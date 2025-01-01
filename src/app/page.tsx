@@ -1,3 +1,11 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import { signOut } from "next-auth/react";
+
 export default function Home() {
-  return <></>;
+  return (
+    <Button onClick={() => signOut({ callbackUrl: "/login", redirect: true })}>
+      Logout
+    </Button>
+  );
 }

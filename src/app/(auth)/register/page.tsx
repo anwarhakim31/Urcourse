@@ -1,17 +1,16 @@
-import AuthLayout from "@/components/Layouts/auth-layout";
+import React from "react";
+
 import { Metadata } from "next";
-import React, { Suspense } from "react";
+import AuthLayout from "@/components/Layouts/auth-layout";
 
 export const metadata: Metadata = {
-  title: "Login",
+  title: "Register",
   description:
     "A platform that empowers your learning journey with engaging, accessible, and expertly crafted courses to help you achieve your goals.",
 };
 
-export default function LoginPage() {
-  return (
-    <Suspense>
-      <AuthLayout />
-    </Suspense>
-  );
-}
+const RegisterPage = () => {
+  return <AuthLayout />;
+};
+
+export default RegisterPage;

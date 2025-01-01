@@ -26,7 +26,7 @@ const AuthFormControl = ({
             autoComplete="off"
             type={type}
             placeholder={placeholder}
-            className={`${type === "password" ? "pr-8" : ""}`}
+            className={`${type === "password" ? "pr-8" : ""} text-sm`}
           />
         </FormControl>
         {type === "password" && (

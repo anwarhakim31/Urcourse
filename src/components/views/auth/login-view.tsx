@@ -7,6 +7,7 @@ import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import useLogin from "@/hooks/auth/useLogin";
 
 const formSchema = z.object({
   email: z
@@ -27,18 +28,22 @@ const LoginView = () => {
     },
   });
 
+  const { Login, error, loading } = useLogin();
+
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
+    Login(data);
   };
 
   return (
     <Form {...form}>
-      <Badge
-        variant={"default"}
-        className="w-full bg-red-100 text-red-600 flex-center py-1.5 text-sm mb-2 hover:bg-red-100"
-      >
-        ssds
-      </Badge>
+      {error && (
+        <Badge
+          variant={"default"}
+          className="w-full bg-red-100 text-red-600 flex-center py-1.5 text-sm mb-2 hover:bg-red-100"
+        >
+          {error}
+        </Badge>
+      )}
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div>
           <FormField
@@ -73,7 +78,12 @@ const LoginView = () => {
         >
           Forget Password?
         </Link>
-        <LoadingButton type="submit" className="w-full mt-6">
+        <LoadingButton
+          loading={loading}
+          disabled={loading}
+          type="submit"
+          className="w-full mt-6"
+        >
           Login
         </LoadingButton>
         <span className="text-xs text-center block mt-2">
