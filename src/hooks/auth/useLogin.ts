@@ -14,7 +14,7 @@ const useLogin = () => {
     return callbackUrl ? callbackUrl : "/";
   }, [searchParams]);
 
-  const Login = async (data: { email: string; password: string }) => {
+  const handleLogin = async (data: { email: string; password: string }) => {
     setLoading(true);
     try {
       setError(null);
@@ -36,7 +36,7 @@ const useLogin = () => {
     }
   };
 
-  return { Login, error, loading };
+  return { handleLogin, error, loading };
 };
 
 export default useLogin;

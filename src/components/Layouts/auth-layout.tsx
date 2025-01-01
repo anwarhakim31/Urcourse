@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import LoginView from "../views/auth/login-view";
 import RegisterView from "../views/auth/register-view";
-import ForgotView from "../views/auth/forgot-view";
+import ForgotView from "../views/auth/forget-password";
 import ResetPasswordView from "../views/auth/reset-password-view";
 import LogoComponent from "../ui/logo-component";
 import { signIn } from "next-auth/react";
@@ -41,7 +41,7 @@ const AuthLayout = () => {
 
   return (
     <Fragment>
-      <header className="absolute w-full left-0 top-0  p-4">
+      <header className="absolute w-full left-0 top-0 p-2 md:p-4">
         <div className="flex justify-between items-center container">
           <LogoComponent />
           <div className="hidden md:flex gap-4 items-center">
@@ -53,22 +53,64 @@ const AuthLayout = () => {
         </div>
       </header>
       <main className="w-full h-screen  bg-slate-50 flex-center">
-        <div className="w-full  h-full pt-10 md:pt-0 md:h-max md:max-w-[470px] bg-white  md:rounded-md md:shadow-md  overflow-hidden">
-          <div className="px-4 md:px-8 py-8">
+        <div className="w-full h-full  pt-10 md:pt-0 flex flex-col  justify-center  md:h-max md:max-w-[470px] bg-white  md:rounded-md md:shadow-md  overflow-hidden">
+          {success && pathname === "/forget-password" && (
+            <div className="flex-center mt-6">
+              <Image
+                src={"/mailer.svg"}
+                alt="success"
+                width={175}
+                height={175}
+              />
+            </div>
+          )}
+          {success && pathname === "/reset-password" && (
+            <div className="flex-center mt-6">
+              <Image
+                src={"/check.svg"}
+                alt="success"
+                width={100}
+                height={100}
+              />
+            </div>
+          )}
+          <div className={`px-4 md:px-8  ${success ? "py-2" : "py-8"}`}>
             <div className=" mb-6">
-              <h1 className="text-xl font-semibold">
+              <h1
+                className={`text-xl font-semibold ${
+                  success ? "text-center" : ""
+                }`}
+              >
                 {pathname === "/register"
                   ? "Create your account"
+                  : pathname === "/login"
+                  ? "Login to ulearn"
                   : pathname === "/forget-password"
-                  ? "Silahkan ganti kata sandi anda dengan akun terdaftar"
-                  : "Login to ulearn"}
+                  ? "Forget Password"
+                  : "Reset Password"}
               </h1>
-              <p className="text-sm text-gray-700 mt-1">
-                {pathname === "/register"
-                  ? "Welcome! Please fill in the details to get started."
-                  : pathname === "/forget-password"
-                  ? "Silahkan ganti kata sandi anda dengan akun terdaftar"
-                  : "welcome back! Please login to continue"}
+              <p
+                className={`text-sm text-gray-700 mt-1 ${
+                  success ? "text-center" : ""
+                }`}
+              >
+                {pathname === "/register" ? (
+                  "Welcome! Please fill in the details to get started."
+                ) : pathname === "/login" ? (
+                  "welcome back! Please login to continue"
+                ) : pathname === "/forget-password" ? (
+                  <>
+                    {success
+                      ? "We have sent you an email to reset your password."
+                      : "Please enter your email address to receive a link to reset your password."}
+                  </>
+                ) : (
+                  <>
+                    {success
+                      ? "Password reset successfully, you can login now"
+                      : "Please enter a new password."}
+                  </>
+                )}
               </p>
             </div>
             {googleRender.includes(pathname) && (

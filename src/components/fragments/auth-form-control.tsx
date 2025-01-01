@@ -24,7 +24,9 @@ const AuthFormControl = ({
           <Input
             {...field}
             autoComplete="off"
-            type={type}
+            type={
+              type === "password" ? (showPassword ? "text" : "password") : type
+            }
             placeholder={placeholder}
             className={`${type === "password" ? "pr-8" : ""} text-sm`}
           />

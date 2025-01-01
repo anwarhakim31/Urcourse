@@ -21,3 +21,12 @@ model User{
 
   @@map("users")
 }
+
+model resetToken{
+  id String @id @default(uuid())
+  user String 
+  expired Int
+  createdAt DateTime @default(now())
+
+  @@map("resetToken")
+}

@@ -1,6 +1,6 @@
 import AuthLayout from "@/components/Layouts/auth-layout";
 import { Metadata } from "next";
-import React, { Suspense } from "react";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Login",
@@ -9,9 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function LoginPage() {
-  return (
-    <Suspense>
-      <AuthLayout />
-    </Suspense>
-  );
+  return <AuthLayout />;
 }

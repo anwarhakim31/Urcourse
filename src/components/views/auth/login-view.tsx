@@ -28,10 +28,10 @@ const LoginView = () => {
     },
   });
 
-  const { Login, error, loading } = useLogin();
+  const { handleLogin, error, loading } = useLogin();
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    Login(data);
+    handleLogin(data);
   };
 
   return (
