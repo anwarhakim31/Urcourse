@@ -1,17 +1,17 @@
 "use client";
 import Image from "next/image";
 import React, { Fragment } from "react";
-// import LoginView from "../views/(auth)/LoginView";
+
 import { usePathname } from "next/navigation";
-// import RegisterView from "../views/(auth)/RegisterView";
-// import ForgetPasswordView from "../views/(auth)/ForgetPasswordView";
+
 import Link from "next/link";
 import LoginView from "../views/auth/login-view";
 import RegisterView from "../views/auth/register-view";
 import ForgotView from "../views/auth/forget-password";
 import ResetPasswordView from "../views/auth/reset-password-view";
 import LogoComponent from "../ui/logo-component";
-import { signIn } from "next-auth/react";
+
+import useGoogleSignIn from "@/hooks/auth/useGoogleSignIn";
 
 const renderView = (
   pathname: string,
@@ -36,18 +36,22 @@ const googleRender = ["/login", "/register"];
 
 const AuthLayout = () => {
   const [success, setSuccess] = React.useState<boolean>(false);
-
   const pathname = usePathname();
+
+  const { handleGoogleSignIn, loading } = useGoogleSignIn();
 
   return (
     <Fragment>
-      <header className="absolute w-full left-0 top-0 p-2 md:p-4">
+      <header className="absolute w-full left-0 top-0 py-2 md:py-4">
         <div className="flex justify-between items-center container">
           <LogoComponent />
           <div className="hidden md:flex gap-4 items-center">
             <span className="text-sm">Don&apos;t have an account</span>
-            <Link href="/register" className="btn px-4 py-1.5 text-sm">
-              Register
+            <Link
+              href={pathname === "/register" ? "/login" : "/register"}
+              className="btn px-4 py-1.5 text-sm"
+            >
+              {pathname === "/register" ? "Login" : "Register"}
             </Link>
           </div>
         </div>
@@ -116,11 +120,10 @@ const AuthLayout = () => {
             {googleRender.includes(pathname) && (
               <Fragment>
                 <button
-                  className="flex items-center justify-center gap-2 w-full px-4  border border-gray-300 rounded-md  text-xs font-medium hover:border-purple-700 transition-all duration-300 ease-in-out py-2"
+                  className="flex items-center justify-center gap-2 w-full px-4  border border-gray-300 rounded-md  text-xs font-medium hover:border-purple-700 transition-all duration-300 ease-in-out py-2.5"
                   type="button"
-                  onClick={() => {
-                    signIn("google", { callbackUrl: "/" });
-                  }}
+                  onClick={() => handleGoogleSignIn()}
+                  disabled={loading}
                 >
                   <Image
                     src="/google.svg"

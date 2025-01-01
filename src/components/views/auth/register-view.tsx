@@ -97,7 +97,7 @@ const RegisterView = () => {
         </LoadingButton>
         <span className="text-xs text-center block mt-2">
           have an account?{" "}
-          <Link href="/login" className="hover:underline  text-purple-700">
+          <Link href="/login" className="hover:underline  text-indigo-700">
             Login
           </Link>
         </span>

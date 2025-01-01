@@ -74,7 +74,7 @@ const LoginView = () => {
         </div>
         <Link
           href="/forget-password"
-          className="text-xs mt-3  hover:underline block ml-auto w-max text-purple-700"
+          className="text-xs mt-3  hover:underline block ml-auto w-max text-indigo-700"
         >
           Forget Password?
         </Link>
@@ -88,7 +88,7 @@ const LoginView = () => {
         </LoadingButton>
         <span className="text-xs text-center block mt-2">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="hover:underline  text-purple-700">
+          <Link href="/register" className="hover:underline  text-indigo-700">
             Register
           </Link>
         </span>

@@ -22,6 +22,7 @@ const config: Config = {
         xl: "1200px",
         "2xl": "1280px",
       },
+      padding: "1rem",
     },
 
     extend: {

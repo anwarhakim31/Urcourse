@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { getServerSession } from "next-auth";
 import ReactQueryProvider from "@/components/providers/react-query-provider";
-import { SessionProvider } from "next-auth/react";
+import SessionAuthProvider from "@/components/providers/session-auth-provider";
 import authOptions from "@/lib/authOptions";
 
 export const metadata: Metadata = {
@@ -25,9 +25,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider session={session}>
+        <SessionAuthProvider session={session}>
           <ReactQueryProvider>{children}</ReactQueryProvider>
-        </SessionProvider>
+        </SessionAuthProvider>
       </body>
     </html>
   );

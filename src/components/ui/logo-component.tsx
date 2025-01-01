@@ -1,7 +1,9 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Averia_Serif_Libre } from "next/font/google";
+import { usePathname } from "next/navigation";
 
 const font = Averia_Serif_Libre({
   subsets: ["latin"],
@@ -9,8 +11,13 @@ const font = Averia_Serif_Libre({
 });
 
 const LogoComponent = () => {
+  const pathname = usePathname();
+
   return (
-    <Link href="/" className="flex items-center ">
+    <Link
+      href={pathname.startsWith("/admin/") ? "/admin/dashboard" : "/"}
+      className="flex items-center "
+    >
       <Image src="/logo.png" alt="logo" width={40} height={40} priority />
       <span
         style={{ fontFamily: font.style.fontFamily }}

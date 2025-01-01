@@ -98,7 +98,7 @@ const ResetPasswordView = ({
         </LoadingButton>
         <span className="text-xs text-center block mt-2">
           Remember your password?{" "}
-          <Link href="/login" className="hover:underline  text-purple-700">
+          <Link href="/login" className="hover:underline  text-indigo-700">
             Login
           </Link>
         </span>
