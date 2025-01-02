@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import ReactQueryProvider from "@/components/providers/react-query-provider";
 import SessionAuthProvider from "@/components/providers/session-auth-provider";
 import authOptions from "@/lib/authOptions";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: {
@@ -26,7 +27,10 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <SessionAuthProvider session={session}>
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <ReactQueryProvider>
+            {children}
+            <Toaster closeButton position="bottom-right" />
+          </ReactQueryProvider>
         </SessionAuthProvider>
       </body>
     </html>

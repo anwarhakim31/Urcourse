@@ -3,7 +3,7 @@ import { FormControl, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Eye, EyeOff } from "lucide-react";
 
-const AuthFormControl = ({
+const DataFormControl = ({
   field,
   label,
   placeholder,
@@ -48,4 +48,4 @@ const AuthFormControl = ({
   );
 };
 
-export default AuthFormControl;
+export default DataFormControl;

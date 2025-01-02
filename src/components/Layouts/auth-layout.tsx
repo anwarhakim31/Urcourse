@@ -57,7 +57,7 @@ const AuthLayout = () => {
         </div>
       </header>
       <main className="w-full h-screen  bg-slate-50 flex-center">
-        <div className="w-full h-full  pt-10 md:pt-0 flex flex-col  justify-center  md:h-max md:max-w-[470px] bg-white  md:rounded-md md:shadow-md  overflow-hidden">
+        <div className="w-full h-full  pt-10 md:pt-0 flex flex-col  justify-center  md:h-max md:max-w-[450px] bg-white  md:rounded-md md:shadow-md  overflow-hidden">
           {success && pathname === "/forget-password" && (
             <div className="flex-center mt-6">
               <Image
@@ -88,7 +88,7 @@ const AuthLayout = () => {
                 {pathname === "/register"
                   ? "Create your account"
                   : pathname === "/login"
-                  ? "Login to ulearn"
+                  ? "Login to Urcourse"
                   : pathname === "/forget-password"
                   ? "Forget Password"
                   : "Reset Password"}

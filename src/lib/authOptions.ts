@@ -152,7 +152,7 @@ const authOptions: NextAuthOptions = {
         session.user.isAdmin = token.isAdmin as boolean;
         session.user.phone = (token.phone as string) || "";
 
-        const accsesToken = jwt.sign(token, process.env.NEXTAUTH_SECRET || "", {
+        const accsesToken = jwt.sign(token, process.env.JWT_SECRET || "", {
           algorithm: "HS256",
         });
 

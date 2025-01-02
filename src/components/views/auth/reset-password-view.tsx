@@ -1,4 +1,4 @@
-import AuthFormControl from "@/components/fragments/auth-form-control";
+import DataFormControl from "@/components/fragments/data-form-control";
 import { Badge } from "@/components/ui/badge";
 import { Form, FormField } from "@/components/ui/form";
 import { LoadingButton } from "@/components/ui/loading-button";
@@ -64,7 +64,7 @@ const ResetPasswordView = ({
             control={form.control}
             name="password"
             render={({ field }) => (
-              <AuthFormControl
+              <DataFormControl
                 field={field}
                 label="Password"
                 type="password"
@@ -78,7 +78,7 @@ const ResetPasswordView = ({
             control={form.control}
             name="confirmPassword"
             render={({ field }) => (
-              <AuthFormControl
+              <DataFormControl
                 field={field}
                 label="Confirm Password"
                 type="password"

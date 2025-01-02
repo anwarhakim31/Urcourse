@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getSession } from "next-auth/react";
 // import { getSession } from "next-auth/react";
 
 export const instance = axios.create({
@@ -11,18 +12,18 @@ export const instance = axios.create({
   timeout: 60 * 1000,
 });
 
-// let cacheAccessToken: string | null = null;
+let cacheAccessToken: string | null = null;
 
 instance.interceptors.request.use(
   async (config) => {
-    // if (!cacheAccessToken) {
-    //   const session = await getSession();
-    //   cacheAccessToken = session?.user?.accessToken || null;
-    // }
+    if (!cacheAccessToken) {
+      const session = await getSession();
+      cacheAccessToken = session?.user?.accessToken || null;
+    }
 
-    // if (cacheAccessToken) {
-    //   config.headers["Authorization"] = `Bearer ${cacheAccessToken}`;
-    // }
+    if (cacheAccessToken) {
+      config.headers["Authorization"] = `Bearer ${cacheAccessToken}`;
+    }
 
     return config;
   },
@@ -33,6 +34,7 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (response) => {
+    console.log(response);
     return response;
   },
   (error) => {

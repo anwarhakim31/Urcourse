@@ -1,4 +1,3 @@
-import AuthFormControl from "@/components/fragments/auth-form-control";
 import { Badge } from "@/components/ui/badge";
 import { Form, FormField } from "@/components/ui/form";
 import { LoadingButton } from "@/components/ui/loading-button";
@@ -8,6 +7,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import useLogin from "@/hooks/auth/useLogin";
+import DataFormControl from "@/components/fragments/data-form-control";
 
 const formSchema = z.object({
   email: z
@@ -50,7 +50,7 @@ const LoginView = () => {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <AuthFormControl
+              <DataFormControl
                 field={field}
                 label="Email"
                 placeholder="exemple@domain.com"
@@ -63,7 +63,7 @@ const LoginView = () => {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <AuthFormControl
+              <DataFormControl
                 field={field}
                 label="Password"
                 placeholder="*******"

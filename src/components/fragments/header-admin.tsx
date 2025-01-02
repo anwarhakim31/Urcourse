@@ -11,11 +11,13 @@ import {
 } from "../ui/sheet";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import Burger from "../ui/burger";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import { splitFullName } from "@/utils/helpers";
 import { SearchCommand } from "./search-command";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Separator } from "../ui/separator";
 
 const HeaderAdmin = () => {
   const session = useSession();
@@ -43,27 +45,50 @@ const HeaderAdmin = () => {
         <SearchCommand />
       </div>
 
-      <Link
-        href="/profile"
-        className="w-9 h-9 rounded-full overflow-hidden bg-gray-200 ml-auto"
-      >
-        {session?.data?.user?.photo ? (
-          <Image
-            src={session.data.user.photo || ""}
-            width={255}
-            height={255}
-            alt={session?.data?.user?.fullname || ""}
-            className=""
-            priority
-          />
-        ) : (
-          <div className="w-full h-full flex-center bg-indigo-700">
-            <span className="text-sm font-semibold text-white">
-              {splitFullName(session?.data?.user?.fullname || "")}
-            </span>
+      <Popover>
+        <PopoverTrigger className="flex gap-2 items-center">
+          <figure className="w-9 h-9 rounded-full overflow-hidden bg-gray-200 ml-auto">
+            {session?.data?.user?.photo ? (
+              <Image
+                src={session.data.user.photo || ""}
+                width={255}
+                height={255}
+                alt={session?.data?.user?.fullname || ""}
+                className=""
+                priority
+              />
+            ) : (
+              <figcaption className="w-full h-full flex-center bg-indigo-700">
+                <span className="text-sm font-semibold text-white">
+                  {splitFullName(session?.data?.user?.fullname || "")}
+                </span>
+              </figcaption>
+            )}
+          </figure>
+        </PopoverTrigger>
+        <PopoverContent className="w-40 p-0 mt-2 mr-5">
+          <div className="p-2 select-none">
+            <p className="text-sm ">{session?.data?.user?.fullname}</p>
+            <p className="text-xs ">Administrator</p>
           </div>
-        )}
-      </Link>
+
+          <Separator />
+
+          {/* <ProfileSheet /> */}
+          <button
+            className="text-sm text-left w-full p-2 block hover:bg-indigo-400/20 transition-all duration-200 ease-in-out"
+            aria-label="Logout"
+            type="button"
+            onClick={() => {
+              signOut({ callbackUrl: "/login" });
+            }}
+          >
+            Logout
+          </button>
+        </PopoverContent>
+      </Popover>
+
+      <Link href="/profile"></Link>
     </div>
   );
 };

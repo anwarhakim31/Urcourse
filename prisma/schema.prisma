@@ -22,11 +22,52 @@ model User{
   @@map("users")
 }
 
-model resetToken{
+model ResetToken{
   id String @id @default(uuid())
   user String 
   expired Int
   createdAt DateTime @default(now())
 
   @@map("resetToken")
+}
+
+model Course{
+  id String @id @default(uuid())
+  title String @db.Text
+  description String? @db.Text
+  image String? @db.Text
+  price Float?
+  isPublished Boolean @default(false)
+  
+  categoryId String?
+  category Category? @relation(fields: [categoryId],references: [id])
+
+  attachments Attachment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category{
+  id String @id @default(uuid())
+  name String @unique
+  course Course[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Attachment{
+  id String @id @default(uuid())
+  name String 
+  url String
+
+  courseId String
+  course Course @relation(fields: [courseId],references: [id],onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
 }

@@ -11,7 +11,7 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
 
   return (
     <div className="w-full h-full border-r flex flex-col bg-white shadow-sm overflow-y-auto border-slate-300">
-      <div className="p-2 flex-center">
+      <div className="p-3  flex-center">
         <LogoComponent />
       </div>
       <div className="flex flex-col w-full ">

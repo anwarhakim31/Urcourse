@@ -1,5 +1,5 @@
 "use client";
-import AuthFormControl from "@/components/fragments/auth-form-control";
+import DataFormControl from "@/components/fragments/data-form-control";
 import { Form, FormField } from "@/components/ui/form";
 import { LoadingButton } from "@/components/ui/loading-button";
 import useRegister from "@/hooks/auth/useRegister";
@@ -49,7 +49,7 @@ const RegisterView = () => {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <AuthFormControl
+              <DataFormControl
                 field={field}
                 label="Email"
                 placeholder="exemple@domain.com"
@@ -62,7 +62,7 @@ const RegisterView = () => {
             control={form.control}
             name="fullname"
             render={({ field }) => (
-              <AuthFormControl
+              <DataFormControl
                 field={field}
                 label="fullname"
                 placeholder="John Doe"
@@ -76,7 +76,7 @@ const RegisterView = () => {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <AuthFormControl
+              <DataFormControl
                 field={field}
                 label="Password"
                 placeholder="*******"

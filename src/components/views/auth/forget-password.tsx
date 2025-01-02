@@ -1,4 +1,4 @@
-import AuthFormControl from "@/components/fragments/auth-form-control";
+import DataFormControl from "@/components/fragments/data-form-control";
 import { Badge } from "@/components/ui/badge";
 import { Form, FormField } from "@/components/ui/form";
 import { LoadingButton } from "@/components/ui/loading-button";
@@ -52,7 +52,7 @@ const ForgetPagsswordView = ({
             control={form.control}
             name="email"
             render={({ field }) => (
-              <AuthFormControl
+              <DataFormControl
                 field={field}
                 label="Email"
                 placeholder="exemple@domain.com"
