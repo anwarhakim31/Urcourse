@@ -42,7 +42,7 @@ model Course{
   level Level?
 
   categoryId String?
-  category Category? @relation(fields: [categoryId],references: [id])
+  category Category? @relation(fields: [categoryId],references: [id] ,onDelete: SetNull)
   
   attachments Attachment[]
 
@@ -53,7 +53,7 @@ model Course{
 model Category{
   id String @id @default(uuid())
   name String @unique
-  course Course[]
+  course Course[] 
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

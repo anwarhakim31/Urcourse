@@ -3,6 +3,32 @@ import { ResponseErrorApi } from "@/lib/response-error";
 import { verifyToken } from "@/lib/verifyToken";
 import { NextRequest, NextResponse } from "next/server";
 
+export async function GET(req: NextRequest) {
+  try {
+    const token = await verifyToken(req, true);
+
+    if (token instanceof NextResponse) {
+      return token;
+    }
+
+    const courses = await db.course.findMany({
+      include: {
+        // chapters: true,
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: "Courses fetched successfully",
+      data: courses,
+      code: 200,
+    });
+  } catch (error) {
+    console.log(["courses", error]);
+    return ResponseErrorApi(500, "Internal Server Error");
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const token = await verifyToken(req, true);
