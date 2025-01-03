@@ -1,11 +1,12 @@
 export interface Course {
-  id: string;
+  id?: string;
   title: string;
-  description: string | null;
-  image: string | null;
-  price: number | null;
-  isPublished: boolean;
-  categoryId: string | null;
-  createdAt: Date;
-  updatedAt: Date;
+  categoryId?: string | null;
+  description?: string | null;
+  image?: string | null;
+  level?: string | null;
+  price?: number | null;
+  isPublished?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

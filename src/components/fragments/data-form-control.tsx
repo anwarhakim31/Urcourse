@@ -2,17 +2,20 @@ import React, { InputHTMLAttributes } from "react";
 import { FormControl, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Eye, EyeOff } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const DataFormControl = ({
   field,
   label,
   placeholder,
   type = "text",
+  className,
 }: {
   field: InputHTMLAttributes<HTMLInputElement>;
   label: string;
   placeholder?: string;
   type?: string;
+  className?: string;
 }) => {
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -28,7 +31,7 @@ const DataFormControl = ({
               type === "password" ? (showPassword ? "text" : "password") : type
             }
             placeholder={placeholder}
-            className={`${type === "password" ? "pr-8" : ""} text-sm`}
+            className={cn("text-sm", type === "password" && "pr-8", className)}
           />
         </FormControl>
         {type === "password" && (

@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import "@uploadthing/react/styles.css";
 body,
 html,
 :root {
@@ -102,4 +102,31 @@ html,
   .btn {
     @apply bg-indigo-700 text-white shadow hover:bg-indigo-700/90 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
   }
+}
+
+@layer utilities {
+  .popover-content-width-full {
+    width: var(--radix-popover-trigger-width);
+    max-height: var(--radix-popover-content-available-height);
+  }
+}
+
+.ql-editor {
+  min-height: 100px !important;
+  max-height: 300px;
+  overflow: hidden;
+  overflow-y: scroll;
+  border-radius: 20px !important;
+}
+
+.ql-container {
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-color: hsl(214.3 31.8% 91.4%);
+}
+
+.ql-toolbar {
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  border-color: hsl(214.3 31.8% 91.4%);
 }

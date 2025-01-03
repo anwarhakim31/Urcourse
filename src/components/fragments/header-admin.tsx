@@ -54,7 +54,7 @@ const HeaderAdmin = () => {
                 width={255}
                 height={255}
                 alt={session?.data?.user?.fullname || ""}
-                className=""
+                className="w-full h-full object-center object-cover"
                 priority
               />
             ) : (

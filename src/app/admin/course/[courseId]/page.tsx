@@ -1,31 +1,7 @@
-import { db } from "@/lib/db";
-import { requiredFieldCourse } from "@/utils/helpers";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
-import React from "react";
-
-const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
-  const { courseId } = params;
-
-  const course = await db.course.findUnique({
-    where: {
-      id: courseId,
-    },
-  });
-  if (!course) {
-    return notFound();
-  }
-
-  const { totalField, complatedField } = requiredFieldCourse(course);
-
-  return (
-    <div>
-      <h1>{course?.title}</h1>
-      <p>
-        {complatedField}/{totalField}
-      </p>
-    </div>
-  );
+const page = ({ params }: { params: { courseId: string } }) => {
+  return redirect(`/admin/course/${params.courseId}/basic`);
 };
 
-export default CourseIdPage;
+export default page;

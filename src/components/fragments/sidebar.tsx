@@ -22,8 +22,9 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
             onClick={onClose}
             className={cn(
               "flex items-center gap-x-2 text-slate-600 text-sm font-medium pl-6 transition-all hover:text-slate-700 hover:bg-indigo-400/10",
-              pathname === item.path &&
-                "bg-indigo-400/20 text-indigo-700 hover:bg-indigo-400/20 hover:text-indigo-700"
+              pathname === item.path ||
+                (pathname.startsWith(item.path) &&
+                  "bg-indigo-400/20 text-indigo-700 hover:bg-indigo-400/20 hover:text-indigo-700")
             )}
           >
             <div className="flex items-center gap-x-2 py-4">
@@ -34,7 +35,8 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
             <div
               className={cn(
                 "bg-indigo-700 h-full w-1 ml-auto opacity-0 transition-all duration-200",
-                pathname === item.path && "opacity-100"
+                pathname === item.path ||
+                  (pathname.startsWith(item.path) && "opacity-100")
               )}
             ></div>
           </Link>

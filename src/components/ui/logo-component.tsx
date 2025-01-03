@@ -18,7 +18,14 @@ const LogoComponent = () => {
       href={pathname.startsWith("/admin/") ? "/admin/dashboard" : "/"}
       className="flex items-center gap-2 "
     >
-      <Image src="/logo.svg" width={40} height={40} alt="logo" priority />
+      <Image
+        src="/logo.svg"
+        width={40}
+        height={40}
+        alt="logo"
+        className="w-8 h-8"
+        priority
+      />
       <span
         style={{ fontFamily: font.style.fontFamily }}
         className="text-lg text-indigo-700  font-medium"

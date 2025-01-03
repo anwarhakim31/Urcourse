@@ -98,7 +98,7 @@ function ProfileForm({
     mutate(data, {
       onSuccess: (res) => {
         toast.success(res.message);
-        router.push("/admin/course/" + res.data.id);
+        router.push("/admin/course/" + res.data.id + "/basic");
         setOpen(false);
       },
       onError: (error: Error) => {

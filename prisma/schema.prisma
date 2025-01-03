@@ -39,9 +39,11 @@ model Course{
   price Float?
   isPublished Boolean @default(false)
   
+  level Level?
+
   categoryId String?
   category Category? @relation(fields: [categoryId],references: [id])
-
+  
   attachments Attachment[]
 
   createdAt DateTime @default(now())
@@ -70,4 +72,10 @@ model Attachment{
   updatedAt DateTime @updatedAt
 
   @@index([courseId])
+}
+
+enum Level {
+  Beginner
+  Intermediate
+  Advanced
 }
