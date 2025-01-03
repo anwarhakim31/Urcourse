@@ -7,7 +7,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Drawer,
@@ -17,7 +16,6 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -26,25 +24,26 @@ import DataFormControl from "@/components/fragments/data-form-control";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@/components/ui/loading-button";
 import { Category } from "@/types/model";
-import useCreateCategory from "@/hooks/category/useCreateCategory";
+
 import usePutCategory from "@/hooks/category/usePutCategory";
+import useCreateCategory from "@/hooks/category/useCreateCategory";
 
 export function ModalFormCategory({
   id,
   data,
+  open,
+  setOpen,
 }: {
   id?: string;
   data?: Category;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button>Add Course</Button>
-        </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>{id ? "Edit Category" : "Add Category"}</DialogTitle>
@@ -58,9 +57,6 @@ export function ModalFormCategory({
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <Button>Add Course</Button>
-      </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
           <DrawerTitle>{id ? "Edit Category" : "Add Category"}</DrawerTitle>
@@ -96,16 +92,17 @@ function ProfileForm({
       name: data?.name || "",
     },
   });
-  const { mutate: mutateCreate, isPending: isPendingCreate } =
-    useCreateCategory(setOpen);
+
   const { mutate: mutatePut, isPending: isPendingPut } = usePutCategory(
     setOpen,
     id as string
   );
+  const { mutate: mutatePost, isPending: isPendingPost } =
+    useCreateCategory(setOpen);
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (id) mutateCreate(data);
-    else mutatePut(data);
+    if (!id) return mutatePost(data);
+    else return mutatePut(data);
   };
 
   return (
@@ -124,9 +121,9 @@ function ProfileForm({
         />
         <LoadingButton
           type="submit"
-          disabled={isPendingCreate || isPendingPut}
-          loading={isPendingCreate || isPendingPut}
-          className="mt-6 w-full md:w-fit"
+          disabled={isPendingPut || isPendingPost}
+          loading={isPendingPut || isPendingPost}
+          className="mt-6 w-full md:w-[150px]"
         >
           Save
         </LoadingButton>

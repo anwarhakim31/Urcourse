@@ -17,16 +17,16 @@ const TableFragment = <T,>({
   table: TableType<T>;
 }) => {
   return (
-    <div className="rounded-md border overflow-hidden">
-      <Table className="">
+    <div className="h-[calc(100vh-300px)] overflow-auto border rounded-md border-slate-200">
+      <Table className="relative w-full">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id} className="bg-white text-slate-600">
+            <TableRow key={headerGroup.id} className=" text-slate-600  ">
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead
                     key={header.id}
-                    className="font-medium text-sm px-4 text-slate-500 truncate"
+                    className="sticky top-[0] z-10 bg-white font-medium text-sm px-4 text-slate-500 truncate"
                   >
                     {header.isPlaceholder
                       ? null
@@ -40,7 +40,7 @@ const TableFragment = <T,>({
             </TableRow>
           ))}
         </TableHeader>
-        <TableBody className="overflow-x-hidden">
+        <TableBody className="pt-40">
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow

@@ -7,10 +7,12 @@ export async function GET(req: NextRequest) {
   try {
     const page = Number(req.nextUrl.searchParams.get("page") || "1");
     const limit = Number(req.nextUrl.searchParams.get("limit") || "10");
-    const skip = page - 1 * limit;
+    const skip = (page - 1) * limit;
     const search = req.nextUrl.searchParams.get("search") || "";
 
-    const categories = await db.category.findMany({
+    console.log(page, limit, skip, search);
+
+    const category = await db.category.findMany({
       where: {
         name: {
           contains: search,
@@ -37,7 +39,7 @@ export async function GET(req: NextRequest) {
       success: true,
       message: "Categories fetched successfully",
       data: {
-        categories,
+        category,
         paging: {
           page,
           limit,
@@ -67,6 +69,16 @@ export async function POST(req: NextRequest) {
       return ResponseErrorApi(400, "Name is required");
     }
 
+    const isExist = await db.category.findUnique({
+      where: {
+        name,
+      },
+    });
+
+    if (isExist) {
+      return ResponseErrorApi(400, "Category name already taken");
+    }
+
     const newCategory = await db.category.create({
       data: {
         name,
@@ -85,7 +97,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function PATCH(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   try {
     const token = await verifyToken(req, true);
 

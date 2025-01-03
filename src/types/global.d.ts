@@ -6,8 +6,8 @@ export interface ResponseApi {
 }
 
 export interface Paging {
-  totalPage?: number;
-  page?: number;
-  limit?: number;
-  total?: number;
+  totalPage: number;
+  page: number;
+  limit: number;
+  total: number;
 }

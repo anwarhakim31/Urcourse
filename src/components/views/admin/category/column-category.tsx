@@ -16,7 +16,7 @@ export const columns: ColumnDef<Category>[] = [
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
-        className="data-[state=checked]:bg-indigo-500 data-[state=checked]:text-white border-white"
+        className="data-[state=checked]:bg-indigo-700 data-[state=checked]:text-white border-gray-500"
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
       />
@@ -27,7 +27,7 @@ export const columns: ColumnDef<Category>[] = [
         onCheckedChange={(value) => {
           row.toggleSelected(!!value);
         }}
-        className="data-[state=checked]:bg-indigo-500 data-[state=checked]:text-white border-gray-500"
+        className="data-[state=checked]:bg-indigo-700 data-[state=checked]:text-white border-gray-500"
         aria-label="Select row"
       />
     ),
