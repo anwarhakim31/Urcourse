@@ -30,7 +30,7 @@ const BasicCoursePage = async ({
   console.log(complatedField, totalField);
 
   return (
-    <SectionWrapper>
+    <SectionWrapper isScroll={true}>
       <div className="flex items-center justify-between">
         <NavigationCourse course={course} />
       </div>

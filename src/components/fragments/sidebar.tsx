@@ -9,8 +9,6 @@ import { cn } from "@/lib/utils";
 const Sidebar = ({ onClose }: { onClose?: () => void }) => {
   const pathname = usePathname();
 
-  console.log(pathname);
-
   return (
     <div className="w-full h-full border-r flex flex-col bg-white shadow-sm overflow-y-auto border-slate-300">
       <div className="p-3  flex-center">
