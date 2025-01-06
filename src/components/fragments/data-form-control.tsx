@@ -10,18 +10,28 @@ const DataFormControl = ({
   placeholder,
   type = "text",
   className,
+  required,
 }: {
   field: InputHTMLAttributes<HTMLInputElement>;
   label: string;
   placeholder?: string;
   type?: string;
   className?: string;
+  required?: boolean;
 }) => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   return (
     <FormItem>
-      <FormLabel className="font-medium text-xs">{label}</FormLabel>
+      <FormLabel
+        className={cn(
+          "font-medium text-xs ",
+          required && "after:content-['*'] after:ml-1 after:text-red-500",
+          className
+        )}
+      >
+        {label}
+      </FormLabel>
       <div className="relative w-full">
         <FormControl>
           <Input
@@ -31,7 +41,11 @@ const DataFormControl = ({
               type === "password" ? (showPassword ? "text" : "password") : type
             }
             placeholder={placeholder}
-            className={cn("text-sm", type === "password" && "pr-8", className)}
+            className={cn(
+              "text-sm bg-white",
+              type === "password" && "pr-8 ",
+              className
+            )}
           />
         </FormControl>
         {type === "password" && (

@@ -21,16 +21,16 @@ const NavigationCourse = ({ course }: { course: Course }) => {
           Basic Information
         </Button>
       </Link>
-      <Link href={`/admin/course/${course.id}/chapter`}>
+      <Link href={`/admin/course/${course.id}/curriculum`}>
         <Button
           variant={
-            pathname === `/admin/course/${course.id}/chapter`
+            pathname === `/admin/course/${course.id}/curriculum`
               ? "default"
               : "outline"
           }
           type="button"
         >
-          Chapter
+          Curriculum
         </Button>
       </Link>
     </div>

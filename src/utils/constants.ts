@@ -17,3 +17,9 @@ export const sidebarItems = [
     icon: LibraryBig,
   },
 ];
+
+export const levelArray = [
+  { id: "Beginner", value: "Beginner" },
+  { id: "Intermediate", value: "Intermediate" },
+  { id: "Advanced", value: "Advanced" },
+];

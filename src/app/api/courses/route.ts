@@ -49,6 +49,12 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    await db.curriculum.create({
+      data: {
+        courseId: newCourse.id,
+      },
+    });
+
     return NextResponse.json({
       success: true,
       message: "Course created successfully",

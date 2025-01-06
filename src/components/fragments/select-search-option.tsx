@@ -63,7 +63,7 @@ const SelectSearchOption = ({
         </FormControl>
       </PopoverTrigger>
       <PopoverContent className="popover-content-width-full p-0 -mt-2 translate-y-0">
-        <Command className="max-h-32">
+        <Command className="max-h-36">
           <CommandInput placeholder={`Cari...`} className="h-9 text-sm" />
 
           <CommandList>

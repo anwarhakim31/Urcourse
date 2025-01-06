@@ -43,6 +43,9 @@ model Course{
 
   categoryId String?
   category Category? @relation(fields: [categoryId],references: [id] ,onDelete: SetNull)
+
+  curriculum Curriculum? 
+
   
   attachments Attachment[]
 
@@ -58,6 +61,102 @@ model Category{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Curriculum{
+  id String @id @default(uuid())
+    
+  courseId String @unique
+  course Course @relation(fields: [courseId] ,references: [id],onDelete: Cascade)
+  lastPosition Int @default(0)
+  module Module[]
+  exercise Exercise[]
+  progress Progress[]
+
+  createdAt DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([courseId])
+}
+
+model Exercise {
+  id          String     @id @default(uuid())
+  title       String
+  type        TypeCurriculum @default(exercise)
+  description String? @db.Text
+  isPublished Boolean @default(false)
+  question    String     
+  answer      Json
+  correctAnswer Int    
+  position Int
+  resourse Resource[]
+
+  curriculumId String
+  curriculum  Curriculum @relation(fields: [curriculumId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
+
+model Module{
+  id String @id @default(uuid())
+  isPublished Boolean @default(false)
+  title String
+  type    TypeCurriculum @default(module)
+  description String? @db.Text
+  position Int
+  video String?
+  muxData MuxData?
+  resourse Resource[]
+
+
+  curriculumId String
+  curriculum  Curriculum @relation(fields: [curriculumId], references: [id], onDelete: Cascade)
+
+  isFree Boolean @default(false)
+
+  createdAt DateTime @default(now())
+}
+
+
+model MuxData{
+    id String @id @default(uuid())
+    assetsId String
+    playbackId String?
+    
+
+    moduleId String    @unique  
+    module   Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+}
+
+model Resource{
+  id String @id @default(uuid())
+  name String
+  file String 
+
+  
+  moduleId String?   @unique  
+  module   Module? @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  exerciseId String? @unique
+  exercise Exercise? @relation(fields: [exerciseId],references: [id],onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+
+model Progress{
+  id String @id @default(uuid())
+  studentId String
+
+  curriculumId String
+  curriculum Curriculum @relation(fields: [curriculumId],references: [id] ,onDelete: Cascade)
+
+  isComplated Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
 
 
 model Attachment{
@@ -78,4 +177,9 @@ enum Level {
   Beginner
   Intermediate
   Advanced
+}
+
+enum TypeCurriculum {
+  exercise
+  module
 }

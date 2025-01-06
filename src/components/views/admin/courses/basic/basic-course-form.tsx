@@ -11,10 +11,10 @@ import { Form, FormField } from "@/components/ui/form";
 import { LoadingButton } from "@/components/ui/loading-button";
 import usePatchCourse from "@/hooks/course/usePatchCourse";
 import { ResponseErrorAxios } from "@/lib/response-error";
-import { Course } from "@/types/model";
+import { Category, Course } from "@/types/model";
+import { levelArray } from "@/utils/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -22,6 +22,7 @@ import { z } from "zod";
 
 interface PropsType {
   course: Course;
+  category: Category[];
 }
 
 const formSchema = z.object({
@@ -38,7 +39,7 @@ const formSchema = z.object({
   price: z.coerce.number().optional(),
 });
 
-const BasicCourseForm = ({ course }: PropsType) => {
+const BasicCourseForm = ({ course, category }: PropsType) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -66,19 +67,12 @@ const BasicCourseForm = ({ course }: PropsType) => {
     });
   };
 
-  useEffect(() => {
-    if (form.formState.isSubmitted && form.formState.errors) {
-      const errorField = Object.keys(form.formState.errors)[0];
-
-      if (errorField) {
-        form.setFocus(errorField as keyof z.infer<typeof formSchema>);
-      }
-    }
-  }, [form.formState.errors, form?.formState.isSubmitted, form]);
-
   return (
     <Form {...form}>
-      <form className="mt-8" onSubmit={form.handleSubmit(onSubmit)}>
+      <p className="text-sm text-slate-500 mt-4">
+        Manage the basic information for your course
+      </p>
+      <form className="mt-4 " onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="title"
@@ -90,20 +84,6 @@ const BasicCourseForm = ({ course }: PropsType) => {
             />
           )}
         />
-
-        <div className="mt-4">
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <AreaFormControl
-                field={field}
-                label="Description"
-                className={` w-full break-all `}
-              />
-            )}
-          />
-        </div>
         <div className="flex items-center flex-col md:flex-row gap-4 mt-4 w-full">
           <FormField
             control={form.control}
@@ -112,7 +92,10 @@ const BasicCourseForm = ({ course }: PropsType) => {
               <SelectFormControl
                 field={field}
                 label="Category"
-                data={[{ id: "1", value: "Web development" }]}
+                data={category?.map((c) => ({
+                  id: c.id as string,
+                  value: c.name,
+                }))}
                 isLoading={false}
                 placeholder="Select Category"
               />
@@ -125,7 +108,7 @@ const BasicCourseForm = ({ course }: PropsType) => {
               <SelectFormControl
                 field={field}
                 label="Level"
-                data={[{ id: "1", value: "Web development" }]}
+                data={levelArray}
                 isLoading={false}
                 placeholder="Select Level"
               />
@@ -150,6 +133,20 @@ const BasicCourseForm = ({ course }: PropsType) => {
             )}
           />
         </div>
+        <div className="mt-4">
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <AreaFormControl
+                field={field}
+                label="Description"
+                className={` w-full break-all `}
+              />
+            )}
+          />
+        </div>
+
         <div className="flex flex-col-reverse items-center gap-4 md:flex-row mt-4">
           <Button
             variant={"outline"}

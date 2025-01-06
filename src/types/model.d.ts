@@ -11,6 +11,23 @@ export interface Course {
   updatedAt?: Date;
 }
 
+export interface Module {
+  id?: string;
+  isPublished?: boolean;
+  title?: string;
+  description?: string;
+  position?: number;
+  video?: string;
+  isFree?: boolean;
+  resource?: Resource[];
+}
+
+export interface Resource {
+  id?: string;
+  name?: string;
+  file?: string;
+}
+
 export interface Category {
   id?: string;
   name: string;

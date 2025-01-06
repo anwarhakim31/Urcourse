@@ -16,7 +16,11 @@ const RichEditor = forwardRef<HTMLDivElement, PropsType>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ({ placeholder, onChange, value, className }: PropsType, ref) => {
     const ReactQuill = React.useMemo(
-      () => dynamic(() => import("react-quill-new"), { ssr: false }),
+      () =>
+        dynamic(() => import("react-quill-new"), {
+          ssr: false,
+          loading: () => <p className="text-sm">Loading...</p>,
+        }),
       []
     );
 

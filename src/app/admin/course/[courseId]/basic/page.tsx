@@ -3,7 +3,7 @@ import BasicCourseForm from "@/components/views/admin/courses/basic/basic-course
 import NavigationCourse from "@/components/views/admin/courses/navigation-course";
 import { db } from "@/lib/db";
 import { requiredFieldCourse } from "@/utils/helpers";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import React from "react";
 
 const BasicCoursePage = async ({
@@ -22,8 +22,11 @@ const BasicCoursePage = async ({
       id: courseId,
     },
   });
+
+  const category = await db.category.findMany();
+
   if (!course) {
-    return notFound();
+    return redirect("/error");
   }
   const { complatedField, totalField } = requiredFieldCourse(course);
 
@@ -34,7 +37,7 @@ const BasicCoursePage = async ({
       <div className="flex items-center justify-between">
         <NavigationCourse course={course} />
       </div>
-      <BasicCourseForm course={course} />
+      <BasicCourseForm course={course} category={category} />
     </SectionWrapper>
   );
 };
