@@ -151,6 +151,7 @@ const BasicCourseForm = ({ course, category }: PropsType) => {
           <Button
             variant={"outline"}
             type="button"
+            onClick={() => router.push("/admin/course")}
             className="w-full md:max-w-[150px]"
           >
             Cancel

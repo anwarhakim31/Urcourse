@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Course } from "@/types/model";
 
-import Link from "next/link";
+import CellActionCourse from "./cell-action-course";
 
 export const columns: ColumnDef<Course>[] = [
   {
@@ -16,7 +16,7 @@ export const columns: ColumnDef<Course>[] = [
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
-        className="data-[state=checked]:bg-indigo-500 data-[state=checked]:text-white border-white"
+        className="data-[state=checked]:bg-indigo-700 data-[state=checked]:text-white border-gray-500"
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
       />
@@ -27,7 +27,7 @@ export const columns: ColumnDef<Course>[] = [
         onCheckedChange={(value) => {
           row.toggleSelected(!!value);
         }}
-        className="data-[state=checked]:bg-indigo-500 data-[state=checked]:text-white border-gray-500"
+        className="data-[state=checked]:bg-indigo-700 data-[state=checked]:text-white border-gray-500"
         aria-label="Select row"
       />
     ),
@@ -45,6 +45,23 @@ export const columns: ColumnDef<Course>[] = [
     accessorKey: "Price",
     header: "Price",
     enableHiding: false,
+    cell: ({ row }) => (
+      <p>{row.getValue("Price") ? row.getValue("Price") : "-"}</p>
+    ),
+  },
+  {
+    accessorKey: "Total Curriculum",
+    header: () => <p className="text-center">Total Curriculum</p>,
+    enableHiding: false,
+    cell: ({ row }) => {
+      const total =
+        row.original?.curriculum && row.original.curriculum.exercise
+          ? row.original.curriculum.module.length +
+            row.original.curriculum.exercise.length
+          : 0;
+
+      return <p className="text-center">{total}</p>;
+    },
   },
   {
     accessorKey: "isPublished",
@@ -53,9 +70,7 @@ export const columns: ColumnDef<Course>[] = [
 
   {
     id: "Action",
-    cell: ({ row }) => (
-      <Link href={`/admin/course/${row.original.id}/basic`}>Edit</Link>
-    ),
+    cell: ({ row }) => <CellActionCourse data={row.original} />,
     enableHiding: false,
   },
 ];

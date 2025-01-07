@@ -8,7 +8,7 @@ const AreaFormControl = ({
   className,
 }: {
   field: {
-    value?: string;
+    value?: string | null;
     onChange?: (value: string) => void;
   };
   label: string;
@@ -25,7 +25,7 @@ const AreaFormControl = ({
             ref={ref}
             placeholder="Enter your description"
             onChange={field.onChange}
-            value={field.value}
+            value={field.value as string}
             className={className}
           />
         </FormControl>

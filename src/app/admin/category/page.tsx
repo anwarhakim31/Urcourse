@@ -37,9 +37,9 @@ const CategoryPage = () => {
       <p className="text-sm text-slate-500">
         Manage all the category for your course
       </p>
-      <div className="flex items-center justify-between my-4">
+      <div className="flex items-center justify-between my-4 gap-4 flex-wrap  md:flex-nowrap">
         <InputSearch placeholder="Search category name..." />
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ml-auto">
           {rowSelection && Object.keys(rowSelection).length > 0 && (
             <button
               type="button"
@@ -62,7 +62,7 @@ const CategoryPage = () => {
           <TablePagination pagination={data?.paging} table={table} />
         </>
       ) : (
-        <TableSkeleton column={5} table={table} />
+        <TableSkeleton column={20} table={table} py="py-3" />
       )}
       <ModalFormCategory setOpen={setIsAdd} open={isAdd} />
       <ModalDelete

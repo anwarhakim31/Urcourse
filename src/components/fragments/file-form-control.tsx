@@ -13,7 +13,7 @@ const FileFormControl = ({
   disable = false,
 }: {
   field: {
-    value?: string;
+    value?: string | null;
     onChange?: (value: string) => void;
   };
   type?: string;

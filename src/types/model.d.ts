@@ -6,12 +6,28 @@ export interface Course {
   image?: string | null;
   level?: string | null;
   price?: number | null;
+  curriculum?: {
+    id?: string;
+    module: Module[];
+    exercise: Exercise[];
+  };
   isPublished?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 export interface Module {
+  id?: string;
+  isPublished?: boolean;
+  title?: string;
+  description?: string;
+  position?: number;
+  video?: string;
+  isFree?: boolean;
+  resource?: Resource[];
+}
+
+export interface Exercise {
   id?: string;
   isPublished?: boolean;
   title?: string;

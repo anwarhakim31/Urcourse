@@ -1,14 +1,18 @@
 "use client";
-import React from "react";
+import React, { Fragment } from "react";
 import {
   Droppable,
   DragDropContext,
   Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
-import { Grip, Pencil } from "lucide-react";
+import { FileWarning, Grip, Pencil, Trash } from "lucide-react";
 import useReorder from "@/hooks/course/useReorder";
 import { useRouter } from "next/navigation";
+import { ModalDelete } from "@/components/fragments/modal-delete";
+import useDeleteCurriculumList from "@/hooks/course/curriculum/useDeleteCurriculumList";
+import { toast } from "sonner";
+import { ResponseErrorAxios } from "@/lib/response-error";
 
 type Data = { id: string; type: string; title: string; position: number };
 
@@ -20,6 +24,10 @@ const CurriculumListView = ({
   courseId: string;
 }) => {
   const router = useRouter();
+  const [isDelete, setIsDelete] = React.useState<{
+    id: string;
+    title: string;
+  } | null>(null);
   const [isMounted, setIsMounted] = React.useState(false);
   const [datas, setDatas] = React.useState<Data[]>([]);
 
@@ -31,7 +39,9 @@ const CurriculumListView = ({
     setDatas(data);
   }, [data]);
 
-  const { mutate } = useReorder();
+  const { mutate: curriculumMutate, isPending } =
+    useDeleteCurriculumList(courseId);
+  const { mutate: reorderMutate } = useReorder();
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -52,7 +62,7 @@ const CurriculumListView = ({
       type: section.type,
     }));
 
-    mutate(UpdateData);
+    reorderMutate(UpdateData);
   };
 
   const onEdit = (id: string, type: string) => {
@@ -64,57 +74,95 @@ const CurriculumListView = ({
 
   if (!isMounted)
     return (
-      <div className="mt-4 flex items-center justify-center">
-        <p>Loading</p>
+      <div className="mt-28 flex items-center justify-center w-full gap-2">
+        <div className="w-4 h-4 rounded-full bg-indigo-700 animate-bounce"></div>
+        <div className="w-4 h-4 rounded-full bg-indigo-700  animate-bounce delay-100"></div>
+        <div className="w-4 h-4 rounded-full bg-indigo-700  animate-bounce"></div>
       </div>
     );
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="data">
-        {(provided) => (
-          <div {...provided.droppableProps} ref={provided.innerRef}>
-            <div className="space-y-2 mt-4">
-              {datas.length > 0 ? (
-                datas.map((item, index) => (
-                  <Draggable key={item.id} draggableId={item.id} index={index}>
-                    {(provided) => (
-                      <div
-                        {...provided.draggableProps}
-                        ref={provided.innerRef}
-                        className="flex items-center bg-indigo-50  rounded-lg text-sm  p-3"
-                      >
-                        <div {...provided.dragHandleProps}>
-                          <Grip className="h-4 w-4 cursor-pointer mr-4 hover:text-blue-600 font-medium" />
-                        </div>
-                        <div className="flex items-center">
-                          <p className="text-sm">
-                            <span className="font-medium">{item.type} : </span>
-                            {item.title}
-                          </p>
-                        </div>
+    <Fragment>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="data">
+          {(provided) => (
+            <div {...provided.droppableProps} ref={provided.innerRef}>
+              <div className="space-y-2 mt-4 relative">
+                {datas.length > 0 ? (
+                  datas.map((item, index) => (
+                    <Draggable
+                      key={item.id}
+                      draggableId={item.id}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <div
+                          {...provided.draggableProps}
+                          ref={provided.innerRef}
+                          className="flex items-center bg-indigo-50  rounded-lg text-sm  p-3"
+                        >
+                          <div {...provided.dragHandleProps}>
+                            <Grip className="h-4 w-4 cursor-pointer mr-4 hover:text-blue-600 font-medium" />
+                          </div>
+                          <div className="flex items-center">
+                            <p className="text-sm line-clamp-1">
+                              <span className="font-medium">
+                                {item.type} :{" "}
+                              </span>
+                              {item.title}
+                            </p>
+                          </div>
 
-                        <div className="ml-auto">
-                          <Pencil
-                            className="h-4 w-4 cursor-pointer hover:text-blue-600"
-                            onClick={() => onEdit(item.id, item.type)}
-                          />
+                          <div className="absolute right-4 flex gap-2 items-center bg-indigo-50">
+                            <Trash
+                              className="h-4 w-4 cursor-pointer hover:text-blue-600"
+                              onClick={() => setIsDelete(item)}
+                            />
+                            <Pencil
+                              className="h-4 w-4 cursor-pointer hover:text-blue-600"
+                              onClick={() => onEdit(item.id, item.type)}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </Draggable>
-                ))
-              ) : (
-                <div className="mt-4">
-                  <p>No data</p>
-                </div>
-              )}
+                      )}
+                    </Draggable>
+                  ))
+                ) : (
+                  <div className="mt-24 flex-center flex-col">
+                    <FileWarning
+                      size={52}
+                      className="text-slate-700"
+                      strokeWidth={1.5}
+                    />
+                    <p className="mt-2">No data</p>
+                  </div>
+                )}
+              </div>
+              {provided.placeholder}
             </div>
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+          )}
+        </Droppable>
+      </DragDropContext>
+      <ModalDelete
+        isOpen={isDelete !== null}
+        onClose={() => setIsDelete(null)}
+        onConfirm={() => {
+          curriculumMutate(isDelete?.id as string, {
+            onSuccess: () => {
+              router.refresh();
+              setIsDelete(null);
+              toast.success("Curriculum deleted successfully");
+            },
+            onError: (error: Error) => {
+              console.log(error);
+              ResponseErrorAxios(error);
+            },
+          });
+        }}
+        loading={isPending}
+        desc={`Are you sure you want to delete ${isDelete?.title}?`}
+      />
+    </Fragment>
   );
 };
 

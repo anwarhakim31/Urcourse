@@ -21,7 +21,7 @@ const TableSkeleton = <T,>({
 }) => {
   return (
     <>
-      <div className="h-[calc(100vh-300px)] overflow-auto border rounded-md border-slate-200">
+      <div className="h-[calc(100vh-300px)] overflow-hidden border rounded-md border-slate-200">
         <Table className="overflow-hidden" defaultValue={"true"}>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

@@ -30,15 +30,15 @@ export const ModalDelete: React.FC<AlertModalProps> = ({
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Apakah anda yakin?</AlertDialogTitle>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription className="">{desc}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={loading} onClick={onClose}>
-            Batal
+            Cancel
           </AlertDialogCancel>
           <AlertDialogAction disabled={loading} onClick={onConfirm}>
-            Lanjut
+            Continue
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -1,10 +1,27 @@
 import SectionWrapper from "@/components/Layouts/section-wrapper";
 import ModuleCourseForm from "@/components/views/admin/courses/curriculum/module/module-course-form";
+import { db } from "@/lib/db";
+import { Module } from "@/types/model";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import React from "react";
 
-const CourseModulePage = ({ params }: { params: { courseId: string } }) => {
+const CourseModulePage = async ({
+  params,
+}: {
+  params: { courseId: string; moduleId: string };
+}) => {
+  if (!params.moduleId) return notFound();
+
+  const currentModule = await db.module.findUnique({
+    where: {
+      id: params.moduleId,
+    },
+  });
+
+  if (!currentModule) return notFound();
+
   return (
     <SectionWrapper isScroll={true}>
       <Link
@@ -15,7 +32,11 @@ const CourseModulePage = ({ params }: { params: { courseId: string } }) => {
         Back To Curriculum
       </Link>
 
-      <ModuleCourseForm courseId={params.courseId} />
+      <ModuleCourseForm
+        module={currentModule as Module}
+        courseId={params.courseId}
+        moduleId={params.moduleId}
+      />
     </SectionWrapper>
   );
 };

@@ -5,17 +5,20 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-const useCreateModule = (id: string) => {
+const usePatchModule = (courseId: string, moduleId: string) => {
   const router = useRouter();
   return useMutation({
     mutationFn: async (data: Course) => {
-      const res = await instance.post(`/courses/${id}/curriculum/module`, data);
+      const res = await instance.patch(
+        `/courses/${courseId}/curriculum/module?moduleId=${moduleId}`,
+        data
+      );
       return res.data;
     },
     onSuccess: () => {
-      toast.success("Module created successfully");
+      toast.success("Module updated successfully");
 
-      router.push("/admin/course/" + id + "/curriculum");
+      router.push("/admin/course/" + courseId + "/curriculum");
       router.refresh();
     },
     onError: (error: Error) => {
@@ -24,4 +27,4 @@ const useCreateModule = (id: string) => {
   });
 };
 
-export default useCreateModule;
+export default usePatchModule;

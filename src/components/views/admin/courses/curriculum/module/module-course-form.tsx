@@ -10,26 +10,23 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { LoadingButton } from "@/components/ui/loading-button";
 import useCreateModule from "@/hooks/course/module/useCreateModule";
-import { ResponseErrorAxios } from "@/lib/response-error";
+import usePatchModule from "@/hooks/course/module/usePatchModule";
 import { Module } from "@/types/model";
-
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { useRouter } from "next/navigation";
-
 import { useFieldArray, useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
 
 interface PropsType {
   module?: Module;
   courseId: string;
+  moduleId?: string;
 }
 
 const formSchema = z.object({
   title: z.string().nonempty({ message: "title is required" }),
-  video: z.string().optional(),
-  description: z.string().optional(),
+  video: z.string().nullable().optional(),
+  description: z.string().nullable().optional(),
   isFree: z.boolean().optional(),
   resource: z
     .array(
@@ -41,18 +38,19 @@ const formSchema = z.object({
     .optional(),
 });
 
-const ModuleCourseForm = ({ module, courseId: id }: PropsType) => {
+const ModuleCourseForm = ({ module, courseId, moduleId }: PropsType) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: module?.title || "",
-      description: module?.description,
-      video: module?.video,
+      description: module?.description || "",
+      video: module?.video || "",
       isFree: module?.isFree || false,
       resource: module?.resource || [],
     },
     shouldFocusError: true,
   });
+
   const router = useRouter();
 
   const field = useFieldArray({
@@ -60,20 +58,16 @@ const ModuleCourseForm = ({ module, courseId: id }: PropsType) => {
     name: "resource",
   });
 
-  const { mutate, isPending } = useCreateModule(id);
+  const { mutate: mutateCreate, isPending: isPendingCreate } =
+    useCreateModule(courseId);
+  const { mutate: mutatePatch, isPending: isPendingPatch } = usePatchModule(
+    courseId,
+    moduleId as string
+  );
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    mutate(data, {
-      onSuccess: () => {
-        toast.success("Module created successfully");
-
-        router.push("/admin/course/" + id + "/curriculum");
-        router.refresh();
-      },
-      onError: (error: Error) => {
-        ResponseErrorAxios(error);
-      },
-    });
+    if (!moduleId) return mutateCreate(data);
+    else return mutatePatch(data);
   };
 
   return (
@@ -142,7 +136,7 @@ const ModuleCourseForm = ({ module, courseId: id }: PropsType) => {
           <Button
             variant={"outline"}
             type="button"
-            disabled={isPending}
+            disabled={isPendingCreate || isPendingPatch}
             className="w-full md:max-w-[150px]"
             onClick={() => router.back()}
           >
@@ -150,8 +144,8 @@ const ModuleCourseForm = ({ module, courseId: id }: PropsType) => {
           </Button>
 
           <LoadingButton
-            loading={isPending}
-            disabled={isPending}
+            loading={isPendingCreate || isPendingPatch}
+            disabled={isPendingCreate || isPendingPatch}
             type="submit"
             className="w-full md:max-w-[150px]"
           >

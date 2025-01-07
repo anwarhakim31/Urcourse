@@ -72,3 +72,44 @@ export async function POST(
     return ResponseErrorApi(500, "Internal Server Error");
   }
 }
+
+export async function PATCH(request: NextRequest) {
+  try {
+    const token = await verifyToken(request, true);
+
+    if (token instanceof NextResponse) {
+      return token;
+    }
+    const moduleId = request.nextUrl.searchParams.get("moduleId");
+
+    const { title, description, video, isFree, resource } =
+      await request.json();
+
+    const newModule = await db.module.update({
+      where: {
+        id: moduleId as string,
+      },
+      data: {
+        title,
+        description,
+        video,
+        isFree,
+      },
+    });
+
+    if (resource?.length > 0) {
+      await db.resource.createMany({
+        data: resource.map((item: { name: string; file: string }) => ({
+          name: item.name,
+          file: item.file,
+          moduleId: newModule.id,
+        })),
+      });
+    }
+
+    return NextResponse.json(newModule);
+  } catch (error) {
+    console.log(`[errModule]`, error);
+    return ResponseErrorApi(500, "Internal Server Error");
+  }
+}

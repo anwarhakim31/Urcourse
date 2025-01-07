@@ -12,10 +12,10 @@ const SectionWrapper = ({
     <Fragment>
       {isScroll ? (
         <ScrollArea className=" h-[calc(100vh-3.6rem)] ">
-          <section className="p-8">{children}</section>
+          <section className="p-4 w-full md:p-8">{children}</section>
         </ScrollArea>
       ) : (
-        <section className="h-[calc(100vh-3.6rem)] p-8 overflow-hidden">
+        <section className="p-4 h-[calc(100vh-3.6rem)] md:p-8">
           {children}
         </section>
       )}

@@ -29,6 +29,7 @@ import { LoadingButton } from "@/components/ui/loading-button";
 import { toast } from "sonner";
 import { ResponseErrorAxios } from "@/lib/response-error";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function ModalAddCourse() {
   const [open, setOpen] = React.useState(false);
@@ -93,12 +94,14 @@ function ProfileForm({
   });
   const router = useRouter();
   const { mutate, isPending } = useCreateCourse();
+  const query = useQueryClient();
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     mutate(data, {
       onSuccess: (res) => {
         toast.success(res.message);
         router.push("/admin/course/" + res.data.id + "/basic");
+        query.invalidateQueries({ queryKey: ["course"] });
         setOpen(false);
       },
       onError: (error: Error) => {
@@ -125,9 +128,9 @@ function ProfileForm({
           type="submit"
           disabled={isPending}
           loading={isPending}
-          className="mt-6 w-full md:w-fit"
+          className="mt-6 w-full md:w-[150px]"
         >
-          Save changes
+          Create
         </LoadingButton>
       </form>
     </Form>
