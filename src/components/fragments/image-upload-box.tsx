@@ -26,7 +26,7 @@ export default function ImageUploadBox({
         <div
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
-          className="relative w-full h-[250px]  rounded-md  border border-dashed mt-2 border-slate-300 overflow-hidden"
+          className="relative w-full h-[250px]  rounded-md  border border-dashed mt-2 border-slate-300 overflow-hidden flex-center"
         >
           {hover && (
             <button
@@ -43,7 +43,7 @@ export default function ImageUploadBox({
             height={200}
             alt="Uploaded image"
             priority
-            className="w-full h-[250px] "
+            className="w-auto h-[250px] bg-contain "
           />
         </div>
       ) : (

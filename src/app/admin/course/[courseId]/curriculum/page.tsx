@@ -2,7 +2,7 @@ import SectionWrapper from "@/components/Layouts/section-wrapper";
 import CurriculumListView from "@/components/views/admin/courses/curriculum/curriculum-list-view";
 import NavigationCourse from "@/components/views/admin/courses/navigation-course";
 import { db } from "@/lib/db";
-import { requiredFieldCourse } from "@/utils/helpers";
+
 import { Course } from "@prisma/client";
 import { BookText, NotebookPen } from "lucide-react";
 import Link from "next/link";
@@ -50,9 +50,6 @@ const CuriculumCoursePage = async ({
   if (!course) {
     return redirect("/error");
   }
-  const { complatedField, totalField } = requiredFieldCourse(course as Course);
-
-  console.log(complatedField, totalField);
 
   return (
     <SectionWrapper>

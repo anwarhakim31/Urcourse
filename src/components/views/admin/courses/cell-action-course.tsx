@@ -64,7 +64,12 @@ const CellActionCourse: React.FC<CellActionProps> = ({ data }) => {
           <DropdownMenuLabel>Action</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem className="cursor-pointer">
-            <Link href={`/admin/course/${data.id}/basic`}>Edit</Link>
+            <Link
+              href={`/admin/course/${data.id}/basic`}
+              className="w-full h-full"
+            >
+              Edit
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setIsDeleting(true)}

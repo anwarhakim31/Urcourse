@@ -44,6 +44,7 @@ export async function POST(
         position: position + 1,
         isFree,
         curriculumId: course.curriculum?.id as string,
+        isPublished: title && description && video ? true : false,
       },
     });
 
@@ -94,6 +95,7 @@ export async function PATCH(request: NextRequest) {
         description,
         video,
         isFree,
+        isPublished: title && description && video ? true : false,
       },
     });
 

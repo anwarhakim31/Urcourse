@@ -1,10 +1,16 @@
+"use client";
 import React from "react";
 import { FormControl, FormItem, FormLabel, FormMessage } from "../ui/form";
-import ReactPlayer from "react-player";
+
 import { UploadDropzone } from "@/utils/uploadthing";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const ReactPlayer = dynamic(() => import("react-player/lazy"), {
+  ssr: false,
+});
 
 const FileFormControl = ({
   field,

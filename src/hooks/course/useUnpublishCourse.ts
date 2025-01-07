@@ -1,19 +1,19 @@
 import { instance } from "@/lib/interceptor";
 import { ResponseErrorAxios } from "@/lib/response-error";
 import { useMutation } from "@tanstack/react-query";
-
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-const useReorder = () => {
+const useUnpublishCourse = (id: string) => {
+  const router = useRouter();
   return useMutation({
-    mutationFn: async (
-      data: { id: string; position: number; type: string }[]
-    ) => {
-      const res = await instance.patch("/courses/reorder", data);
+    mutationFn: async () => {
+      const res = await instance.post(`/courses/${id}/unpublish`);
       return res.data;
     },
     onSuccess: () => {
-      toast.success("Course updated successfully");
+      toast.success("Course unpublished successfully");
+      router.refresh();
     },
     onError: (error: Error) => {
       ResponseErrorAxios(error);
@@ -21,4 +21,4 @@ const useReorder = () => {
   });
 };
 
-export default useReorder;
+export default useUnpublishCourse;

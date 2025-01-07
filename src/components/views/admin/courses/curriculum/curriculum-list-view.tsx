@@ -7,7 +7,7 @@ import {
   DropResult,
 } from "@hello-pangea/dnd";
 import { FileWarning, Grip, Pencil, Trash } from "lucide-react";
-import useReorder from "@/hooks/course/useReorder";
+import useReorder from "@/hooks/course/curriculum/useReorder";
 import { useRouter } from "next/navigation";
 import { ModalDelete } from "@/components/fragments/modal-delete";
 import useDeleteCurriculumList from "@/hooks/course/curriculum/useDeleteCurriculumList";

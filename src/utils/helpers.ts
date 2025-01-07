@@ -1,4 +1,4 @@
-import { Course } from "@/types/model";
+import { Course, Module } from "@/types/model";
 
 export const splitFullName = (fullname: string) => {
   const split = fullname.split(" ");
@@ -15,13 +15,36 @@ export const requiredFieldCourse = (course: Course) => {
     course.price,
     course.image,
     course.categoryId,
+    course.level,
+    (course.curriculum &&
+      (course.curriculum.exercise?.length || 0) +
+        (course.curriculum.module?.length || 0) >
+        0 &&
+      course?.curriculum?.exercise.some((exercise) => exercise.isPublished)) ||
+      course?.curriculum?.module.some((module) => module.isPublished),
   ];
 
   const totalField = requiredField.length;
   const complatedField = requiredField.filter(Boolean).length;
+  const complated = complatedField === totalField;
 
   return {
     totalField,
     complatedField,
+    complated,
+  };
+};
+
+export const requiredFieldModule = (module: Module) => {
+  const requiredField = [module.title, module.description, module.video];
+
+  const totalField = requiredField.length;
+  const complatedField = requiredField.filter(Boolean).length;
+  const complated = complatedField === totalField;
+
+  return {
+    totalField,
+    complatedField,
+    complated,
   };
 };
