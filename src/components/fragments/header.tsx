@@ -10,7 +10,7 @@ const Header = () => {
   const session = useSession();
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50  border-b">
+    <div className="fixed top-0 left-0 w-full z-50  border-b bg-white">
       <header className="container h-14 flex items-center justify-between">
         <LogoComponent />
         {session.data?.user ? (

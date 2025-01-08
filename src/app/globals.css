@@ -130,3 +130,22 @@ html,
   border-top-left-radius: 6px;
   border-color: hsl(214.3 31.8% 91.4%);
 }
+
+.swiper-slide {
+  z-index: 1; /* Default untuk semua slide */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.swiper-slide-active {
+  z-index: 10; /* Slide aktif memiliki prioritas tertinggi */
+  transform: scale(1);
+  opacity: 1;
+  border-radius: 20px;
+}
+.swiper-slide-next,
+.swiper-slide-prev {
+  transform: scale(
+    0.8
+  ); /* Skala lebih kecil untuk slide berikutnya atau sebelumnya */
+  opacity: 0.5;
+  z-index: 5;
+}
