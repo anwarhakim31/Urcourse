@@ -1,6 +1,7 @@
 export interface Course {
   id?: string;
   title: string;
+  category?: Category;
   categoryId?: string | null;
   description?: string | null;
   image?: string | null;

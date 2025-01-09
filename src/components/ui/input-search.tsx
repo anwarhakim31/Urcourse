@@ -3,6 +3,7 @@ import React from "react";
 import { Input } from "./input";
 import { Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const InputSearch = ({ ...props }: React.ComponentProps<typeof Input>) => {
   const pathname = usePathname();
@@ -17,7 +18,7 @@ const InputSearch = ({ ...props }: React.ComponentProps<typeof Input>) => {
       const param = new URLSearchParams(searchParams);
 
       if (value) {
-        param.set("page", "1");
+        if (pathname !== "/course") param.set("page", "1");
         param.set("search", value);
       } else {
         if (value === "") param.delete("search");
@@ -42,7 +43,7 @@ const InputSearch = ({ ...props }: React.ComponentProps<typeof Input>) => {
         type="search"
         onChange={handleSearch}
         value={search}
-        className="pl-10 rounded-lg text-sm"
+        className={cn("pl-10 rounded-lg text-sm ", props.className)}
         {...props}
       />
     </div>

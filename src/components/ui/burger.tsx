@@ -7,7 +7,7 @@ const Burger = ({ open }: { open: boolean }) => {
       <div
         className={cn(
           "w-full h-0.5 bg-slate-600 trnsform duration-200 ease-in-out",
-          open && "-rotate-45"
+          open && "-rotate-45 translate-y-2"
         )}
       ></div>
       <div
@@ -19,7 +19,7 @@ const Burger = ({ open }: { open: boolean }) => {
       <div
         className={cn(
           "w-1/2 h-0.5 group-hover:w-full bg-slate-600 transform duration-200 ease-in-out",
-          open && "w-full rotate-45"
+          open && "w-full rotate-45 -translate-y-1"
         )}
       ></div>
     </div>

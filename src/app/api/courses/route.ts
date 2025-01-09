@@ -125,7 +125,10 @@ export async function PATCH(req: NextRequest) {
       return token;
     }
     const id = req.nextUrl.searchParams.get("id") || "";
-    const data = await req.json();
+    const { title, description, categoryId, level, price, image } =
+      await req.json();
+
+    console.log(description);
 
     if (!id) {
       return ResponseErrorApi(400, "ID is required");
@@ -146,7 +149,23 @@ export async function PATCH(req: NextRequest) {
         id,
       },
       data: {
-        ...data,
+        title,
+        description:
+          (description as string) === "<p><br></p>" ? "" : description,
+        categoryId,
+        level,
+        price,
+        image,
+        isPublished:
+          !title ||
+          description === "<p><br></p>" ||
+          !image ||
+          !price ||
+          !categoryId ||
+          !level ||
+          !price
+            ? false
+            : isExist.isPublished,
       },
     });
 

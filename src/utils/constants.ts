@@ -23,3 +23,14 @@ export const levelArray = [
   { id: "Intermediate", value: "Intermediate" },
   { id: "Advanced", value: "Advanced" },
 ];
+
+export const navItem = [
+  {
+    name: "Home",
+    path: "/",
+  },
+  {
+    name: "Course",
+    path: "/course",
+  },
+];

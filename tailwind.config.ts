@@ -11,14 +11,16 @@ const config: Config = {
   theme: {
     screens: {
       xs: "320px",
-      sm: "480px",
+      sm: "567px",
       md: "768px",
-      lg: "976px",
-      xl: "1440px",
+      lg: "990px",
+      xl: "1180px",
+      "2xl": "1280",
     },
     container: {
       center: true,
       screens: {
+        lg: "990px",
         xl: "1200px",
         "2xl": "1280px",
       },

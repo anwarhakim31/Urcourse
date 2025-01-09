@@ -79,6 +79,7 @@ const BasicCourseForm = ({ course, category }: PropsType) => {
             name="title"
             render={({ field }) => (
               <DataFormControl
+                required={true}
                 field={field}
                 label="Title"
                 placeholder="Ex: Web development"
@@ -99,6 +100,7 @@ const BasicCourseForm = ({ course, category }: PropsType) => {
                   }))}
                   isLoading={false}
                   placeholder="Select Category"
+                  required
                 />
               )}
             />

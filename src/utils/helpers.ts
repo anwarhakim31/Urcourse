@@ -48,3 +48,10 @@ export const requiredFieldModule = (module: Module) => {
     complated,
   };
 };
+
+export const formatCurrency = (value: number) => {
+  return Intl.NumberFormat("id-Id", {
+    style: "currency",
+    currency: "IDR",
+  }).format(value);
+};
