@@ -28,8 +28,34 @@ export async function GET(req: NextRequest) {
       },
       include: {
         category: true,
+        curriculum: {
+          include: {
+            module: true,
+            exercise: true,
+          },
+        },
       },
     });
+
+    // const course = courses.map((course) => {
+    //   const modulec = course?.curriculum?.module.map((module) =>
+    //     module.isPublished ? module : null
+    //   );
+    //   const exercise = course?.curriculum?.exercise.map((exercise) =>
+    //     exercise.isPublished ? exercise : null
+    //   );
+
+    //   const curriculumList = [...(modulec || []), ...(exercise || [])].sort(
+    //     (a, b) => {
+    //       if (a && a.position != null && b && b.position != null) {
+    //         return a.position - b.position;
+    //       }
+    //       return 0;
+    //     }
+    //   );
+
+    //   return { ...course, modulec, exercise, firstList: curriculumList[0] };
+    // });
 
     return NextResponse.json({
       success: true,

@@ -10,12 +10,9 @@ import useLogin from "@/hooks/auth/useLogin";
 import DataFormControl from "@/components/fragments/data-form-control";
 
 const formSchema = z.object({
-  email: z
-    .string()
-    .nonempty({
-      message: "Email is required",
-    })
-    .email({ message: "Invalid email address" }),
+  email: z.string().nonempty({
+    message: "Email is required",
+  }),
   password: z.string().nonempty({ message: "Password is required" }),
 });
 

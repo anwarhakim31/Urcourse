@@ -4,12 +4,15 @@ import { useMutation } from "@tanstack/react-query";
 
 import { toast } from "sonner";
 
-const useReorder = () => {
+const useReorder = (id: string) => {
   return useMutation({
     mutationFn: async (
-      data: { id: string; position: number; type: string }[]
+      data: { id: string; position: number; type: string; courseId: string }[]
     ) => {
-      const res = await instance.patch("/courses/curriculum/reorder", data);
+      const res = await instance.patch(
+        `/courses/${id}/curriculum/reorder`,
+        data
+      );
       return res.data;
     },
     onSuccess: () => {

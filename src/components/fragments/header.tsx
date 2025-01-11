@@ -1,11 +1,14 @@
 "use client";
 import React, { Fragment } from "react";
 import LogoComponent from "../ui/logo-component";
-
+import { useSession } from "next-auth/react";
 import Burger from "../ui/burger";
 import Navbar from "./navbar";
-
+import Image from "next/image";
+import { splitFullName } from "@/utils/helpers";
+import Link from "next/link";
 const Header = () => {
+  const session = useSession();
   const [open, setOpen] = React.useState(false);
   const [pending, setPending] = React.useState(false);
 
@@ -26,16 +29,46 @@ const Header = () => {
 
   return (
     <Fragment>
-      <div className="fixed top-0 left-0 w-full z-50  border-b bg-white">
-        <header className="container h-14 flex items-center justify-between  gap-4">
+      <div className="fixed top-0 left-0 w-full  border-b bg-white z-50">
+        <header className="container  h-14 flex items-center justify-between  gap-4">
           <LogoComponent />
-          <nav className="hidden md:block">
-            <Navbar onClose={handleToggle} />
-          </nav>
 
-          <button onClick={handleToggle} className="block md:hidden">
-            <Burger open={open} />
-          </button>
+          <div className="flex items-center gap-4">
+            <nav className="hidden md:block">
+              <Navbar onClose={handleToggle} />
+            </nav>
+            {session.data?.user ? (
+              <Link
+                href="/profile"
+                className="w-9 h-9 rounded-full overflow-hidden bg-gray-200"
+              >
+                {session.data.user.photo ? (
+                  <Image
+                    src={session.data.user.photo || ""}
+                    width={255}
+                    height={255}
+                    alt={session?.data?.user?.fullname || ""}
+                    className=""
+                    priority
+                  />
+                ) : (
+                  <div className="w-full h-full flex-center bg-indigo-700">
+                    <span className="text-sm font-semibold text-white">
+                      {splitFullName(session?.data?.user?.fullname || "")}
+                    </span>
+                  </div>
+                )}
+              </Link>
+            ) : (
+              <Link href={"/login"} className="btn px-4 py-1.5 w-full">
+                Login
+              </Link>
+            )}
+
+            <button onClick={handleToggle} className="block md:hidden">
+              <Burger open={open} />
+            </button>
+          </div>
         </header>
       </div>
       {open && (

@@ -25,6 +25,10 @@ export async function DELETE(
       where: {
         courseId: params.params.courseId,
       },
+      include: {
+        module: true,
+        exercise: true,
+      },
     });
 
     if (!curriculum) {
@@ -48,6 +52,17 @@ export async function DELETE(
         curriculumId: curriculum.id,
       },
     });
+
+    if (curriculum.module.length === 0 && curriculum.exercise.length === 0) {
+      await db.course.update({
+        where: {
+          id: params.params.courseId,
+        },
+        data: {
+          isPublished: false,
+        },
+      });
+    }
 
     return NextResponse.json({
       success: true,

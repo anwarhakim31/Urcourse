@@ -94,7 +94,7 @@ html,
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-slate-50 text-foreground;
   }
 }
 
@@ -108,6 +108,10 @@ html,
   .popover-content-width-full {
     width: var(--radix-popover-trigger-width);
     max-height: var(--radix-popover-content-available-height);
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
 }
 

@@ -12,6 +12,10 @@ const CourseCardSkeleton = () => {
           <Skeleton className="font-medium truncate w-3/4 h-5"></Skeleton>
           <Skeleton className="font-medium truncate w-1/2 h-4 mt-2"></Skeleton>
           <Skeleton className="font-medium truncate w-1/2 h-5 mt-2"></Skeleton>
+          <div className="flex justify-between items-center mt-3">
+            <Skeleton className=" w-1/4 h-4"></Skeleton>
+            <Skeleton className=" w-1/3 h-5"></Skeleton>
+          </div>
         </div>
       </div>
     </div>

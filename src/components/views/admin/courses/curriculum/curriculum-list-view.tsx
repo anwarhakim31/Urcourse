@@ -41,7 +41,7 @@ const CurriculumListView = ({
 
   const { mutate: curriculumMutate, isPending } =
     useDeleteCurriculumList(courseId);
-  const { mutate: reorderMutate } = useReorder();
+  const { mutate: reorderMutate } = useReorder(courseId);
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -60,6 +60,7 @@ const CurriculumListView = ({
       id: section.id,
       position: items.findIndex((item) => item.id === section.id) + 1,
       type: section.type,
+      courseId: courseId,
     }));
 
     reorderMutate(UpdateData);

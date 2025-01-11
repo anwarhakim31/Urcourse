@@ -13,8 +13,6 @@ export async function PATCH(req: NextRequest) {
 
     const data = await req.json();
 
-    console.log(data);
-
     for (const item of data) {
       if (item.type === "module") {
         await db.module.update({
@@ -36,6 +34,15 @@ export async function PATCH(req: NextRequest) {
         });
       }
     }
+
+    await db.curriculum.update({
+      where: {
+        courseId: data[0].courseId,
+      },
+      data: {
+        lastPosition: data.length - 1,
+      },
+    });
 
     return NextResponse.json({
       success: true,

@@ -1,14 +1,12 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { splitFullName } from "@/utils/helpers";
+
 import { navItem } from "@/utils/constants";
 import { cn } from "@/lib/utils";
-import { useSession } from "next-auth/react";
+
 import { usePathname } from "next/navigation";
 
 const Navbar = ({ onClose }: { onClose?: () => void }) => {
-  const session = useSession();
   const path = usePathname();
 
   return (
@@ -28,38 +26,6 @@ const Navbar = ({ onClose }: { onClose?: () => void }) => {
           {item.name}
         </Link>
       ))}
-      {session.data?.user ? (
-        <Link
-          href="/profile"
-          className="w-9 h-9 rounded-full overflow-hidden bg-gray-200"
-        >
-          {session.data.user.photo ? (
-            <Image
-              src={session.data.user.photo || ""}
-              width={255}
-              height={255}
-              alt={session?.data?.user?.fullname || ""}
-              className=""
-              priority
-            />
-          ) : (
-            <div className="w-full h-full flex-center bg-indigo-700">
-              <span className="text-sm font-semibold text-white">
-                {splitFullName(session?.data?.user?.fullname || "")}
-              </span>
-            </div>
-          )}
-        </Link>
-      ) : (
-        <div className="flex items-center flex-col  md:flex-row gap-4 w-full p-4">
-          <Link href={"/login"} className="btn px-4 py-1.5 w-full">
-            Login
-          </Link>
-          <Link href={"/register"} className="btn px-4 py-1.5 w-full">
-            Register
-          </Link>
-        </div>
-      )}
     </div>
   );
 };

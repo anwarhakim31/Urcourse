@@ -92,10 +92,12 @@ export async function PATCH(request: NextRequest) {
       },
       data: {
         title,
-        description,
+        description:
+          (description as string) === "<p><br></p>" ? "" : description,
         video,
         isFree,
-        isPublished: title && description && video ? true : false,
+        isPublished:
+          title || description === "<p><br></p>" || video ? false : true,
       },
     });
 

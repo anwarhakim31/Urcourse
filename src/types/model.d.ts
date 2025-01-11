@@ -15,6 +15,9 @@ export interface Course {
   isPublished?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  firstList?: {
+    id: string;
+  };
 }
 
 export interface Module {
@@ -50,4 +53,24 @@ export interface Category {
   name: string;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface Purchase {
+  id?: string;
+  userId?: string;
+  courseId?: string;
+  status?: string;
+  price?: number;
+  course?: Course;
+}
+
+export interface Transaction {
+  id: string;
+  purchaseId: string;
+  paymentMethod: string;
+  paymentName: string;
+  xenditCode: string;
+  expired: Date;
+  amount: number;
+  status: string;
 }

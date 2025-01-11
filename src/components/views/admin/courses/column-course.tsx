@@ -6,6 +6,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Course } from "@/types/model";
 
 import CellActionCourse from "./cell-action-course";
+import { formatCurrency } from "@/utils/helpers";
+
+import { Badge } from "@/components/ui/badge";
 
 export const columns: ColumnDef<Course>[] = [
   {
@@ -46,7 +49,7 @@ export const columns: ColumnDef<Course>[] = [
     header: "Price",
     enableHiding: false,
     cell: ({ row }) => (
-      <p>{row.getValue("Price") ? row.getValue("Price") : "-"}</p>
+      <p>{row.original?.price ? formatCurrency(row.original.price) : "-"}</p>
     ),
   },
   {
@@ -64,8 +67,19 @@ export const columns: ColumnDef<Course>[] = [
     },
   },
   {
+    header: () => <p className="text-center">{"Status"}</p>,
     accessorKey: "isPublished",
-    header: "Status",
+    cell: ({ row }) => {
+      return (
+        <div className="flex-center">
+          <Badge
+            variant={row.original?.isPublished ? "default" : "destructive"}
+          >
+            {row.original?.isPublished ? "Published" : "Unpublished"}
+          </Badge>
+        </div>
+      );
+    },
   },
 
   {

@@ -128,8 +128,6 @@ export async function PATCH(req: NextRequest) {
     const { title, description, categoryId, level, price, image } =
       await req.json();
 
-    console.log(description);
-
     if (!id) {
       return ResponseErrorApi(400, "ID is required");
     }

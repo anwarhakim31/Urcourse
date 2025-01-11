@@ -8,7 +8,9 @@ export default function Home() {
   return (
     <>
       <Header />
-      <CarouselView />
+      <main className="bg-[url('/background-top.svg')]  bg-top bg-no-repeat min-h-screen">
+        <CarouselView />
+      </main>
     </>
   );
 }

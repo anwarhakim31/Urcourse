@@ -18,9 +18,11 @@ model User{
   photo String?
   isAdmin Boolean @default(false)
   createdAt DateTime @default(now())
+  purchases Purchase[]
 
   @@map("users")
 }
+
 
 model ResetToken{
   id String @id @default(uuid())
@@ -46,7 +48,7 @@ model Course{
 
   curriculum Curriculum? 
 
-  
+   purchases   Purchase[]
   attachments Attachment[]
 
   createdAt DateTime @default(now())
@@ -70,7 +72,7 @@ model Curriculum{
   lastPosition Int @default(0)
   module Module[]
   exercise Exercise[]
-  progress Progress[]
+  
 
   createdAt DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -90,8 +92,11 @@ model Exercise {
   position Int
   resourse Resource[]
 
+
   curriculumId String
   curriculum  Curriculum @relation(fields: [curriculumId], references: [id], onDelete: Cascade)
+
+  proggress Proggress[] 
 
   createdAt DateTime @default(now())
 }
@@ -111,10 +116,30 @@ model Module{
   curriculumId String
   curriculum  Curriculum @relation(fields: [curriculumId], references: [id], onDelete: Cascade)
 
+  proggress Proggress[] 
+
   isFree Boolean @default(false)
 
   createdAt DateTime @default(now())
 }
+
+
+model Proggress{
+  id String @id @default(uuid())
+  userId String
+
+  moduleId String 
+  module Module @relation(fields: [moduleId],references: [id],onDelete:Cascade)
+
+  exerciseId String 
+  exercise Exercise @relation(fields: [exerciseId],references: [id],onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+ @@unique([userId,moduleId,exerciseId])
+
+}
+
+
 
 
 model MuxData{
@@ -144,19 +169,6 @@ model Resource{
 }
 
 
-model Progress{
-  id String @id @default(uuid())
-  studentId String
-
-  curriculumId String
-  curriculum Curriculum @relation(fields: [curriculumId],references: [id] ,onDelete: Cascade)
-
-  isComplated Boolean @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-}
-
 
 
 model Attachment{
@@ -173,6 +185,52 @@ model Attachment{
   @@index([courseId])
 }
 
+
+model Purchase {
+  id          String         @id @default(uuid())
+  userId      String
+  courseId    String
+  price       Float
+  status      PurchaseStatus
+  createdAt   DateTime      @default(now())
+  transactions Transaction[]
+
+  user   User   @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
+}
+model Transaction {
+  id              String         @id @default(uuid())
+  purchaseId      String
+  paymentMethod   PaymentMethod
+  paymentName     String
+  xenditCode      String         @unique
+  expired         DateTime  
+  amount          Float
+  status          TransactionStatus
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime?
+
+  purchase Purchase @relation(fields: [purchaseId], references: [id])
+}
+
+enum PurchaseStatus {
+  PENDING
+  PAID
+  EXPIRED
+  CANCELLED
+}
+
+enum TransactionStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+enum PaymentMethod {
+  EWALLET
+  VIRTUAL_ACCOUNT
+  OVER_THE_COUNTER
+}
 enum Level {
   Beginner
   Intermediate
