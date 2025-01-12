@@ -18,7 +18,7 @@ const CourseDetailAction = ({ course }: { course: Course }) => {
 
   const handleClick = () => {
     if (!session.data?.user) {
-      return router.push("/login");
+      return router.push("/login?callbackUrl=/course/" + course.id);
     }
 
     mutate(
@@ -44,7 +44,7 @@ const CourseDetailAction = ({ course }: { course: Course }) => {
         onClick={handleClick}
         className={cn(
           "flex items-center gap-2 text-sm mt-8 w-full text-indigo-700 hover:text-indigo-700  ",
-          isPending && "pointer-events-none bg-indigo-600"
+          isPending && "cursor-not-allowed bg-white"
         )}
       >
         <Wallet size={18} />

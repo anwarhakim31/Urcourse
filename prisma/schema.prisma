@@ -201,7 +201,7 @@ model Purchase {
 model Transaction {
   id              String         @id @default(uuid())
   purchaseId      String
-  invoice  String
+  invoice  String?
   paymentMethod   PaymentMethod
   paymentName     String
   xenditCode      String         @unique

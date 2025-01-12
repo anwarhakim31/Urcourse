@@ -33,11 +33,12 @@ export async function POST(req: NextRequest) {
 
       const currentTime = new Date();
       const expirationTime = new Date(currentTime.getTime() + 60 * 60 * 1000);
+      const invoice = `INV-${currentTime.getTime()}`;
 
       const xenditResponse = await axios.post(
         "https://api.xendit.co/callback_virtual_accounts",
         {
-          external_id: `INV-`,
+          external_id: invoice,
           bank_code: paymentName.toUpperCase(),
           name: token.fullname,
           expected_amount: total,
@@ -72,6 +73,7 @@ export async function POST(req: NextRequest) {
           xenditCode: xenditResponse?.data?.account_number,
           status: "PENDING",
           expired: expirationTime,
+          invoice: invoice,
         },
       });
 
