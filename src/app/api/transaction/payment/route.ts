@@ -60,8 +60,6 @@ export async function POST(req: NextRequest) {
         return ResponseErrorApi(500, xenditResponse.data.message);
       }
 
-      console.log(xenditResponse.data);
-
       const paymentMethod = formatPaymentMethod(paymentType as string);
 
       const transaction = await db.transaction.create({

@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   try {
     const token = await verifyToken(req);
     const { purchaseId, paymentType, paymentName } = await req.json();
-    console.log(purchaseId, paymentType, paymentName);
+
     if (token instanceof NextResponse) {
       return token;
     }
@@ -32,14 +32,13 @@ export async function POST(req: NextRequest) {
       );
 
       const currentTime = new Date();
-      const expirationTime = new Date(
-        currentTime.getTime() + 4 * 60 * 60 * 1000
-      );
+      const expirationTime = new Date(currentTime.getTime() + 1 * 60 * 1000);
+      const invoice = `INV-${currentTime.getTime()}`;
 
       const xenditResponse = await axios.post(
         "https://api.xendit.co/callback_virtual_accounts",
         {
-          external_id: `INV-`,
+          external_id: invoice,
           bank_code: paymentName.toUpperCase(),
           name: token.fullname,
           expected_amount: total,
@@ -71,7 +70,8 @@ export async function POST(req: NextRequest) {
           paymentName: paymentName,
           xenditCode: xenditResponse?.data?.account_number,
           status: "PENDING",
-          expired: expirationTime,
+          expired: xenditResponse?.data?.expiration_date,
+          invoice: invoice,
         },
       });
 

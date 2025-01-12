@@ -7,18 +7,21 @@ import { Course } from "@/types/model";
 
 import { Wallet } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 const CourseDetailAction = ({ course }: { course: Course }) => {
   const session = useSession();
   const router = useRouter();
-
+  const pathname = usePathname();
   const { mutate, isPending } = useCreatePurchase();
 
   const handleClick = () => {
     if (!session.data?.user) {
-      return router.push("/login?callbackUrl=/course/" + course.id);
+      return router.push(
+        "/login?callbackUrl=" +
+          encodeURIComponent(process.env.NEXT_PUBLIC_DOMAIN + pathname)
+      );
     }
 
     mutate(

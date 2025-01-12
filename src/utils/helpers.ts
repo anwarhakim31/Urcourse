@@ -63,7 +63,7 @@ export const calculateFeeAndPPN = (
   paymentMethod: string
 ): { tax: number; total: number } => {
   const fees = {
-    virtualAccount: 4000, // Biaya tetap
+    virtualAccount: 5000, // Biaya tetap
     alfamart: 5000, // Biaya tetap
     indomaret: 7000, // Biaya tetap
     dana: 0.015, // Persentase 1.5%

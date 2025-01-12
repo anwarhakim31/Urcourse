@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   try {
     const payload = await req.json();
 
-    console.log(payload);
+    console.log({ payload });
     if (!payload) {
       return NextResponse.json(
         { message: "No payload received" },
