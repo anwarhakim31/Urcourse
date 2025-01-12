@@ -1,4 +1,5 @@
 // app/api/webhook/xendit/route.ts
+import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
 // Fungsi untuk menangani POST request
@@ -6,6 +7,7 @@ export async function POST(req: Request) {
   try {
     const payload = await req.json();
 
+    console.log(payload);
     if (!payload) {
       return NextResponse.json(
         { message: "No payload received" },
@@ -17,7 +19,14 @@ export async function POST(req: Request) {
     const transactionId = payload.external_id;
 
     if (paymentStatus === "SUCCESS") {
-      // Pembayaran berhasil
+      await db.transaction.update({
+        where: {
+          id: transactionId,
+        },
+        data: {
+          status: "PAID",
+        },
+      });
       console.log(`Payment Success for Transaction: ${transactionId}`);
     } else if (paymentStatus === "FAILED") {
       // Pembayaran gagal
