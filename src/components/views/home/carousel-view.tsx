@@ -19,7 +19,7 @@ const CarouselView = () => {
   if (loading) {
     return (
       <div className=" w-full  pt-28  flex-center ">
-        <div className="w-full p-2 aspect-[16/8] bg-white max-h-[268px] rounded-3xl  md:w-[75vw] lg:h-[268px]  "></div>
+        <div className="w-full p-2 aspect-[16/8] bg-white max-h-[268px] rounded-3xl  md:w-[50vw] lg:h-[268px]  "></div>
       </div>
     );
   }

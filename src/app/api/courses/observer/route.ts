@@ -2,9 +2,11 @@ import { db } from "@/lib/db";
 import { ResponseErrorApi } from "@/lib/response-error";
 import { NextRequest, NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   try {
-    const searchParams = req.nextUrl.searchParams;
+    const searchParams = new URL(req.url).searchParams;
 
     const search = searchParams.get("search") || "";
     const category = searchParams.get("category");

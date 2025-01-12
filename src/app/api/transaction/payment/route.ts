@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   try {
     const token = await verifyToken(req);
     const { purchaseId, paymentType, paymentName } = await req.json();
-    console.log(purchaseId, paymentType, paymentName);
+
     if (token instanceof NextResponse) {
       return token;
     }
@@ -32,9 +32,7 @@ export async function POST(req: NextRequest) {
       );
 
       const currentTime = new Date();
-      const expirationTime = new Date(
-        currentTime.getTime() + 4 * 60 * 60 * 1000
-      );
+      const expirationTime = new Date(currentTime.getTime() + 60 * 60 * 1000);
 
       const xenditResponse = await axios.post(
         "https://api.xendit.co/callback_virtual_accounts",
@@ -60,6 +58,8 @@ export async function POST(req: NextRequest) {
       if (xenditResponse.status !== 200) {
         return ResponseErrorApi(500, xenditResponse.data.message);
       }
+
+      console.log(xenditResponse.data);
 
       const paymentMethod = formatPaymentMethod(paymentType as string);
 

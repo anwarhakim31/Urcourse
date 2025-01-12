@@ -115,3 +115,78 @@ export const formatPaymentMethod = (value: string) => {
       return "EWALLET";
   }
 };
+
+export const formatPaymentWith = (value: string) => {
+  switch (value) {
+    case "BCA":
+      return {
+        name: "VA BCA",
+        image: "/payment/bca.png",
+      };
+    case "MANDIRI":
+      return {
+        name: "VA Mandiri",
+        image: "/payment/mandiri.png",
+      };
+    case "BNI":
+      return {
+        name: "VA BNI",
+        image: "/payment/bni.png",
+      };
+    case "BRI":
+      return {
+        name: "VA BRI",
+        image: "/payment/bri.png",
+      };
+    case "BSI":
+      return {
+        name: "VA BSI",
+        image: "/payment/bsi.png",
+      };
+    case "PERMATA":
+      return {
+        name: "VA Permata",
+        image: "/payment/permata.png",
+      };
+    case "ALFAMART":
+      return {
+        name: "Alfamart",
+        image: "/payment/alfamart.png",
+      };
+    case "INDOMARET":
+      return {
+        name: "Indomaret",
+        image: "/payment/indomaret.png",
+      };
+    case "DANA":
+      return {
+        name: "Dana",
+        image: "/payment/dana.png",
+      };
+    case "OVO":
+      return {
+        name: "OVO",
+        image: "/payment/ovo.png",
+      };
+    case "SHOPEEPAY":
+      return {
+        name: "ShopeePay",
+        image: "/payment/shopeepay.png",
+      };
+    case "LINKAJA":
+      return {
+        name: "LinkAja",
+        image: "/payment/linkaja.png",
+      };
+    case "QRIS":
+      return {
+        name: "QRIS",
+        image: "/payment/qris.png",
+      };
+    default:
+      return {
+        name: "VA Mandiri",
+        image: "/payment/mandiri.png",
+      };
+  }
+};

@@ -2,6 +2,7 @@
 
 import { LoadingButton } from "@/components/ui/loading-button";
 import useCreatePurchase from "@/hooks/purchase/useCreatePurchase";
+import { cn } from "@/lib/utils";
 import { Course } from "@/types/model";
 
 import { Wallet } from "lucide-react";
@@ -41,7 +42,10 @@ const CourseDetailAction = ({ course }: { course: Course }) => {
         disabled={isPending}
         variant={"outline"}
         onClick={handleClick}
-        className="flex items-center gap-2 text-sm mt-8 w-full text-indigo-700 hover:text-indigo-700"
+        className={cn(
+          "flex items-center gap-2 text-sm mt-8 w-full text-indigo-700 hover:text-indigo-700  ",
+          isPending && "pointer-events-none bg-indigo-600"
+        )}
       >
         <Wallet size={18} />
         <span>{isPending ? "Purchasing..." : "Purchase Now"}</span>

@@ -72,5 +72,8 @@ export interface Transaction {
   xenditCode: string;
   expired: Date;
   amount: number;
+  invoice?: string;
   status: string;
+  purchase?: Purchase;
+  createdAt?: Date;
 }

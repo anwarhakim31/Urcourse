@@ -2,7 +2,6 @@ import CoruseDetailView from "@/components/views/course/course-detail/course-det
 import { db } from "@/lib/db";
 import { Course } from "@/types/model";
 
-import { getSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 const DetailPage = async ({ params }: { params: { courseId: string } }) => {
@@ -18,10 +17,6 @@ const DetailPage = async ({ params }: { params: { courseId: string } }) => {
   if (!course) {
     return redirect("/course");
   }
-
-  const user = await getSession();
-
-  console.log(user);
 
   return <CoruseDetailView course={course as Course} />;
 };

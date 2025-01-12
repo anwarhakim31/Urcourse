@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { Transaction } from "@/types/model";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import React, { Fragment } from "react";
+import React, { Fragment, Suspense } from "react";
 
 const PaymentPage = async ({ params }: { params: { paymentId: string } }) => {
   const { paymentId } = params;
@@ -21,6 +21,17 @@ const PaymentPage = async ({ params }: { params: { paymentId: string } }) => {
       id: paymentId,
       status: "PENDING",
     },
+    include: {
+      purchase: {
+        include: {
+          course: {
+            include: {
+              category: true,
+            },
+          },
+        },
+      },
+    },
   });
 
   if (!payment) {
@@ -30,7 +41,9 @@ const PaymentPage = async ({ params }: { params: { paymentId: string } }) => {
   return (
     <Fragment>
       <Header />
-      <PaymentView transaction={payment as Transaction} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <PaymentView transaction={payment as Transaction} />
+      </Suspense>
     </Fragment>
   );
 };

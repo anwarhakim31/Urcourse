@@ -31,7 +31,7 @@ const InputSearch = ({ ...props }: React.ComponentProps<typeof Input>) => {
   };
 
   return (
-    <div className="relative w-full md:max-w-[300px]">
+    <div className="relative w-full bg-white rounded-full md:max-w-[300px]">
       <Search
         width={16}
         height={16}
@@ -43,7 +43,7 @@ const InputSearch = ({ ...props }: React.ComponentProps<typeof Input>) => {
         type="search"
         onChange={handleSearch}
         value={search}
-        className={cn("pl-10 rounded-lg text-sm ", props.className)}
+        className={cn("pl-10 rounded-full bg-white text-sm ", props.className)}
         {...props}
       />
     </div>

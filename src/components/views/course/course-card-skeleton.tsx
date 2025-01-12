@@ -3,7 +3,7 @@ import React from "react";
 
 const CourseCardSkeleton = () => {
   return (
-    <div className="rounded-md  shadow-md flex flex-col overflow-hidden border-slate-300">
+    <div className="rounded-md   flex flex-col overflow-hidden border-slate-300">
       <div className="flex-1">
         <div className="relative w-full aspect-video">
           <Skeleton className="w-full h-full"></Skeleton>

@@ -9,13 +9,12 @@ const CoruseDetailView = ({ course }: { course: Course }) => {
   return (
     <div className="flex flex-col xl:flex-row gap-4">
       <div className="flex-1  my-6 xl:mx-4">
-        <figure className="aspet-video rounded-md border overflow-hidden">
+        <figure className="aspect-video rounded-md border overflow-hidden relative">
           <Image
             src={course.image || ""}
             alt={course.title}
-            width={1000}
-            height={1000}
-            className="w-full h-full"
+            fill
+            className="object-cover"
           />
         </figure>
         <div className="mt-6 p-4 rounded-md border bg-white">

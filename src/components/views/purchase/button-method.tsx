@@ -23,7 +23,14 @@ const ButtonMethod = ({
         method?.name === item?.name && "border-indigo-700 text-indigo-700"
       )}
     >
-      <Image src={item.image} alt={item.name} width={50} height={25} priority />
+      <Image
+        src={item.image}
+        alt={item.name}
+        width={50}
+        height={25}
+        priority
+        className="w-[50px] h-[25px]"
+      />
 
       <span>{item.name}</span>
     </button>

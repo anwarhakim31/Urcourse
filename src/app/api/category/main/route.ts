@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const category = await db.category.findMany({});
+    const category = await db.category.findMany();
 
     return NextResponse.json({
       success: true,
