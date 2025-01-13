@@ -201,15 +201,15 @@ model Purchase {
 model Transaction {
   id              String         @id @default(uuid())
   purchaseId      String
-  invoice  String?
+  invoice  String? @unique
   paymentMethod   PaymentMethod
   paymentName     String
-  xenditCode      String         @unique
+  paymentCode      String        
   expired         DateTime  
   amount          Float
   status          TransactionStatus
   createdAt       DateTime       @default(now())
-  updatedAt       DateTime?
+  updatedAt       DateTime @updatedAt
 
   purchase Purchase @relation(fields: [purchaseId], references: [id])
 }

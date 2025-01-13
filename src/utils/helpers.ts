@@ -61,16 +61,16 @@ export const formatCurrency = (value: number) => {
 export const calculateFeeAndPPN = (
   baseAmount: number,
   paymentMethod: string
-): { tax: number; total: number } => {
+): { tax: number; total: number; ppn: number } => {
   const fees = {
-    virtualAccount: 5000, // Biaya tetap
-    alfamart: 5000, // Biaya tetap
-    indomaret: 7000, // Biaya tetap
-    dana: 0.015, // Persentase 1.5%
-    ovo: 0.0273, // Persentase 2.73%
-    shopeepay: 0.04, // Persentase 4%
-    linkaja: 0.027, // Persentase 2.7%
-    qris: 0.007, // Persentase 0.7%
+    virtualAccount: 4000,
+    alfamart: 5000,
+    indomaret: 5000,
+    dana: 0.015 * baseAmount,
+    ovo: 0.015 * baseAmount,
+    shopeepay: 0.02 * baseAmount,
+    linkaja: 0.015 * baseAmount,
+    qris: 0,
   };
 
   const fee = fees[paymentMethod as keyof typeof fees];
@@ -79,18 +79,18 @@ export const calculateFeeAndPPN = (
   let total = baseAmount;
 
   if (typeof fee === "number") {
-    if (fee < 1) {
-      // Jika fee adalah persentase
+    if (paymentMethod === "qris") {
+      tax = 700;
+    } else if (fee < 1) {
       tax = baseAmount * fee;
     } else {
-      // Jika fee adalah biaya tetap
       tax = fee;
     }
   }
+  const ppn = fees[paymentMethod as keyof typeof fees] * 0.11;
+  total += tax + ppn;
 
-  total += tax;
-
-  return { tax, total };
+  return { tax, total, ppn };
 };
 
 export const formatPaymentMethod = (value: string) => {
@@ -189,4 +189,14 @@ export const formatPaymentWith = (value: string) => {
         image: "/payment/mandiri.png",
       };
   }
+};
+
+export const formatTimeClockId = (value: Date) => {
+  const day = String(value.getDate()).padStart(2, "0");
+  const month = String(value.getMonth() + 1).padStart(2, "0"); // Bulan dimulai dari 0, jadi tambahkan 1
+  const year = value.getFullYear();
+  const hours = String(value.getHours()).padStart(2, "0");
+  const minute = String(value.getMinutes()).padStart(2, "0");
+
+  return `${day}/${month}/${year} ${hours}:${minute}`;
 };

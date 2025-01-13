@@ -24,6 +24,18 @@ export async function POST(req: NextRequest) {
         return ResponseErrorApi(404, "Course not found");
       }
 
+      // const alreadyPaid = await db.purchase.findFirst({
+      //   where: {
+      //     courseId,
+      //     userId: token.id,
+      //     status: "PAID",
+      //   },
+      // });
+
+      // if (alreadyPaid) {
+      //   return ResponseErrorApi(400, "The same course already paid");
+      // }
+
       const isExist = await db.purchase.findFirst({
         where: {
           courseId,

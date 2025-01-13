@@ -26,7 +26,7 @@ const PurchaseView = ({ purchase }: { purchase: Purchase }) => {
     type: string;
   } | null>(null);
 
-  const { tax, total } = useMemo(() => {
+  const { tax, total, ppn } = useMemo(() => {
     return calculateFeeAndPPN(
       purchase?.price as number,
       method?.type as string
@@ -154,8 +154,14 @@ const PurchaseView = ({ purchase }: { purchase: Purchase }) => {
                 </span>
               </p>
               <p className="text-slate-900 text-sm flex justify-between items-center">
-                Tax (PPN){" "}
+                Tax Transaction{" "}
                 <span className="font-semibold">{formatCurrency(tax)}</span>
+              </p>
+              <p className="text-slate-900 text-sm flex justify-between items-center">
+                PPN 11%
+                <span className="font-semibold">
+                  {formatCurrency(ppn || 0)}
+                </span>
               </p>
               <Separator />
               <p className="text-slate-900 text-sm flex justify-between items-center">

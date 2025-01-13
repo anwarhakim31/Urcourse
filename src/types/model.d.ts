@@ -69,11 +69,12 @@ export interface Transaction {
   purchaseId: string;
   paymentMethod: string;
   paymentName: string;
-  xenditCode: string;
+  paymentCode: string;
   expired: Date;
   amount: number;
   invoice?: string;
   status: string;
   purchase?: Purchase;
   createdAt?: Date;
+  updatedAt?: Date;
 }

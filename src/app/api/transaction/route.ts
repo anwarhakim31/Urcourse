@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { ResponseErrorApi } from "@/lib/response-error";
 import { verifyToken } from "@/lib/verifyToken";
 import { calculateFeeAndPPN, formatPaymentMethod } from "@/utils/helpers";
+
 import axios from "axios";
 
 import { NextRequest, NextResponse } from "next/server";
@@ -50,7 +51,7 @@ export async function POST(req: NextRequest) {
         },
         {
           auth: {
-            username: process.env.XENDIT_SECRET_KEY as string,
+            username: `${process.env.XENDIT_SECRET_KEY}`,
             password: "",
           },
         }
@@ -68,7 +69,7 @@ export async function POST(req: NextRequest) {
           amount: total,
           paymentMethod,
           paymentName: paymentName,
-          xenditCode: xenditResponse?.data?.account_number,
+          paymentCode: xenditResponse?.data?.account_number,
           status: "PENDING",
           expired: xenditResponse?.data?.expiration_date,
           invoice: invoice,

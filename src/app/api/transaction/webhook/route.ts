@@ -2,12 +2,12 @@
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-// Fungsi untuk menangani POST request
 export async function POST(req: Request) {
   try {
     const payload = await req.json();
 
-    console.log({ payload });
+    console.log(payload);
+
     if (!payload) {
       return NextResponse.json(
         { message: "No payload received" },
@@ -15,31 +15,22 @@ export async function POST(req: Request) {
       );
     }
 
-    const paymentStatus = payload.status;
-    const transactionId = payload.external_id;
+    const transaction = await db.transaction.findUnique({
+      where: { invoice: payload.external_id },
+    });
 
-    if (paymentStatus === "SUCCESS") {
-      await db.transaction.update({
-        where: {
-          id: transactionId,
-        },
-        data: {
-          status: "PAID",
-        },
+    if (transaction) {
+      const result = await db.transaction.update({
+        where: { id: transaction.id },
+        data: { status: "PAID" },
       });
-      console.log(`Payment Success for Transaction: ${transactionId}`);
-    } else if (paymentStatus === "FAILED") {
-      // Pembayaran gagal
-      console.log(`Payment Failed for Transaction: ${transactionId}`);
-      // Lakukan update status pembayaran di database atau sistem Anda
-    } else {
-      // Status lainnya (misalnya pending)
-      console.log(
-        `Payment status: ${paymentStatus} for Transaction: ${transactionId}`
-      );
+      console.log({ result });
+      await db.purchase.update({
+        where: { id: transaction.purchaseId },
+        data: { status: "PAID" },
+      });
     }
 
-    // Kirim response OK ke Xendit
     return NextResponse.json({ message: "Webhook received" }, { status: 200 });
   } catch (error) {
     console.error("Error processing webhook:", error);

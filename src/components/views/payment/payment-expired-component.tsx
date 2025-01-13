@@ -39,8 +39,7 @@ const PaymentExpiredComponent = ({
 
   return (
     <Fragment>
-      {transaction.status === "PENDING" &&
-      new Date().getTime() < new Date(transaction.expired).getTime() ? (
+      {transaction?.status === "PENDING" ? (
         <div className="flex items-center p-4 bg-orange-100 rounded-md gap-4">
           <div className="w-10 h-10 rounded-full bg-orange-300 flex-center">
             <div className="w-8 h-8 rounded-full bg-orange-400 flex-center">
