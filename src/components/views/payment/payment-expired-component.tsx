@@ -1,42 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Transaction } from "@/types/model";
 import { AlarmClock, X } from "lucide-react";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 
 const PaymentExpiredComponent = ({
   transaction,
+  timeRemaining,
 }: {
   transaction: Transaction;
+  timeRemaining: string;
 }) => {
-  const [timeRemaining, setTimeRemaining] = React.useState("");
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      const expired = new Date(transaction.expired);
-      const diff = expired.getTime() - now.getTime();
-
-      if (diff <= 0) {
-        setTimeRemaining("00:00:00");
-        clearInterval(interval);
-        return;
-      }
-
-      const remaining = Math.floor(diff / 1000);
-      const hours = Math.floor((remaining % (24 * 60 * 60)) / (60 * 60));
-      const minutes = Math.floor((remaining % (60 * 60)) / 60);
-      const seconds = remaining % 60;
-
-      setTimeRemaining(
-        `${hours.toString().padStart(2, "0")}:${minutes
-          .toString()
-          .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
-      );
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [transaction]);
-
   return (
     <Fragment>
       {transaction?.status === "PENDING" ? (

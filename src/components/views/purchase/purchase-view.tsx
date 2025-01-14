@@ -1,5 +1,6 @@
 "use client";
 import {
+  creditcard,
   overthecounter,
   virtualAccountItem,
   walletqrisItem,
@@ -57,7 +58,7 @@ const PurchaseView = ({ purchase }: { purchase: Purchase }) => {
   };
 
   return (
-    <main className="py-24">
+    <main className="pt-24 pb-16">
       <div className="flex flex-col  lg:flex-row container gap-6">
         <div className="block lg:hidden  bg-white rounded-tr-md rounded-tl-md border p-6 w-full lg:w-[400px] h-fit">
           <DetailOrder purchase={purchase} />
@@ -119,6 +120,23 @@ const PurchaseView = ({ purchase }: { purchase: Purchase }) => {
             </h5>
             <div className="flex items-center flex-wrap gap-4 mt-2">
               {overthecounter.map((item) => (
+                <ButtonMethod
+                  item={item}
+                  key={item.name}
+                  method={method}
+                  disabled={isPending}
+                  onClick={() => {
+                    setMethod(item);
+                    if (isError) setIsError(false);
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="mt-6 ">
+            <h5 className="font-medium text-sm text-slate-700">Credit Card</h5>
+            <div className="flex items-center flex-wrap gap-4 mt-2">
+              {creditcard.map((item) => (
                 <ButtonMethod
                   item={item}
                   key={item.name}

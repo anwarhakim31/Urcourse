@@ -71,6 +71,7 @@ export const calculateFeeAndPPN = (
     shopeepay: 0.02 * baseAmount,
     linkaja: 0.015 * baseAmount,
     qris: 0,
+    creditcard: 0.029 * baseAmount + 3000,
   };
 
   const fee = fees[paymentMethod as keyof typeof fees];
@@ -87,7 +88,10 @@ export const calculateFeeAndPPN = (
       tax = fee;
     }
   }
-  const ppn = fees[paymentMethod as keyof typeof fees] * 0.11;
+  const ppn =
+    paymentMethod === "creditcard"
+      ? 0
+      : fees[paymentMethod as keyof typeof fees] * 0.11;
   total += tax + ppn;
 
   return { tax, total: Math.ceil(total), ppn };
@@ -111,6 +115,8 @@ export const formatPaymentMethod = (value: string) => {
       return "EWALLET";
     case "qris":
       return "EWALLET";
+    case "creditcard":
+      return "CREDIT_CARD";
     default:
       return "EWALLET";
   }
@@ -182,6 +188,11 @@ export const formatPaymentWith = (value: string) => {
       return {
         name: "QRIS",
         image: "/payment/qris.png",
+      };
+    case "CREDIT CARD":
+      return {
+        name: "Credit Card",
+        image: "/payment/creditcard.png",
       };
     default:
       return {

@@ -108,3 +108,11 @@ export const overthecounter = [
     type: "indomaret",
   },
 ];
+
+export const creditcard = [
+  {
+    name: "Credit Card",
+    image: "/payment/creditcard.png",
+    type: "creditcard",
+  },
+];

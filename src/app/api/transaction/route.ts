@@ -2,6 +2,8 @@ import { db } from "@/lib/db";
 import { ResponseErrorApi } from "@/lib/response-error";
 import { verifyToken } from "@/lib/verifyToken";
 import { calculateFeeAndPPN, formatPaymentMethod } from "@/utils/helpers";
+import { v4 as uuid } from "uuid";
+import QRCode from "qrcode";
 
 import axios from "axios";
 
@@ -11,8 +13,6 @@ export async function POST(req: NextRequest) {
   try {
     const token = await verifyToken(req);
     const { purchaseId, paymentType, paymentName } = await req.json();
-
-    console.log(paymentType, paymentName);
 
     if (token instanceof NextResponse) {
       return token;
@@ -36,7 +36,9 @@ export async function POST(req: NextRequest) {
 
       const currentTime = new Date();
       const expirationTime = new Date(currentTime.getTime() + 60 * 60 * 1000);
-      const invoice = `INV-${currentTime.getTime()}`;
+      const invoice = `INV-${uuid()
+        .split("-")[0]
+        .toLocaleUpperCase()}${new Date().getTime()}`;
 
       const createXenditTransaction = (
         paymentName: string,
@@ -46,6 +48,7 @@ export async function POST(req: NextRequest) {
           return {
             url: "https://api.xendit.co/callback_virtual_accounts",
             body: {
+              external_id: invoice,
               bank_code: paymentName.toUpperCase(),
               name: token.fullname,
               expected_amount: total,
@@ -95,6 +98,29 @@ export async function POST(req: NextRequest) {
               },
             },
           };
+        } else if (paymentType === "creditcard") {
+          return {
+            url: "https://api.xendit.co/v2/invoices",
+            body: {
+              external_id: invoice,
+              amount: total,
+              currency: "IDR",
+              country: "ID",
+              success_redirect_url: `${process.env.NEXT_PUBLIC_DOMAIN}/payment/${invoice}/success`,
+            },
+          };
+        } else {
+          return {
+            url: "https://api.xendit.co/qr_codes",
+            body: {
+              external_id: invoice,
+              type: "DYNAMIC",
+              name: token.fullname,
+              amount: total,
+              expires_at: expirationTime.toISOString(),
+              callback_url: `${process.env.NEXT_PUBLIC_DOMAIN}/payment/${invoice}/success`,
+            },
+          };
         }
       };
 
@@ -112,8 +138,10 @@ export async function POST(req: NextRequest) {
           },
         }
       );
-
-      console.log(xenditResponse.data);
+      let qrCodeUrl = "";
+      if (paymentName === "QRIS") {
+        qrCodeUrl = await QRCode.toDataURL(xenditResponse?.data?.qr_string);
+      }
 
       const paymentMethod = formatPaymentMethod(paymentType as string);
 
@@ -126,8 +154,10 @@ export async function POST(req: NextRequest) {
           paymentCode:
             xenditResponse?.data?.account_number ||
             xenditResponse?.data?.payment_code ||
-            xenditResponse?.data?.actions.mobile_web_checkout_url ||
-            xenditResponse?.data?.actions.mobile_deeplink_checkout_url,
+            xenditResponse?.data?.actions?.mobile_web_checkout_url ||
+            xenditResponse?.data?.actions?.mobile_deeplink_checkout_url ||
+            xenditResponse?.data?.invoice_url ||
+            qrCodeUrl,
           status: "PENDING",
           expired: xenditResponse?.data?.expiration_date || expirationTime,
           invoice: invoice,

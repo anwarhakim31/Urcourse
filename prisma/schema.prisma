@@ -231,6 +231,7 @@ enum PaymentMethod {
   EWALLET
   VIRTUAL_ACCOUNT
   OVER_THE_COUNTER
+  CREDIT_CARD
 }
 enum Level {
   Beginner

@@ -8,7 +8,7 @@ import React from "react";
 const CourseCard = ({ item }: { item: Course }) => {
   return (
     <Link href={"/course/" + item.id}>
-      <div className="rounded-md border  flex flex-col overflow-hidden bg-white border-slate-300">
+      <div className="rounded-md  border flex flex-col overflow-hidden bg-white ">
         <div className="flex-1">
           <div className="relative w-full aspect-video">
             <Image
