@@ -96,6 +96,11 @@ html,
   body {
     @apply bg-slate-50 text-foreground;
   }
+
+  a:focus-within,
+  button:focus-within {
+    @apply outline-blue-600;
+  }
 }
 
 @layer components {

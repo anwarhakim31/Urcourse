@@ -11,7 +11,7 @@ const PaymetSuccessPage = async ({
 }) => {
   const transaction = await db.transaction.findUnique({
     where: {
-      id: params.paymentId,
+      invoice: params.paymentId,
     },
     include: {
       purchase: {
@@ -21,6 +21,7 @@ const PaymetSuccessPage = async ({
       },
     },
   });
+  console.log(transaction);
 
   if (!transaction || transaction.status !== "PAID") {
     return redirect("/");

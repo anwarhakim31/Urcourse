@@ -9,16 +9,16 @@ export async function GET(req: NextRequest) {
     const token = await verifyToken(req);
     const searchParams = new URL(req.url).searchParams;
 
-    const paymentId = searchParams.get("paymentId");
+    const invoice = searchParams.get("invoice");
 
     if (token instanceof NextResponse) {
       return token;
     }
 
     if (token && typeof token === "object" && "id" in token) {
-      const transaction = await db.transaction.findFirst({
+      const transaction = await db.transaction.findUnique({
         where: {
-          id: paymentId || "",
+          invoice: invoice || "",
         },
 
         include: {

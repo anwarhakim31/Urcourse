@@ -166,7 +166,9 @@ const PurchaseView = ({ purchase }: { purchase: Purchase }) => {
               <Separator />
               <p className="text-slate-900 text-sm flex justify-between items-center">
                 <span className="font-semibold">Total</span>{" "}
-                <span className="font-semibold">{formatCurrency(total)}</span>
+                <span className="font-semibold">
+                  {formatCurrency((total as number) || 0)}
+                </span>
               </p>
             </div>
             <div className="mt-8 flex-center flex-col">

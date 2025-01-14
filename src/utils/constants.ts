@@ -36,16 +36,16 @@ export const navItem = [
 ];
 
 export const walletqrisItem = [
-  // {
-  //   name: "DANA",
-  //   image: "/payment/dana.png",
-  //   type: "dana",
-  // },
   {
-    name: "OVO",
-    image: "/payment/ovo.png",
-    type: "ovo",
+    name: "DANA",
+    image: "/payment/dana.png",
+    type: "dana",
   },
+  // {
+  //   name: "OVO",
+  //   image: "/payment/ovo.png",
+  //   type: "ovo",
+  // },
   {
     name: "ShopeePay",
     image: "/payment/spay.png",

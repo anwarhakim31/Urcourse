@@ -18,7 +18,7 @@ const useCreateTransaction = () => {
 
     onSuccess: (res) => {
       if (res) {
-        router.push(`/payment/${res.data.id}`);
+        router.push(`/payment/${res.data.invoice}`);
       }
     },
 

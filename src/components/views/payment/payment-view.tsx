@@ -10,8 +10,8 @@ import { cn } from "@/lib/utils";
 import PaymentInfo from "./payment-info-component";
 import useGetStatusTransaction from "@/hooks/transaction/useGetStatusTransaction";
 
-const PaymentView = ({ paymentId }: { paymentId: string }) => {
-  const { data, isLoading } = useGetStatusTransaction(paymentId);
+const PaymentView = ({ invoice }: { invoice: string }) => {
+  const { data, isLoading } = useGetStatusTransaction(invoice);
 
   const { image, name } = React.useMemo(() => {
     return formatPaymentWith(

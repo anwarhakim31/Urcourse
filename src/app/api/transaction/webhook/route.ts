@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     }
 
     const transaction = await db.transaction.findUnique({
-      where: { invoice: payload.external_id },
+      where: { invoice: payload.external_id || payload.data.reference_id },
     });
 
     if (transaction) {

@@ -22,12 +22,10 @@ const CourseView: React.FC<PropsType> = ({ category }) => {
 
   const categoryParams = searchParams.get("category") || "";
 
-  const { data, isLoading } = useFetchCourseObserver(searchParams);
-
-  console.log(data);
+  const { data, isError, isLoading } = useFetchCourseObserver(searchParams);
 
   return (
-    <main className="container py-24">
+    <main className="container py-24  bg-[url('/background-top.svg')]  bg-top bg-no-repeat min-h-screen">
       <div className="flex-center">
         <InputSearch
           placeholder="Search course name..."
@@ -66,7 +64,7 @@ const CourseView: React.FC<PropsType> = ({ category }) => {
         ))}
       </div>
       <div className="grid sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 mt-10 gap-6">
-        {isLoading ? (
+        {isLoading || isError ? (
           Array.from({ length: 12 }).map((item, i) => (
             <CourseCardSkeleton key={i} />
           ))

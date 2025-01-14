@@ -90,7 +90,7 @@ export const calculateFeeAndPPN = (
   const ppn = fees[paymentMethod as keyof typeof fees] * 0.11;
   total += tax + ppn;
 
-  return { tax, total, ppn };
+  return { tax, total: Math.ceil(total), ppn };
 };
 
 export const formatPaymentMethod = (value: string) => {
@@ -171,7 +171,7 @@ export const formatPaymentWith = (value: string) => {
     case "SHOPEEPAY":
       return {
         name: "ShopeePay",
-        image: "/payment/shopeepay.png",
+        image: "/payment/spay.png",
       };
     case "LINKAJA":
       return {

@@ -35,7 +35,7 @@ const useLogin = () => {
         router.push(path, { scroll: false });
       } else {
         setLoading(false);
-        setError("Email atau Password salah");
+        setError("Email or Password is incorrect");
       }
     } catch (error) {
       console.log(error);

@@ -2,18 +2,16 @@ import { instance } from "@/lib/interceptor";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
-const useGetStatusTransaction = (paymentId: string) => {
+const useGetStatusTransaction = (invoice: string) => {
   const router = useRouter();
   return useQuery({
-    queryKey: ["pooling", paymentId],
+    queryKey: ["pooling", invoice],
     queryFn: async () => {
-      const res = await instance.get(
-        "/transaction/status?paymentId=" + paymentId
-      );
+      const res = await instance.get("/transaction/status?invoice=" + invoice);
 
       if (res.data.data.status === "PAID") {
-        return router.replace(`/payment/${paymentId}/success`);
-      } else if (res.data.data.status === "EXPIRED") {
+        return router.replace(`/payment/${invoice}/success`);
+      } else if (res.data.data.status === "FAILED") {
         return router.refresh();
       }
 

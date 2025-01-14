@@ -43,10 +43,9 @@ const CourseDetailAction = ({ course }: { course: Course }) => {
       </p>
       <LoadingButton
         disabled={isPending}
-        variant={"outline"}
         onClick={handleClick}
         className={cn(
-          "flex items-center gap-2 text-sm mt-8 w-full text-indigo-700 hover:text-indigo-700  ",
+          "flex items-center gap-2 text-sm mt-8 w-full text-indigo-700 hover:text-indigo-700 hover:bg-white  bg-white ",
           isPending && "cursor-not-allowed bg-white"
         )}
       >

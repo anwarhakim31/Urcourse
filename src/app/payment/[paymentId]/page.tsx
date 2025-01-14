@@ -18,7 +18,7 @@ const PaymentPage = async ({ params }: { params: { paymentId: string } }) => {
 
   const payment = await db.transaction.findUnique({
     where: {
-      id: paymentId,
+      invoice: paymentId,
     },
   });
 
@@ -34,7 +34,7 @@ const PaymentPage = async ({ params }: { params: { paymentId: string } }) => {
     <Fragment>
       <Header />
 
-      <PaymentView paymentId={paymentId} />
+      <PaymentView invoice={paymentId} />
     </Fragment>
   );
 };
