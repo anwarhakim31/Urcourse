@@ -5,7 +5,15 @@ import Image from "next/image";
 import React from "react";
 import CourseDetailAction from "./course-detail-action";
 
-const CoruseDetailView = ({ course }: { course: Course }) => {
+const CoruseDetailView = ({
+  course,
+  isPaid,
+  firstCurriculumId,
+}: {
+  course: Course;
+  isPaid: boolean;
+  firstCurriculumId: string;
+}) => {
   return (
     <div className="flex flex-col xl:flex-row gap-4">
       <div className="flex-1  my-6 xl:mx-4">
@@ -39,7 +47,11 @@ const CoruseDetailView = ({ course }: { course: Course }) => {
           </div>
         </div>
       </div>
-      <CourseDetailAction course={course as Course} />
+      <CourseDetailAction
+        course={course as Course}
+        isPaid={isPaid}
+        firstCurriculumId={firstCurriculumId}
+      />
     </div>
   );
 };

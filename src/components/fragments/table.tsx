@@ -18,7 +18,7 @@ const TableFragment = <T,>({
 }) => {
   return (
     <div className="overflow-hidden w-full">
-      <div className="h-[calc(100vh-300px)] overflow-auto border rounded-md border-slate-200">
+      <div className="h-[calc(100vh-300px)] overflow-auto border rounded-md border-slate-200 bg-white">
         <Table className="relative">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

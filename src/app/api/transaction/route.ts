@@ -25,6 +25,10 @@ export async function POST(req: NextRequest) {
         },
       });
 
+      if (purchase?.status === "PAID") {
+        return ResponseErrorApi(400, "Purchase already paid");
+      }
+
       if (!purchase) {
         return ResponseErrorApi(404, "Purchase not found");
       }

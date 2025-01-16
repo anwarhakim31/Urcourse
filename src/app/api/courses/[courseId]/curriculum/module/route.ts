@@ -86,6 +86,19 @@ export async function PATCH(request: NextRequest) {
     const { title, description, video, isFree, resource } =
       await request.json();
 
+    const modules = await db.module.findUnique({
+      where: {
+        id: moduleId as string,
+      },
+      include: {
+        resourse: true,
+      },
+    });
+
+    if (!modules) {
+      return ResponseErrorApi(404, "Module not found");
+    }
+
     const newModule = await db.module.update({
       where: {
         id: moduleId as string,
@@ -97,11 +110,13 @@ export async function PATCH(request: NextRequest) {
         video,
         isFree,
         isPublished:
-          title || description === "<p><br></p>" || video ? false : true,
+          !title || description === "<p><br></p>" || !video
+            ? false
+            : modules.isPublished,
       },
     });
 
-    if (resource?.length > 0) {
+    if (resource?.length > 0 && modules.resourse?.length !== resource.length) {
       await db.resource.createMany({
         data: resource.map((item: { name: string; file: string }) => ({
           name: item.name,

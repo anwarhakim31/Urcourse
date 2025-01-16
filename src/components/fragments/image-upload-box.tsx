@@ -26,7 +26,7 @@ export default function ImageUploadBox({
         <div
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
-          className="relative w-full h-[250px]  rounded-md  border border-dashed mt-2 border-slate-300 overflow-hidden flex-center"
+          className="relative w-full h-[250px]  rounded-md  border border-dashed mt-2 bg-white border-slate-300 overflow-hidden flex-center"
         >
           {hover && (
             <button

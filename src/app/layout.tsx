@@ -25,7 +25,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className="bg-[url('/background-top.svg')]  bg-top bg-no-repeat min-h-screen">
+      <body className=" scroll-smooth">
         <SessionAuthProvider session={session}>
           <ReactQueryProvider>
             {children}

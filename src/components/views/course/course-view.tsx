@@ -25,63 +25,66 @@ const CourseView: React.FC<PropsType> = ({ category }) => {
   const { data, isLoading } = useFetchCourseObserver(searchParams);
 
   return (
-    <main className="container py-24 ">
-      <div className="flex-center">
-        <InputSearch
-          placeholder="Search course name..."
-          className="rounded-full pl-10 border-slate-300"
-        />
-      </div>
-      <div
-        className={cn(
-          "flex gap-2 items-center   mt-10 pb-1",
-          hover ? "overflow-auto" : "overflow-hidden",
-          category.length < 8 && "lg:justify-center"
-        )}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
-        <Link
-          href={"/course"}
+    <main className="bg-back">
+      <div className="container py-24 ">
+        <div className="flex-center">
+          <InputSearch
+            placeholder="Search course name..."
+            className="rounded-full pl-10 border-slate-300"
+          />
+        </div>
+        <div
           className={cn(
-            "text-sm border rounded-md font-medium   bg-slate-100 px-3 py-1.5 border-slate-300",
-            !categoryParams && "border-indigo-700 text-indigo-700"
+            "flex gap-2 items-center   mt-10 pb-1",
+            hover ? "overflow-auto" : "overflow-hidden",
+            category.length < 8 && "lg:justify-center"
           )}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
         >
-          All
-        </Link>
-        {category.map((item) => (
           <Link
-            key={item.id}
-            href={`/course?category=${item.id}`}
+            href={"/course"}
             className={cn(
-              "text-sm border rounded-md font-medium capitalize  bg-indigo-400/20 px-3 py-1.5 border-slate-300",
-              categoryParams === item.id && "border-indigo-700 text-indigo-700"
+              "text-sm border rounded-md font-medium   bg-slate-100 px-3 py-1.5 border-slate-300",
+              !categoryParams && "border-indigo-700 text-indigo-700"
             )}
           >
-            {item.name}
+            All
           </Link>
-        ))}
-      </div>
-      <div className="grid sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 mt-10 gap-6">
-        {isLoading ? (
-          Array.from({ length: 12 }).map((item, i) => (
-            <CourseCardSkeleton key={i} />
-          ))
-        ) : data?.length > 0 ? (
-          data.map((item: Course) => <CourseCard key={item.id} item={item} />)
-        ) : (
-          <div className="flex-center col-span-12 flex-col">
-            <Image
-              src={"/course-notfound.svg"}
-              alt="notfound"
-              width={200}
-              height={200}
-              priority
-            />
-            <p className="mt-4 font-medium">Course Not Found</p>
-          </div>
-        )}
+          {category.map((item) => (
+            <Link
+              key={item.id}
+              href={`/course?category=${item.id}`}
+              className={cn(
+                "text-sm border rounded-md font-medium capitalize  bg-indigo-400/20 px-3 py-1.5 border-slate-300",
+                categoryParams === item.id &&
+                  "border-indigo-700 text-indigo-700"
+              )}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
+        <div className="grid sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 mt-10 gap-6">
+          {isLoading ? (
+            Array.from({ length: 12 }).map((item, i) => (
+              <CourseCardSkeleton key={i} />
+            ))
+          ) : data?.length > 0 ? (
+            data.map((item: Course) => <CourseCard key={item.id} item={item} />)
+          ) : (
+            <div className="flex-center col-span-12 flex-col">
+              <Image
+                src={"/course-notfound.svg"}
+                alt="notfound"
+                width={200}
+                height={200}
+                priority
+              />
+              <p className="mt-4 font-medium">Course Not Found</p>
+            </div>
+          )}
+        </div>
       </div>
     </main>
   );

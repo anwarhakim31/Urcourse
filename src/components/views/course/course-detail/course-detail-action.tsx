@@ -10,13 +10,25 @@ import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
-const CourseDetailAction = ({ course }: { course: Course }) => {
+const CourseDetailAction = ({
+  course,
+  isPaid,
+  firstCurriculumId,
+}: {
+  course: Course;
+  isPaid: boolean;
+  firstCurriculumId: string;
+}) => {
   const session = useSession();
   const router = useRouter();
   const pathname = usePathname();
   const { mutate, isPending } = useCreatePurchase();
 
   const handleClick = () => {
+    if (isPaid) {
+      return router.push("/course/" + course.id + "/" + firstCurriculumId);
+    }
+
     if (!session.data?.user) {
       return router.push(
         "/login?callbackUrl=" +
@@ -50,7 +62,13 @@ const CourseDetailAction = ({ course }: { course: Course }) => {
         )}
       >
         <Wallet size={18} />
-        <span>{isPending ? "Purchasing..." : "Purchase Now"}</span>
+        <span>
+          {isPending
+            ? "Purchasing..."
+            : isPaid
+            ? "Start Learning"
+            : "Purchase Now"}
+        </span>
       </LoadingButton>
     </div>
   );

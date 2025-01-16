@@ -6,11 +6,6 @@ import { UploadDropzone } from "@/utils/uploadthing";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
-import dynamic from "next/dynamic";
-
-const ReactPlayer = dynamic(() => import("react-player/lazy"), {
-  ssr: false,
-});
 
 const FileFormControl = ({
   field,
@@ -35,12 +30,9 @@ const FileFormControl = ({
           {type === "video" && field.value ? (
             <>
               <div className="aspect-video max-h-[250px]">
-                <ReactPlayer
-                  url={field.value}
-                  controls
-                  width={"100%"}
-                  height={"100%"}
-                />
+                <video controls width={"100%"} height={"100%"}>
+                  <source src={field.value} />
+                </video>
               </div>
               <p className=" border p-2 mt-4 text-sm border-indigo-700 relative bg-indigo-400/20 rounded-md">
                 {field.value}

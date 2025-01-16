@@ -39,6 +39,8 @@ const formSchema = z.object({
 });
 
 const ModuleCourseForm = ({ module, courseId, moduleId }: PropsType) => {
+  console.log(module);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,7 +48,7 @@ const ModuleCourseForm = ({ module, courseId, moduleId }: PropsType) => {
       description: module?.description || "",
       video: module?.video || "",
       isFree: module?.isFree || false,
-      resource: module?.resource || [],
+      resource: module?.resourse || [],
     },
     shouldFocusError: true,
   });

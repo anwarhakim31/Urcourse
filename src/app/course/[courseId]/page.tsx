@@ -1,24 +1,30 @@
 import CoruseDetailView from "@/components/views/course/course-detail/course-detail-view";
+import { getCurriculum } from "@/lib/api-service";
+import authOptions from "@/lib/authOptions";
 import { db } from "@/lib/db";
 import { Course } from "@/types/model";
-
-import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 
 const DetailPage = async ({ params }: { params: { courseId: string } }) => {
-  const course = await db.course.findUnique({
+  const session = await getServerSession(authOptions);
+
+  const isPaid = await db.purchase.findFirst({
     where: {
-      id: params.courseId,
-    },
-    include: {
-      category: true,
+      userId: session?.user?.id,
+      courseId: params.courseId,
+      status: "PAID",
     },
   });
 
-  if (!course) {
-    return redirect("/course");
-  }
+  const { course, curriculumList } = await getCurriculum(params.courseId);
 
-  return <CoruseDetailView course={course as Course} />;
+  return (
+    <CoruseDetailView
+      course={course as Course}
+      isPaid={isPaid ? true : false}
+      firstCurriculumId={curriculumList[0].id as string}
+    />
+  );
 };
 
 export default DetailPage;

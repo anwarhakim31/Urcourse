@@ -25,7 +25,7 @@ const PriceFormControl = ({
             autoComplete="off"
             step={1000}
             min={0}
-            className={cn("text-sm pl-8 ", className)}
+            className={cn("text-sm pl-8 bg-white", className)}
           />
           <p className="absolute left-0  top-1/2 text-sm p-2 -translate-y-1/2  ">
             Rp.

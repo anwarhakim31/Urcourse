@@ -19,7 +19,7 @@ const AreaFormControl = ({
   return (
     <FormItem>
       <FormLabel className="font-medium text-xs">{label}</FormLabel>
-      <div className="relative w-full">
+      <div className="relative w-full bg-white">
         <FormControl>
           <RichEditor
             ref={ref}

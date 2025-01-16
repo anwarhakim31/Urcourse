@@ -128,11 +128,12 @@ model Proggress{
   id String @id @default(uuid())
   userId String
 
-  moduleId String 
-  module Module @relation(fields: [moduleId],references: [id],onDelete:Cascade)
+  moduleId String? 
+  module Module? @relation(fields: [moduleId],references: [id],onDelete:Cascade)
+  isComplated  Boolean @default(true)
 
-  exerciseId String 
-  exercise Exercise @relation(fields: [exerciseId],references: [id],onDelete: Cascade)
+  exerciseId String? 
+  exercise Exercise? @relation(fields: [exerciseId],references: [id],onDelete: Cascade)
   createdAt DateTime @default(now())
 
  @@unique([userId,moduleId,exerciseId])
@@ -158,10 +159,10 @@ model Resource{
   file String 
 
   
-  moduleId String?   @unique  
+  moduleId String?  
   module   Module? @relation(fields: [moduleId], references: [id], onDelete: Cascade)
 
-  exerciseId String? @unique
+  exerciseId String? 
   exercise Exercise? @relation(fields: [exerciseId],references: [id],onDelete: Cascade)
 
   createdAt DateTime @default(now())

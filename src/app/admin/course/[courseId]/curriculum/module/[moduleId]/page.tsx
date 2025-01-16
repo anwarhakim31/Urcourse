@@ -21,6 +21,9 @@ const CourseModulePage = async ({
     where: {
       id: params.moduleId,
     },
+    include: {
+      resourse: true,
+    },
   });
 
   if (!currentModule) return notFound();

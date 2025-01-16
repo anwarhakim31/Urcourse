@@ -1,6 +1,13 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { BookOpenIcon, NotebookPen, PlayCircle } from "lucide-react";
+import { Course } from "@/types/model";
+import {
+  BookOpenIcon,
+  CheckCircle,
+  Lock,
+  NotebookPen,
+  PlayCircle,
+} from "lucide-react";
 
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
@@ -11,38 +18,75 @@ interface PropsType {
     id: string;
     type: string;
     title: string;
+    proggress: {
+      id: string;
+      moduleId: string | null;
+      exerciseId: string | null;
+    }[];
   }[];
+  course: Course;
 }
 
-const CourseCurriculumList = ({ courseId, list }: PropsType) => {
+const CourseCurriculumList = ({ courseId, list, course }: PropsType) => {
   const pathname = usePathname();
   const router = useRouter();
+
   return (
     <div className="max-h-[calc(100vh-50px)] ">
       <div className="flex-center py-4 bg-white">
-        <h3 className="font-medium">What you will learn!</h3>
+        <h3 className="font-medium">
+          {pathname === `/course/${courseId}`
+            ? "What you will learn!"
+            : course?.title}
+        </h3>
       </div>
-      <div className="scrollbar-none h-fit max-h-[calc(100vh-180px)] overflow-auto">
-        {list.map((item) => (
+      <div className="scrollbar-none bg-white h-fit max-h-[calc(100vh-180px)] overflow-auto">
+        {list.map((item, i) => (
           <button
             key={item.id}
-            disabled={pathname === `/course/${courseId}`}
+            disabled={
+              pathname === `/course/${courseId}` ||
+              (i > 0 && list[i - 1].proggress.length === 0)
+            }
             onClick={() => router.push(`/course/${courseId}/${item.id}`)}
             className={cn(
-              "flex relative items-center w-full gap-x-2 border-b text-slate-600 text-sm font-medium pl-6 transition-all hover:text-slate-700 hover:bg-indigo-400/10",
+              "flex relative items-center w-full gap-x-2 border-b text-slate-600 text-sm font-medium pl-4 transition-all hover:text-slate-700 hover:bg-indigo-400/10",
               pathname.includes(item.id) &&
                 "bg-indigo-400/20 text-indigo-700 hover:bg-indigo-400/20 hover:text-indigo-700",
-              pathname === `/course/${courseId}` && "bg-slate-100"
+
+              i > 0 &&
+                list[i - 1].proggress.length === 0 &&
+                "hover:bg-transparent text-slate-500 hover:text-slate-500",
+              pathname === `/course/${courseId}` &&
+                "bg-slate-100 text-slate-600 hover:bg-slate-100 hover:text-slate-600 pointer-events-none",
+              pathname !== `/course/${courseId}` &&
+                item.proggress.some((item) => item.moduleId) &&
+                "text-emerald-500 hover:text-emerald-500 "
             )}
           >
-            <div className="flex items-center gap-x-2 py-4">
-              <PlayCircle size={18} strokeWidth={1.5} />
-              <span className="text-sm">{item.title}</span>
-            </div>
+            {(i > 0 && list[i - 1].proggress.length === 0) ||
+            pathname === `/course/${courseId}` ? (
+              <div className="flex items-center gap-x-2 py-4">
+                <Lock size={18} strokeWidth={1.5} />
+                <span className="text-sm">{item.title}</span>
+              </div>
+            ) : item.proggress.some((item) => item.moduleId) ? (
+              <div className="flex items-center gap-x-2 py-4">
+                <CheckCircle size={18} strokeWidth={1.5} />
+                <span className="text-sm truncate">{item.title}</span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-x-2 py-4">
+                <PlayCircle size={18} strokeWidth={1.5} />
+                <span className="text-sm truncate">{item.title}</span>
+              </div>
+            )}
 
             <div
               className={cn(
                 "bg-indigo-700 h-full w-1 ml-auto opacity-0 transition-all duration-200 absolute right-0 top-0",
+                item.proggress.some((item) => item.moduleId) &&
+                  "bg-emerald-500 ",
                 pathname.includes(item.id) && "opacity-100"
               )}
             ></div>

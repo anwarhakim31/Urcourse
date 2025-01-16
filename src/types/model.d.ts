@@ -28,7 +28,8 @@ export interface Module {
   position?: number;
   video?: string;
   isFree?: boolean;
-  resource?: Resource[];
+  resourse?: Resource[];
+  proggress?: Proggress[];
 }
 
 export interface Exercise {
@@ -40,6 +41,14 @@ export interface Exercise {
   video?: string;
   isFree?: boolean;
   resource?: Resource[];
+  proggress?: Proggress[];
+}
+
+export interface Proggress {
+  id?: string;
+  userId?: string;
+  moduleId?: string | null;
+  exerciseId?: string | null;
 }
 
 export interface Resource {

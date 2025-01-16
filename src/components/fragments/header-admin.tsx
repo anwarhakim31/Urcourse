@@ -27,21 +27,22 @@ const HeaderAdmin = () => {
   return (
     <div className="flex items-center justify-between gap-2">
       <div className="flex gap-2 items-center w-full">
-        {isMobile && (
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger
-              onClick={() => setOpen(true)}
-              className="flex-center lg:hidden "
-            >
-              <Burger open={open} />
-            </SheetTrigger>
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTrigger
+            onClick={() => setOpen(true)}
+            className="flex-center lg:hidden "
+          >
+            <Burger open={open} />
+          </SheetTrigger>
+          {isMobile && (
             <SheetContent side={"left"} className="p-0 bg-white w-full">
               <SheetTitle />
               <SheetDescription />
               <Sidebar onClose={() => setOpen(false)} />
             </SheetContent>
-          </Sheet>
-        )}
+          )}
+        </Sheet>
+
         <SearchCommand />
       </div>
 

@@ -118,6 +118,10 @@ html,
   .scrollbar-none::-webkit-scrollbar {
     display: none;
   }
+
+  .bg-back {
+    background: url("../assets/background-top.svg") no-repeat center top;
+  }
 }
 
 .ql-editor {
@@ -157,4 +161,8 @@ html,
   ); /* Skala lebih kecil untuk slide berikutnya atau sebelumnya */
   opacity: 0.5;
   z-index: 5;
+}
+
+video::-webkit-media-controls {
+  display: none !important;
 }
