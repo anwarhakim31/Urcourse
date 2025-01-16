@@ -33,6 +33,18 @@ export async function POST(req: NextRequest) {
         return ResponseErrorApi(404, "Purchase not found");
       }
 
+      const alreadyPaid = await db.purchase.findFirst({
+        where: {
+          courseId: purchase.courseId,
+          userId: token.id,
+          status: "PAID",
+        },
+      });
+
+      if (alreadyPaid) {
+        return ResponseErrorApi(400, "The same course already paid");
+      }
+
       const { total } = calculateFeeAndPPN(
         purchase?.price as number,
         paymentType

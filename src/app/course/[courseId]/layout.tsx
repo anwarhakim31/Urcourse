@@ -26,7 +26,7 @@ const layout = async ({
 
       <main className="bg-back">
         <div className="container relative w-full flex flex-col lg:flex-row  pt-14 pb-16 gap-4 ">
-          <div className="lg:sticky top-[58px] mt-6 lg:w-[350px]  h-fit border  overflow-hidden border-slate-300 order-2 lg:order-1 rounded-md lg:rounded-bl-md lg:rounded-br-md">
+          <div className="lg:sticky top-[58px] mt-6 lg:w-[350px]  h-fit   overflow-hidden border order-2 lg:order-1 rounded-md lg:rounded-bl-md lg:rounded-br-md">
             <CourseCurriculumList
               course={course as Course}
               courseId={params.courseId}

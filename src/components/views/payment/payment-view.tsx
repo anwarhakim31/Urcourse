@@ -30,6 +30,7 @@ const PaymentView = ({ invoice }: { invoice: string }) => {
                 <PaymentExpiredComponent
                   transaction={data?.data}
                   timeRemaining={timeRemaining}
+                  courseId={data?.data?.purchase?.course?.id}
                 />
                 <div className="flex justify-between  gap-2 mt-4">
                   <div className="flex gap-2">

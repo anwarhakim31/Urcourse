@@ -1,18 +1,23 @@
-import { Course } from "@/types/model";
+import { Course, Reviews } from "@/types/model";
 import { formatCurrency } from "@/utils/helpers";
-import { Gem, Star } from "lucide-react";
+import { Gem } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import CourseDetailAction from "./course-detail-action";
+import CourseReview from "./course-review";
 
 const CoruseDetailView = ({
   course,
   isPaid,
   firstCurriculumId,
+  isReviewed,
+  reviews,
 }: {
   course: Course;
   isPaid: boolean;
   firstCurriculumId: string;
+  isReviewed: boolean;
+  reviews: Reviews[];
 }) => {
   return (
     <div className="flex flex-col xl:flex-row gap-4">
@@ -32,20 +37,23 @@ const CoruseDetailView = ({
             className="my-4"
             dangerouslySetInnerHTML={{ __html: course.description || "" }}
           />
-          <p className="mt-2 text-indigo-700 font-medium">
-            {formatCurrency(course.price || 0)}
-          </p>
-          <div className="flex justify-between items-center mt-2">
-            <span className="flex items-center gap-2  text-xs">
-              <Star size={16} className="fill-yellow-500 text-yellow-500" />
-              0/5
-            </span>
-            <span className="flex items-center gap-2 pointer-events-none text-indigo-700 border rounded-full font-medium  bg-indigo-100 px-4 py-0.5 text-xs">
-              <Gem size={16} strokeWidth={1.5} className="text-indigo-700" />{" "}
-              {course.level}
-            </span>
-          </div>
+          {!isPaid && (
+            <p className="mt-2 font-medium">
+              {formatCurrency(course.price || 0)}
+            </p>
+          )}
+
+          <span className="mt-4 w-fit flex items-center gap-2 pointer-events-none text-indigo-700 border rounded-full font-medium  bg-indigo-100 px-4 py-0.5 text-xs">
+            <Gem size={16} strokeWidth={1.5} className="text-indigo-700" />{" "}
+            {course.level}
+          </span>
         </div>
+        <CourseReview
+          isPaid={isPaid}
+          course={course as Course}
+          isReviewed={isReviewed}
+          reviews={reviews as Reviews[]}
+        />
       </div>
       <CourseDetailAction
         course={course as Course}

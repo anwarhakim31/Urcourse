@@ -2,7 +2,7 @@ import CoruseDetailView from "@/components/views/course/course-detail/course-det
 import { getCurriculum } from "@/lib/api-service";
 import authOptions from "@/lib/authOptions";
 import { db } from "@/lib/db";
-import { Course } from "@/types/model";
+import { Course, Reviews } from "@/types/model";
 import { getServerSession } from "next-auth";
 
 const DetailPage = async ({ params }: { params: { courseId: string } }) => {
@@ -18,11 +18,29 @@ const DetailPage = async ({ params }: { params: { courseId: string } }) => {
 
   const { course, curriculumList } = await getCurriculum(params.courseId);
 
+  const isReviewed = await db.rating.findFirst({
+    where: {
+      userId: session?.user?.id,
+      courseId: params.courseId,
+    },
+  });
+
+  const reviews = await db.rating.findMany({
+    where: {
+      courseId: params.courseId,
+    },
+    include: {
+      user: true,
+    },
+  });
+
   return (
     <CoruseDetailView
       course={course as Course}
       isPaid={isPaid ? true : false}
       firstCurriculumId={curriculumList[0].id as string}
+      isReviewed={!!isReviewed}
+      reviews={reviews as Reviews[]}
     />
   );
 };

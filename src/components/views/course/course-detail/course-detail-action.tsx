@@ -5,7 +5,7 @@ import useCreatePurchase from "@/hooks/purchase/useCreatePurchase";
 import { cn } from "@/lib/utils";
 import { Course } from "@/types/model";
 
-import { Wallet } from "lucide-react";
+import { BookOpen, Wallet } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
@@ -61,7 +61,7 @@ const CourseDetailAction = ({
           isPending && "cursor-not-allowed bg-white"
         )}
       >
-        <Wallet size={18} />
+        {isPaid ? <BookOpen size={18} /> : <Wallet size={18} />}
         <span>
           {isPending
             ? "Purchasing..."

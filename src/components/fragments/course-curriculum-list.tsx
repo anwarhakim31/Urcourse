@@ -33,7 +33,7 @@ const CourseCurriculumList = ({ courseId, list, course }: PropsType) => {
 
   return (
     <div className="max-h-[calc(100vh-50px)] ">
-      <div className="flex-center py-4 bg-white">
+      <div className="flex-center py-4 bg-white border-b  ">
         <h3 className="font-medium">
           {pathname === `/course/${courseId}`
             ? "What you will learn!"

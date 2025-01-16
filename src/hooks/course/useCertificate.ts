@@ -14,7 +14,7 @@ const useCertificate = () => {
       const blob = new Blob([response], { type: "application/pdf" });
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = "certificate.pdf"; // File name for download
+      link.download = "certificate-urcourse.pdf"; // File name for download
       link.click(); // Trigger the download
     },
   });

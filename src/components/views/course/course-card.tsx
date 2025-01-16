@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const CourseCard = ({ item }: { item: Course }) => {
+const CourseCard = ({ item, isPaid }: { item: Course; isPaid: boolean }) => {
   return (
     <Link href={"/course/" + item.id}>
       <div className="rounded-md  border flex flex-col overflow-hidden bg-white ">
@@ -24,7 +24,7 @@ const CourseCard = ({ item }: { item: Course }) => {
             <h3 className="font-medium truncate">{item.title}</h3>
             <p className="text-slate-700 text-sm">{item?.category?.name}</p>
             <p className="mt-2 text-indigo-700 font-medium">
-              {formatCurrency((item.price as number) || 0)}
+              {isPaid ? "Paid" : formatCurrency((item.price as number) || 0)}
             </p>
             <div className="flex justify-between items-center mt-2">
               <span className="flex items-center gap-2  text-xs">

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import useCreatePurchase from "@/hooks/purchase/useCreatePurchase";
 import { Transaction } from "@/types/model";
 import { AlarmClock, X } from "lucide-react";
 import React, { Fragment } from "react";
@@ -6,10 +7,14 @@ import React, { Fragment } from "react";
 const PaymentExpiredComponent = ({
   transaction,
   timeRemaining,
+  courseId,
 }: {
   transaction: Transaction;
   timeRemaining: string;
+  courseId: string;
 }) => {
+  const { mutate, isPending } = useCreatePurchase();
+
   return (
     <Fragment>
       {transaction?.status === "PENDING" ? (
@@ -44,7 +49,11 @@ const PaymentExpiredComponent = ({
               <p className="text-sm">You can try to puchase again</p>
             </div>
           </div>
-          <Button className="rounded-full mt-4 w-full h-10">
+          <Button
+            className="rounded-full mt-4 w-full h-10"
+            disabled={isPending}
+            onClick={() => mutate({ courseId })}
+          >
             Puchase Again
           </Button>
         </div>

@@ -11,6 +11,7 @@ const Header = () => {
   const session = useSession();
   const [open, setOpen] = React.useState(false);
   const [pending, setPending] = React.useState(false);
+  const [isScroll, setIsScroll] = React.useState(false);
 
   const handleToggle = () => {
     if (pending) return;
@@ -27,9 +28,23 @@ const Header = () => {
     }, 500);
   };
 
+  React.useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 0) {
+        setIsScroll(true);
+      } else {
+        setIsScroll(false);
+      }
+    });
+  }, []);
+
   return (
     <Fragment>
-      <div className="fixed top-0 left-0 w-full  border-b bg-white z-50">
+      <div
+        className={`fixed top-0 left-0 w-full  border-b bg-white z-50 ${
+          isScroll && "shadow-[0_5px_8px_rgba(0,0,0,0.1)]"
+        }`}
+      >
         <header className="container  h-14 flex items-center justify-between  gap-4">
           <LogoComponent />
 

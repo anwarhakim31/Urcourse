@@ -7,11 +7,16 @@ export interface Course {
   image?: string | null;
   level?: string | null;
   price?: number | null;
+
   curriculum?: {
     id?: string;
     module: Module[];
     exercise: Exercise[];
   };
+
+  averageRating?: number | null;
+  ratingCount?: number | null;
+
   isPublished?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
@@ -86,4 +91,14 @@ export interface Transaction {
   purchase?: Purchase;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface Reviews {
+  id?: string;
+  userId?: string;
+  courseId?: string;
+  rating?: number;
+  comment?: string;
+  course?: Course;
+  user?: User;
 }

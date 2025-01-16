@@ -45,7 +45,6 @@ const CurriculumListView = ({
 
   return (
     <Fragment>
-      <div className="flex gap-2 items-center bg-emerald-500"></div>
       <div className="flex flex-col xl:flex-row gap-4">
         <div className="flex-1  my-6 xl:mx-4">
           <VideoPlayer

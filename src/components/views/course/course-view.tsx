@@ -24,6 +24,8 @@ const CourseView: React.FC<PropsType> = ({ category }) => {
 
   const { data, isLoading } = useFetchCourseObserver(searchParams);
 
+  console.log(data);
+
   return (
     <main className="bg-back">
       <div className="container py-24 ">
@@ -67,11 +69,19 @@ const CourseView: React.FC<PropsType> = ({ category }) => {
         </div>
         <div className="grid sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 mt-10 gap-6">
           {isLoading ? (
-            Array.from({ length: 12 }).map((item, i) => (
+            Array.from({ length: 8 }).map((_, i) => (
               <CourseCardSkeleton key={i} />
             ))
-          ) : data?.length > 0 ? (
-            data.map((item: Course) => <CourseCard key={item.id} item={item} />)
+          ) : data?.course?.length > 0 ? (
+            data?.course?.map((item: Course) => (
+              <CourseCard
+                key={item.id}
+                item={item}
+                isPaid={
+                  !!data.purchased.some((p: { id: string }) => p.id === item.id)
+                }
+              />
+            ))
           ) : (
             <div className="flex-center col-span-12 flex-col">
               <Image

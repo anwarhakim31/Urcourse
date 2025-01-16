@@ -19,6 +19,7 @@ model User{
   isAdmin Boolean @default(false)
   createdAt DateTime @default(now())
   purchases Purchase[]
+  rating Rating[]
 
   @@map("users")
 }
@@ -47,12 +48,33 @@ model Course{
   category Category? @relation(fields: [categoryId],references: [id] ,onDelete: SetNull)
 
   curriculum Curriculum? 
+  
 
    purchases   Purchase[]
-  attachments Attachment[]
+
+  averageRating Float?     @default(0)
+  ratingCount Int @default(0)  
+
+  rating Rating[]
+
+  certificate Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Rating {
+  id        String   @id @default(uuid()) 
+  userId    String   
+  courseId  String  
+  rating    Int      
+  comment   String?  
+  createdAt DateTime @default(now())  
+
+  user      User     @relation(fields: [userId], references: [id],onDelete: Cascade)  
+  course    Course   @relation(fields: [courseId], references: [id],onDelete: Cascade) 
+
+  @@unique([userId, courseId])  
 }
 
 model Category{
@@ -109,7 +131,7 @@ model Module{
   description String? @db.Text
   position Int
   video String?
-  muxData MuxData?
+
   resourse Resource[]
 
 
@@ -143,15 +165,6 @@ model Proggress{
 
 
 
-model MuxData{
-    id String @id @default(uuid())
-    assetsId String
-    playbackId String?
-    
-
-    moduleId String    @unique  
-    module   Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
-}
 
 model Resource{
   id String @id @default(uuid())
@@ -172,19 +185,7 @@ model Resource{
 
 
 
-model Attachment{
-  id String @id @default(uuid())
-  name String 
-  url String
 
-  courseId String
-  course Course @relation(fields: [courseId],references: [id],onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([courseId])
-}
 
 
 model Purchase {
@@ -196,8 +197,8 @@ model Purchase {
   createdAt   DateTime      @default(now())
   transactions Transaction[]
 
-  user   User   @relation(fields: [userId], references: [id])
-  course Course @relation(fields: [courseId], references: [id])
+  user   User   @relation(fields: [userId], references: [id],onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id],onDelete: Cascade)
 }
 model Transaction {
   id              String         @id @default(uuid())
@@ -212,7 +213,7 @@ model Transaction {
   createdAt       DateTime       @default(now())
   updatedAt       DateTime @updatedAt
 
-  purchase Purchase @relation(fields: [purchaseId], references: [id])
+  purchase Purchase @relation(fields: [purchaseId], references: [id],onDelete: Cascade)
 }
 
 enum PurchaseStatus {
