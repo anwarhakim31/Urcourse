@@ -21,7 +21,7 @@ export default function ImageUploadBox({
   const [hover, setHover] = React.useState(false);
 
   return (
-    <div className="flex flex-wrap gap-4 w-full">
+    <div className="flex flex-wrap gap-4 w-full ">
       {value ? (
         <div
           onMouseEnter={() => setHover(true)}
@@ -58,7 +58,7 @@ export default function ImageUploadBox({
           onUploadError={(error: Error) => {
             toast.error(error.message);
           }}
-          className="w-full h-[250px] py-0 px-0"
+          className="w-full h-[250px] py-0 px-0 bg-white"
         />
       )}
     </div>

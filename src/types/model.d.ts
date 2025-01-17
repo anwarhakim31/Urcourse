@@ -43,10 +43,29 @@ export interface Exercise {
   title?: string;
   description?: string;
   position?: number;
-  video?: string;
+  image?: string | null;
   isFree?: boolean;
-  resource?: Resource[];
+  resourse?: Resource[];
   proggress?: Proggress[];
+  questions?: Question[];
+}
+
+export interface Question {
+  id?: string;
+  text?: string;
+  position?: number;
+  exerciseId?: string;
+  exercise?: Exercise;
+  image?: string;
+  answers?: Answer[];
+}
+
+export interface Answer {
+  id?: string;
+  text?: string;
+  isCorrect?: boolean;
+  questionId?: string;
+  question?: Question;
 }
 
 export interface Proggress {

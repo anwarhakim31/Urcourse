@@ -6,6 +6,7 @@ const AreaFormControl = ({
   field,
   label,
   className,
+  placeholder = "Enter your description",
 }: {
   field: {
     value?: string | null;
@@ -13,6 +14,7 @@ const AreaFormControl = ({
   };
   label: string;
   className?: string;
+  placeholder?: string;
 }) => {
   const ref = React.useRef<HTMLDivElement>(null);
 
@@ -23,15 +25,15 @@ const AreaFormControl = ({
         <FormControl>
           <RichEditor
             ref={ref}
-            placeholder="Enter your description"
             onChange={field.onChange}
+            placeholder={placeholder}
             value={field.value as string}
             className={className}
           />
         </FormControl>
       </div>
 
-      <FormMessage />
+      <FormMessage className="text-xs" />
     </FormItem>
   );
 };

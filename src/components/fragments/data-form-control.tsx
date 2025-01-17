@@ -60,7 +60,7 @@ const DataFormControl = ({
         )}
       </div>
 
-      <FormMessage />
+      <FormMessage className="text-xs" />
     </FormItem>
   );
 };

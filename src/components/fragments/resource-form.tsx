@@ -32,7 +32,7 @@ const ResourceForm: React.FC<ResourceFormProps> = ({ form, field }) => {
     <div className="mt-4">
       <h3 className="text-base font-medium ">Resource (opsional)</h3>
       <p className="text-sm mt-1">
-        Add resource to this module to make it more interactive
+        Add resource to this curriculum to make it more interactive
       </p>
       {field.fields.map((f, i) => (
         <div

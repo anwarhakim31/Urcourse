@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import React, { forwardRef } from "react";
 
 import "react-quill/dist/quill.snow.css";
+import { Skeleton } from "./skeleton";
 
 interface PropsType {
   placeholder?: string;
@@ -19,7 +20,7 @@ const RichEditor = forwardRef<HTMLDivElement, PropsType>(
       () =>
         dynamic(() => import("react-quill-new"), {
           ssr: false,
-          loading: () => <p className="text-sm">Loading...</p>,
+          loading: () => <Skeleton className="h-32 rounded-md "></Skeleton>,
         }),
       []
     );
@@ -30,7 +31,7 @@ const RichEditor = forwardRef<HTMLDivElement, PropsType>(
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className={cn("text-sm min-h-32 rounded-md ", className)}
+        className={cn("text-sm min-h-32 rounded-md  ", className)}
       />
     );
   }

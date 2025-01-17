@@ -16,7 +16,7 @@ const ImageFormControl = ({
 }) => {
   return (
     <FormItem className="w-full">
-      <FormLabel className="font-medium text-xs">{label}</FormLabel>
+      <FormLabel className="font-medium text-xs ">{label}</FormLabel>
       <div className="relative w-full">
         <FormControl>
           <ImageUploadBox

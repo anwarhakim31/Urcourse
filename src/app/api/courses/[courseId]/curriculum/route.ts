@@ -53,6 +53,64 @@ export async function DELETE(
       },
     });
 
+    const updatedModules = await db.module.findMany({
+      where: {
+        curriculumId: curriculum.id,
+      },
+      orderBy: {
+        position: "asc",
+      },
+    });
+
+    const updatedExercises = await db.exercise.findMany({
+      where: {
+        curriculumId: curriculum.id,
+      },
+      orderBy: {
+        position: "asc",
+      },
+    });
+
+    const list = [...updatedModules, ...updatedExercises];
+    const sort = list.sort((a, b) => a.position - b.position);
+
+    const updatedPosition = sort.map((item, index) => ({
+      id: item.id,
+      position: index + 1,
+      type: item.type,
+    }));
+
+    updatedPosition.forEach(async (item) => {
+      if (item.type === "module") {
+        await db.module.update({
+          where: {
+            id: item.id,
+          },
+          data: {
+            position: item.position,
+          },
+        });
+      } else {
+        await db.exercise.update({
+          where: {
+            id: item.id,
+          },
+          data: {
+            position: item.position,
+          },
+        });
+      }
+    });
+
+    await db.curriculum.update({
+      where: {
+        id: curriculum.id,
+      },
+      data: {
+        lastPosition: updatedPosition.length,
+      },
+    });
+
     if (curriculum.module.length === 0 && curriculum.exercise.length === 0) {
       await db.course.update({
         where: {

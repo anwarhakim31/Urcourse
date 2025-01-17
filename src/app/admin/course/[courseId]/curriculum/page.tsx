@@ -40,6 +40,7 @@ const CuriculumCoursePage = async ({
   ];
 
   const sortCuricul = curriculum.sort((a, b) => a.position - b.position);
+
   const data = sortCuricul.map((item) => ({
     id: item.id,
     type: item.type,

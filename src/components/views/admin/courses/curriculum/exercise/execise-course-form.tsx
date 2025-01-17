@@ -1,31 +1,32 @@
 "use client";
 
-import AccessFormControl from "@/components/fragments/access-form-control";
 import AreaFormControl from "@/components/fragments/area-form-control";
 
 import DataFormControl from "@/components/fragments/data-form-control";
-import FileFormControl from "@/components/fragments/file-form-control";
+
+import ImageFormControl from "@/components/fragments/image-form-control";
 import ResourceForm from "@/components/fragments/resource-form";
 import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { LoadingButton } from "@/components/ui/loading-button";
 import useCreateModule from "@/hooks/course/module/useCreateModule";
 import usePatchModule from "@/hooks/course/module/usePatchModule";
-import { Module } from "@/types/model";
+import { Exercise } from "@/types/model";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
+import ExerciseQuestionComp from "./exercise-question-comp";
 
 interface PropsType {
-  module?: Module;
+  exercise?: Exercise;
   courseId: string;
-  moduleId?: string;
+  exerciseId?: string;
 }
 
 const formSchema = z.object({
   title: z.string().nonempty({ message: "title is required" }),
-  video: z.string().nullable().optional(),
+  image: z.string().optional(),
   description: z.string().nullable().optional(),
   isFree: z.boolean().optional(),
   resource: z
@@ -36,17 +37,36 @@ const formSchema = z.object({
       })
     )
     .optional(),
+  questions: z
+    .array(
+      z.object({
+        text: z.string().nonempty({ message: "Question is required" }),
+        image: z.string().optional(),
+        answers: z
+          .array(
+            z.object({
+              text: z.string().nonempty({ message: "Answer is required" }),
+              isCorrect: z.boolean(),
+            })
+          )
+          .min(2, { message: "At least 2 answers are required" })
+          .max(4, {
+            message: "At most 4 answers are required",
+          }),
+      })
+    )
+    .optional(),
 });
 
-const ModuleCourseForm = ({ module, courseId, moduleId }: PropsType) => {
+const ExerciseCourseForm = ({ exercise, courseId, exerciseId }: PropsType) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: module?.title || "",
-      description: module?.description || "",
-      video: module?.video || "",
-      isFree: module?.isFree || false,
-      resource: module?.resourse || [],
+      title: exercise?.title || "",
+      description: exercise?.description || "",
+      image: exercise?.image || "",
+      resource: exercise?.resourse || [],
+      questions: exercise?.questions || [],
     },
     shouldFocusError: true,
   });
@@ -62,21 +82,26 @@ const ModuleCourseForm = ({ module, courseId, moduleId }: PropsType) => {
     useCreateModule(courseId);
   const { mutate: mutatePatch, isPending: isPendingPatch } = usePatchModule(
     courseId,
-    moduleId as string
+    exerciseId as string
   );
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    if (!moduleId) return mutateCreate(data);
+    if (!exerciseId) return mutateCreate(data);
     else return mutatePatch(data);
   };
+
+  const fieldQuestion = useFieldArray({
+    control: form.control,
+    name: "questions",
+  });
 
   return (
     <Form {...form}>
       <div className="flex items-center justify-between mt-4 ">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-700">Module</h1>
+          <h1 className="text-2xl font-semibold text-slate-700">Exercise</h1>
           <p className="text-sm text-slate-500">
-            Manage the module curriculum for this course
+            Manage the exercise curriculum for this course
           </p>
         </div>
       </div>
@@ -88,18 +113,18 @@ const ModuleCourseForm = ({ module, courseId, moduleId }: PropsType) => {
             <DataFormControl
               field={field}
               label="Title"
-              placeholder="Ex: Web development"
+              placeholder="Ex: Chapter 1"
               required
             />
           )}
         />
 
-        <div className="mt-4">
+        <div className="mt-4 w-full">
           <FormField
             control={form.control}
-            name="video"
+            name="image"
             render={({ field }) => (
-              <FileFormControl field={field} label="Video" />
+              <ImageFormControl field={field} label="Image" />
             )}
           />
         </div>
@@ -116,21 +141,26 @@ const ModuleCourseForm = ({ module, courseId, moduleId }: PropsType) => {
             )}
           />
         </div>
+        <ExerciseQuestionComp
+          append={(value: {
+            text: string;
+            answers: { text: string; isCorrect: boolean }[];
+          }) => {
+            fieldQuestion.append(value);
+          }}
+          fields={fieldQuestion.fields}
+          remove={fieldQuestion.remove}
+          update={(
+            index: number,
+            value: {
+              text: string;
+              answers: { text: string; isCorrect: boolean }[];
+            }
+          ) => {
+            fieldQuestion.update(index, value);
+          }}
+        />
         <ResourceForm form={form} field={field} />
-
-        <div className="mt-4">
-          <FormField
-            control={form.control}
-            name="isFree"
-            render={({ field }) => (
-              <AccessFormControl
-                field={field}
-                label="Accessibility"
-                description="Everyone can access this module for FREE"
-              />
-            )}
-          />
-        </div>
 
         <div className="flex flex-col-reverse items-center gap-4 md:flex-row mt-4">
           <Button
@@ -157,4 +187,4 @@ const ModuleCourseForm = ({ module, courseId, moduleId }: PropsType) => {
   );
 };
 
-export default ModuleCourseForm;
+export default ExerciseCourseForm;

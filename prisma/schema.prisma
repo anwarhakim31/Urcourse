@@ -108,12 +108,12 @@ model Exercise {
   type        TypeCurriculum @default(exercise)
   description String? @db.Text
   isPublished Boolean @default(false)
-  question    String     
-  answer      Json
-  correctAnswer Int    
+  image  String?
+  
+ 
   position Int
   resourse Resource[]
-
+  questions    Question[] 
 
   curriculumId String
   curriculum  Curriculum @relation(fields: [curriculumId], references: [id], onDelete: Cascade)
@@ -121,6 +121,27 @@ model Exercise {
   proggress Proggress[] 
 
   createdAt DateTime @default(now())
+}
+
+model Question {
+  id          String     @id @default(uuid())
+  text        String     @db.Text
+  exerciseId  String
+  exercise    Exercise   @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  image       String?
+  answers     Answer[]   
+
+  createdAt   DateTime   @default(now())
+}
+
+model Answer {
+  id          String     @id 
+  text        String     @db.Text
+  isCorrect   Boolean    @default(false)
+  questionId  String
+  question    Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime   @default(now())
 }
 
 model Module{
@@ -140,7 +161,6 @@ model Module{
 
   proggress Proggress[] 
 
-  isFree Boolean @default(false)
 
   createdAt DateTime @default(now())
 }

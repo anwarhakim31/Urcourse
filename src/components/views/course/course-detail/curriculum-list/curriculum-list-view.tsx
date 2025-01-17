@@ -47,20 +47,22 @@ const CurriculumListView = ({
     <Fragment>
       <div className="flex flex-col xl:flex-row gap-4">
         <div className="flex-1  my-6 xl:mx-4">
-          <VideoPlayer
-            src={list?.video || ""}
-            onEndded={() => {
-              if (!isActive) {
-                mutateProgress({
-                  listId: params.curriculumListId,
-                  type:
-                    "type" in list && list.type === "module"
-                      ? "module"
-                      : "exercise",
-                });
-              }
-            }}
-          />
+          {"video" in list ? (
+            <VideoPlayer
+              src={list?.video || ""}
+              onEndded={() => {
+                if (!isActive) {
+                  mutateProgress({
+                    listId: params.curriculumListId,
+                    type:
+                      "type" in list && list.type === "module"
+                        ? "module"
+                        : "exercise",
+                  });
+                }
+              }}
+            />
+          ) : null}
           <div className="mt-6 p-4 rounded-md border bg-white">
             <h1 className="font-semibold text-xl capitalize">{list?.title}</h1>
 

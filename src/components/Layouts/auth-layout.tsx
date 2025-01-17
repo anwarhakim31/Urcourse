@@ -87,11 +87,11 @@ const AuthLayout = () => {
               >
                 {pathname === "/register"
                   ? "Create your account"
-                  : pathname === "/login"
-                  ? "Login to Urcourse"
+                  : pathname === "/reset-password"
+                  ? "Reset your password"
                   : pathname === "/forget-password"
                   ? "Forget Password"
-                  : "Reset Password"}
+                  : "Login to Urcourse"}
               </h1>
               <p
                 className={`text-sm text-gray-700 mt-1 ${
@@ -100,8 +100,12 @@ const AuthLayout = () => {
               >
                 {pathname === "/register" ? (
                   "Welcome! Please fill in the details to get started."
-                ) : pathname === "/login" ? (
-                  "welcome back! Please login to continue"
+                ) : pathname === "/reset-password" ? (
+                  <>
+                    {success
+                      ? "Password reset successfully, you can login now"
+                      : "Please enter a new password."}
+                  </>
                 ) : pathname === "/forget-password" ? (
                   <>
                     {success
@@ -109,11 +113,7 @@ const AuthLayout = () => {
                       : "Please enter your email address to receive a link to reset your password."}
                   </>
                 ) : (
-                  <>
-                    {success
-                      ? "Password reset successfully, you can login now"
-                      : "Please enter a new password."}
-                  </>
+                  "welcome back! Please login to continue"
                 )}
               </p>
             </div>

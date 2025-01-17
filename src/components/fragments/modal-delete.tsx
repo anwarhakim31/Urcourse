@@ -30,7 +30,9 @@ export const ModalDelete: React.FC<AlertModalProps> = ({
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle className="text-base">
+            Are you absolutely sure?
+          </AlertDialogTitle>
           <AlertDialogDescription className="">{desc}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
