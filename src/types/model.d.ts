@@ -7,7 +7,7 @@ export interface Course {
   image?: string | null;
   level?: string | null;
   price?: number | null;
-
+  certificate?: boolean;
   curriculum?: {
     id?: string;
     module: Module[];
@@ -41,6 +41,7 @@ export interface Exercise {
   id?: string;
   isPublished?: boolean;
   title?: string;
+  duration?: string;
   description?: string;
   position?: number;
   image?: string | null;

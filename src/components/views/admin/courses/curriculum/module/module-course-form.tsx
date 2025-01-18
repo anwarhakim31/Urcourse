@@ -1,6 +1,5 @@
 "use client";
 
-import AccessFormControl from "@/components/fragments/access-form-control";
 import AreaFormControl from "@/components/fragments/area-form-control";
 
 import DataFormControl from "@/components/fragments/data-form-control";
@@ -27,7 +26,6 @@ const formSchema = z.object({
   title: z.string().nonempty({ message: "title is required" }),
   video: z.string().nullable().optional(),
   description: z.string().nullable().optional(),
-  isFree: z.boolean().optional(),
   resource: z
     .array(
       z.object({
@@ -45,7 +43,6 @@ const ModuleCourseForm = ({ module, courseId, moduleId }: PropsType) => {
       title: module?.title || "",
       description: module?.description || "",
       video: module?.video || "",
-      isFree: module?.isFree || false,
       resource: module?.resourse || [],
     },
     shouldFocusError: true,
@@ -117,20 +114,6 @@ const ModuleCourseForm = ({ module, courseId, moduleId }: PropsType) => {
           />
         </div>
         <ResourceForm form={form} field={field} />
-
-        <div className="mt-4">
-          <FormField
-            control={form.control}
-            name="isFree"
-            render={({ field }) => (
-              <AccessFormControl
-                field={field}
-                label="Accessibility"
-                description="Everyone can access this module for FREE"
-              />
-            )}
-          />
-        </div>
 
         <div className="flex flex-col-reverse items-center gap-4 md:flex-row mt-4">
           <Button

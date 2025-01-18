@@ -1,4 +1,4 @@
-import { Course, Module } from "@/types/model";
+import { Course, Exercise, Module } from "@/types/model";
 
 export const splitFullName = (fullname: string) => {
   const split = fullname.split(" ");
@@ -37,6 +37,26 @@ export const requiredFieldCourse = (course: Course) => {
 
 export const requiredFieldModule = (module: Module) => {
   const requiredField = [module.title, module.description, module.video];
+
+  const totalField = requiredField.length;
+  const complatedField = requiredField.filter(Boolean).length;
+  const complated = complatedField === totalField;
+
+  return {
+    totalField,
+    complatedField,
+    complated,
+  };
+};
+
+export const requiredFieldExercise = (exercise: Exercise) => {
+  const requiredField = [
+    exercise.title,
+    exercise.description,
+    exercise.image,
+    exercise.duration,
+    exercise.questions!.length > 0 ? "true" : undefined,
+  ];
 
   const totalField = requiredField.length;
   const complatedField = requiredField.filter(Boolean).length;

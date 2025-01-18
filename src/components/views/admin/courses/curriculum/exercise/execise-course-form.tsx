@@ -7,16 +7,25 @@ import DataFormControl from "@/components/fragments/data-form-control";
 import ImageFormControl from "@/components/fragments/image-form-control";
 import ResourceForm from "@/components/fragments/resource-form";
 import { Button } from "@/components/ui/button";
-import { Form, FormField } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { LoadingButton } from "@/components/ui/loading-button";
-import useCreateModule from "@/hooks/course/module/useCreateModule";
-import usePatchModule from "@/hooks/course/module/usePatchModule";
+
 import { Exercise } from "@/types/model";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import ExerciseQuestionComp from "./exercise-question-comp";
+import useCreateExercise from "@/hooks/course/excercise/useCreateExercise";
+import usePatchExercise from "@/hooks/course/excercise/usePatchExercise";
+import { Input } from "@/components/ui/input";
 
 interface PropsType {
   exercise?: Exercise;
@@ -27,8 +36,8 @@ interface PropsType {
 const formSchema = z.object({
   title: z.string().nonempty({ message: "title is required" }),
   image: z.string().optional(),
-  description: z.string().nullable().optional(),
-  isFree: z.boolean().optional(),
+  description: z.string().optional(),
+  duration: z.string().optional(),
   resource: z
     .array(
       z.object({
@@ -41,7 +50,6 @@ const formSchema = z.object({
     .array(
       z.object({
         text: z.string().nonempty({ message: "Question is required" }),
-        image: z.string().optional(),
         answers: z
           .array(
             z.object({
@@ -49,7 +57,7 @@ const formSchema = z.object({
               isCorrect: z.boolean(),
             })
           )
-          .min(2, { message: "At least 2 answers are required" })
+
           .max(4, {
             message: "At most 4 answers are required",
           }),
@@ -57,13 +65,13 @@ const formSchema = z.object({
     )
     .optional(),
 });
-
 const ExerciseCourseForm = ({ exercise, courseId, exerciseId }: PropsType) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: exercise?.title || "",
       description: exercise?.description || "",
+      duration: exercise?.duration || "",
       image: exercise?.image || "",
       resource: exercise?.resourse || [],
       questions: exercise?.questions || [],
@@ -79,8 +87,8 @@ const ExerciseCourseForm = ({ exercise, courseId, exerciseId }: PropsType) => {
   });
 
   const { mutate: mutateCreate, isPending: isPendingCreate } =
-    useCreateModule(courseId);
-  const { mutate: mutatePatch, isPending: isPendingPatch } = usePatchModule(
+    useCreateExercise(courseId);
+  const { mutate: mutatePatch, isPending: isPendingPatch } = usePatchExercise(
     courseId,
     exerciseId as string
   );
@@ -94,6 +102,8 @@ const ExerciseCourseForm = ({ exercise, courseId, exerciseId }: PropsType) => {
     control: form.control,
     name: "questions",
   });
+
+  console.log(form.watch("questions"));
 
   return (
     <Form {...form}>
@@ -116,6 +126,31 @@ const ExerciseCourseForm = ({ exercise, courseId, exerciseId }: PropsType) => {
               placeholder="Ex: Chapter 1"
               required
             />
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="duration"
+          render={({ field }) => (
+            <FormItem className="mt-4">
+              <FormLabel className="font-medium text-xs ">Duration</FormLabel>
+              <div className="relative w-full">
+                <FormControl>
+                  <Input
+                    {...field}
+                    autoComplete="off"
+                    type="number"
+                    min={1}
+                    step={1}
+                    max={60}
+                    placeholder="5"
+                    className={"text-sm bg-white"}
+                  />
+                </FormControl>
+              </div>
+
+              <FormMessage className="text-xs" />
+            </FormItem>
           )}
         />
 

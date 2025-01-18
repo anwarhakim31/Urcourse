@@ -43,7 +43,7 @@ declare module "next-auth" {
 const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
-    maxAge: 1 * 60 * 60,
+    maxAge: 60 * 60 * 1,
   },
   secret: process.env.NEXTAUTH_SECRET,
   providers: [

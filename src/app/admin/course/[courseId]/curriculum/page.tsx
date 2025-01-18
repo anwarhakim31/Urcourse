@@ -46,6 +46,7 @@ const CuriculumCoursePage = async ({
     type: item.type,
     title: item.title,
     position: item.position,
+    isPublished: item.isPublished,
   }));
 
   if (!course) {

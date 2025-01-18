@@ -13,8 +13,15 @@ import { ModalDelete } from "@/components/fragments/modal-delete";
 import useDeleteCurriculumList from "@/hooks/course/curriculum/useDeleteCurriculumList";
 import { toast } from "sonner";
 import { ResponseErrorAxios } from "@/lib/response-error";
+import { cn } from "@/lib/utils";
 
-type Data = { id: string; type: string; title: string; position: number };
+type Data = {
+  id: string;
+  type: string;
+  title: string;
+  position: number;
+  isPublished: boolean;
+};
 
 const CurriculumListView = ({
   data,
@@ -76,9 +83,9 @@ const CurriculumListView = ({
   if (!isMounted)
     return (
       <div className="mt-28 flex items-center justify-center w-full gap-2">
-        <div className="w-4 h-4 rounded-full bg-indigo-700 animate-bounce"></div>
-        <div className="w-4 h-4 rounded-full bg-indigo-700  animate-bounce delay-100"></div>
-        <div className="w-4 h-4 rounded-full bg-indigo-700  animate-bounce"></div>
+        <div className="w-3 h-3 rounded-full bg-indigo-700 animate-bounce"></div>
+        <div className="w-3 h-3 rounded-full bg-indigo-700  animate-bounce delay-200"></div>
+        <div className="w-3 h-3 rounded-full bg-indigo-700  animate-bounce"></div>
       </div>
     );
 
@@ -100,7 +107,10 @@ const CurriculumListView = ({
                         <div
                           {...provided.draggableProps}
                           ref={provided.innerRef}
-                          className="flex items-center bg-indigo-50  rounded-lg text-sm  p-3"
+                          className={cn(
+                            "flex items-center   rounded-lg text-sm  p-3",
+                            item.isPublished ? "bg-indigo-50" : "bg-orange-50"
+                          )}
                         >
                           <div {...provided.dragHandleProps}>
                             <Grip className="h-4 w-4 cursor-pointer mr-4 hover:text-blue-600 font-medium" />

@@ -36,7 +36,7 @@ const DetailPage = async ({ params }: { params: { courseId: string } }) => {
 
   return (
     <CoruseDetailView
-      course={course as Course}
+      course={course as unknown as Course}
       isPaid={isPaid ? true : false}
       firstCurriculumId={curriculumList[0].id as string}
       isReviewed={!!isReviewed}

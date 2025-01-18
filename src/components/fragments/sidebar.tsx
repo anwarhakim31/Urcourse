@@ -27,13 +27,13 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
             )}
           >
             <div className="flex items-center gap-x-2 py-4">
-              {item.icon && <item.icon size={18} strokeWidth={1.5} />}
-              <span className="text-sm">{item.name}</span>
+              {item.icon && <item.icon size={16} strokeWidth={1.5} />}
+              <span className="text-sm ">{item.name}</span>
             </div>
 
             <div
               className={cn(
-                "bg-indigo-700 h-full w-1 ml-auto opacity-0 transition-all duration-200",
+                "bg-indigo-700 h-full w-1 ml-auto opacity-0 transition-all duration-200 ",
 
                 pathname.startsWith(item.path) && "opacity-100"
               )}

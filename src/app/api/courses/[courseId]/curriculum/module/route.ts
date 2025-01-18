@@ -14,8 +14,7 @@ export async function POST(
       return token;
     }
 
-    const { title, description, video, isFree, resource } =
-      await request.json();
+    const { title, description, video, resource } = await request.json();
 
     const course = await db.course.findUnique({
       where: {
@@ -39,10 +38,9 @@ export async function POST(
     const newModule = await db.module.create({
       data: {
         title,
-        description,
+        description: description === "<p><br></p" ? "" : description,
         video,
         position: position + 1,
-        isFree,
         curriculumId: course.curriculum?.id as string,
         isPublished: title && description && video ? true : false,
       },
@@ -83,8 +81,7 @@ export async function PATCH(request: NextRequest) {
     }
     const moduleId = request.nextUrl.searchParams.get("moduleId");
 
-    const { title, description, video, isFree, resource } =
-      await request.json();
+    const { title, description, video, resource } = await request.json();
 
     const modules = await db.module.findUnique({
       where: {
@@ -108,7 +105,6 @@ export async function PATCH(request: NextRequest) {
         description:
           (description as string) === "<p><br></p>" ? "" : description,
         video,
-        isFree,
         isPublished:
           !title || description === "<p><br></p>" || !video
             ? false
@@ -116,7 +112,12 @@ export async function PATCH(request: NextRequest) {
       },
     });
 
-    if (resource?.length > 0 && modules.resourse?.length !== resource.length) {
+    if (modules.resourse?.length !== resource.length) {
+      await db.resource.deleteMany({
+        where: {
+          moduleId: moduleId as string,
+        },
+      });
       await db.resource.createMany({
         data: resource.map((item: { name: string; file: string }) => ({
           name: item.name,

@@ -35,12 +35,18 @@ const CourseCurriculumListPage = async ({
     return redirect(`/course/${courseId}`);
   }
 
-  const { modules, exercise, nextCurriculum, progress, isActive } =
-    await getDataCurriculumList(
-      courseId,
-      curriculumListId,
-      session?.user?.id as string
-    );
+  const {
+    modules,
+    exercise,
+    nextCurriculum,
+    withCertificate,
+    progress,
+    isActive,
+  } = await getDataCurriculumList(
+    courseId,
+    curriculumListId,
+    session?.user?.id as string
+  );
 
   return (
     <CurriculumListView
@@ -49,6 +55,7 @@ const CourseCurriculumListPage = async ({
       nextCurriculum={nextCurriculum}
       progress={progress}
       isActive={isActive}
+      witchCertificate={withCertificate}
     />
   );
 };

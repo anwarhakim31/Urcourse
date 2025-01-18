@@ -1,5 +1,6 @@
 "use client";
 
+import AccessFormControl from "@/components/fragments/Access-form-control";
 import AreaFormControl from "@/components/fragments/area-form-control";
 
 import DataFormControl from "@/components/fragments/data-form-control";
@@ -35,6 +36,7 @@ const formSchema = z.object({
     )
     .optional(),
   description: z.string().optional(),
+  certificate: z.boolean().optional(),
   image: z.string().optional(),
   price: z.coerce.number().optional(),
 });
@@ -49,6 +51,7 @@ const BasicCourseForm = ({ course, category }: PropsType) => {
       description: course.description || "",
       image: course.image || "",
       price: course.price || undefined,
+      certificate: course?.certificate || false,
     },
     shouldFocusError: true,
   });
@@ -145,6 +148,19 @@ const BasicCourseForm = ({ course, category }: PropsType) => {
                   field={field}
                   label="Description"
                   className={` w-full break-all `}
+                />
+              )}
+            />
+          </div>
+          <div className="mt-4">
+            <FormField
+              control={form.control}
+              name="certificate"
+              render={({ field }) => (
+                <AccessFormControl
+                  field={field}
+                  label="Certificate"
+                  description="Give certificate to the student"
                 />
               )}
             />

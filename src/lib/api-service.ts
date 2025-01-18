@@ -173,11 +173,14 @@ export async function getDataCurriculumList(
       item.exerciseId === curriculumListId || item.moduleId === curriculumListId
   );
 
+  const withCertificate = course.certificate;
+
   return {
     nextCurriculum,
     progress,
     modules,
     exercise,
+    withCertificate,
     isActive: !!isActive,
   };
 }

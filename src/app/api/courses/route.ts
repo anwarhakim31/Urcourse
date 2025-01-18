@@ -125,7 +125,7 @@ export async function PATCH(req: NextRequest) {
       return token;
     }
     const id = req.nextUrl.searchParams.get("id") || "";
-    const { title, description, categoryId, level, price, image } =
+    const { title, description, categoryId, level, price, image, certificate } =
       await req.json();
 
     if (!id) {
@@ -154,6 +154,7 @@ export async function PATCH(req: NextRequest) {
         level,
         price,
         image,
+        certificate,
         isPublished:
           !title ||
           description === "<p><br></p>" ||

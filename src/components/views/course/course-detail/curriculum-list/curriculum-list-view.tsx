@@ -16,6 +16,7 @@ interface PropsType {
   nextCurriculum: string | undefined;
   progress: number;
   isActive: boolean;
+  witchCertificate: boolean;
 }
 
 const CurriculumListView = ({
@@ -24,6 +25,7 @@ const CurriculumListView = ({
   nextCurriculum,
   progress,
   isActive,
+  witchCertificate,
 }: PropsType) => {
   const router = useRouter();
   const [active, setActive] = React.useState(isActive || false);
@@ -95,7 +97,7 @@ const CurriculumListView = ({
               {progress}% Complete
             </p>
           </div>
-          {progress === 100 && (
+          {progress === 100 && witchCertificate && (
             <LoadingButton
               variant={"outline"}
               className="text-indigo-700 w-full mt-4"

@@ -53,7 +53,7 @@ const BasicCoursePage = async ({
   }
 
   const { complatedField, totalField, complated } = requiredFieldCourse(
-    course as Course
+    course as unknown as Course
   );
 
   return (
@@ -66,7 +66,7 @@ const BasicCoursePage = async ({
         type="course"
       />
       <div className="flex items-center justify-between p-8 pb-0 flex-wrap gap-4">
-        <NavigationCourse course={course as Course} />
+        <NavigationCourse course={course as unknown as Course} />
         <PublishComponent
           isPublished={course?.isPublished}
           type="course"
@@ -74,7 +74,10 @@ const BasicCoursePage = async ({
           isCompleted={complated}
         />
       </div>
-      <BasicCourseForm course={course as Course} category={category} />
+      <BasicCourseForm
+        course={course as unknown as Course}
+        category={category}
+      />
     </SectionWrapper>
   );
 };
