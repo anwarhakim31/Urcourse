@@ -1,6 +1,7 @@
 "use client";
 
 import { ourFileRouter } from "@/app/api/uploadthing/core";
+import { cn } from "@/lib/utils";
 import { UploadDropzone } from "@/utils/uploadthing";
 import { X } from "lucide-react";
 import Image from "next/image";
@@ -11,12 +12,14 @@ interface PropsType {
   value?: string;
   onChange?: (url: string) => void;
   endpoint: keyof typeof ourFileRouter;
+  className?: string;
 }
 
 export default function ImageUploadBox({
   value,
   onChange,
   endpoint,
+  className,
 }: PropsType) {
   const [hover, setHover] = React.useState(false);
 
@@ -26,7 +29,10 @@ export default function ImageUploadBox({
         <div
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
-          className="relative w-full h-[250px]  rounded-md  border border-dashed mt-2 bg-white border-slate-300 overflow-hidden flex-center"
+          className={cn(
+            "relative w-full h-[250px]  rounded-md  border border-dashed mt-2 bg-white border-slate-300 overflow-hidden flex-center",
+            className
+          )}
         >
           {hover && (
             <button
@@ -58,7 +64,7 @@ export default function ImageUploadBox({
           onUploadError={(error: Error) => {
             toast.error(error.message);
           }}
-          className="w-full h-[250px] py-0 px-0 bg-white"
+          className={(cn("w-full h-[250px] py-0 px-0 bg-white"), className)}
         />
       )}
     </div>

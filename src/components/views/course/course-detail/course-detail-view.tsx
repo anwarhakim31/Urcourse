@@ -1,10 +1,11 @@
 import { Course, Reviews } from "@/types/model";
 import { formatCurrency } from "@/utils/helpers";
-import { Gem } from "lucide-react";
+import { Gem, Ribbon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import CourseDetailAction from "./course-detail-action";
 import CourseReview from "./course-review";
+import { cn } from "@/lib/utils";
 
 const CoruseDetailView = ({
   course,
@@ -34,7 +35,7 @@ const CoruseDetailView = ({
           <h1 className="font-semibold text-xl capitalize">{course.title}</h1>
           <p className="text-slate-700 text-sm">{course.category?.name}</p>
           <div
-            className="my-4"
+            className="my-4 text-sm"
             dangerouslySetInnerHTML={{ __html: course.description || "" }}
           />
           {!isPaid && (
@@ -43,10 +44,41 @@ const CoruseDetailView = ({
             </p>
           )}
 
-          <span className="mt-4 w-fit flex items-center gap-2 pointer-events-none text-indigo-700 border rounded-full font-medium  bg-indigo-100 px-4 py-0.5 text-xs">
-            <Gem size={16} strokeWidth={1.5} className="text-indigo-700" />{" "}
-            {course.level}
-          </span>
+          <div className="flex item-center mt-4 gap-2">
+            <span
+              className={cn(
+                "w-fit flex items-center gap-2 pointer-events-none border rounded-full font-medium   px-4 py-0.5 text-xs",
+                course.level === "Beginner" && "bg-green-100 text-green-500",
+                course.level === "Intermediate" &&
+                  "bg-yellow-100 text-yellow-500",
+                course.level === "Advanced" && "bg-red-100 text-red-500"
+              )}
+            >
+              <Gem
+                size={14}
+                strokeWidth={1.5}
+                className={cn(
+                  "text-indigo-700",
+                  course.level === "Beginner" && "text-green-500",
+                  course.level === "Intermediate" && "fill-yellow-500",
+                  course.level === "Advanced" && "fill-red-500"
+                )}
+              />
+              {course.level}
+            </span>
+            <span
+              className={cn(
+                "w-fit flex items-center gap-2 pointer-events-none border rounded-full font-medium bg-orange-100   text-orange-500  px-4 py-0.5 text-xs"
+              )}
+            >
+              <Ribbon
+                size={14}
+                strokeWidth={1.5}
+                className={cn("text-orange-700")}
+              />
+              Certificate
+            </span>
+          </div>
         </div>
         <CourseReview
           isPaid={isPaid}

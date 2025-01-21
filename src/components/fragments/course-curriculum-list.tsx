@@ -3,9 +3,10 @@ import { cn } from "@/lib/utils";
 import { Course } from "@/types/model";
 import {
   BookOpenIcon,
-  CheckCircle,
+  CheckCircle2Icon,
   Lock,
   NotebookPen,
+  Pencil,
   PlayCircle,
 } from "lucide-react";
 
@@ -72,12 +73,16 @@ const CourseCurriculumList = ({ courseId, list, course }: PropsType) => {
               </div>
             ) : item.proggress.some((item) => item.moduleId) ? (
               <div className="flex items-center gap-x-2 py-4">
-                <CheckCircle size={18} strokeWidth={1.5} />
+                <CheckCircle2Icon size={18} strokeWidth={1.5} />
                 <span className="text-sm truncate">{item.title}</span>
               </div>
             ) : (
               <div className="flex items-center gap-x-2 py-4">
-                <PlayCircle size={18} strokeWidth={1.5} />
+                {item.type === "module" ? (
+                  <PlayCircle size={18} strokeWidth={1.5} />
+                ) : (
+                  <Pencil size={16} strokeWidth={1.5} />
+                )}
                 <span className="text-sm truncate">{item.title}</span>
               </div>
             )}
@@ -104,7 +109,7 @@ const CourseCurriculumList = ({ courseId, list, course }: PropsType) => {
         )}
         {list.filter((item) => item.type === "exercise").length > 0 && (
           <p className="flex items-center gap-2 text-xs font-medium bg-indigo-400/20 px-4 py-1 text-indigo-700 rounded-md">
-            & <NotebookPen size={14} />
+            <NotebookPen size={14} />
             <span>
               {list.filter((item) => item.type === "exercise").length} Exercise
             </span>

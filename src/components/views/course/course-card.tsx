@@ -1,6 +1,7 @@
+import { cn } from "@/lib/utils";
 import { Course } from "@/types/model";
 import { formatCurrency } from "@/utils/helpers";
-import { Gem, Star } from "lucide-react";
+import { Gem, Ribbon, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -28,13 +29,26 @@ const CourseCard = ({ item, isPaid }: { item: Course; isPaid: boolean }) => {
             </p>
             <div className="flex justify-between items-center mt-2">
               <span className="flex items-center gap-2  text-xs">
-                <Star size={16} className="fill-yellow-500 text-yellow-500" />
-                0/5
+                <Star size={16} className="fill-yellow-400 text-yellow-400" />
+                {item.averageRating}/5
               </span>
-              <span className="flex items-center gap-2 pointer-events-none text-indigo-700 border rounded-full font-medium  bg-indigo-100 px-4 py-0.5 text-xs">
-                <Gem size={16} strokeWidth={1.5} className="text-indigo-700" />{" "}
-                {item.level}
-              </span>
+              <div className="flex-center gap-2">
+                <Ribbon
+                  size={18}
+                  strokeWidth={1.5}
+                  className={cn("text-orange-500")}
+                />
+                <Gem
+                  size={18}
+                  strokeWidth={1.5}
+                  className={cn(
+                    "text-indigo-700",
+                    item.level === "Beginner" && "text-green-500",
+                    item.level === "Intermediate" && "fill-yellow-500",
+                    item.level === "Advanced" && "fill-red-500"
+                  )}
+                />
+              </div>
             </div>
           </div>
         </div>

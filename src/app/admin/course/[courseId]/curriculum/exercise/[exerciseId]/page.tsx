@@ -39,6 +39,8 @@ const CourseExercisePage = async ({
     duration: exercise?.duration?.toString(),
   } as Exercise);
 
+  // console.log(exercise);
+
   return (
     <SectionWrapper isScroll={true} isPadding={false}>
       <BannerComponent

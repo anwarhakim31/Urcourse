@@ -51,6 +51,13 @@ export interface Exercise {
   questions?: Question[];
 }
 
+export interface ExerciseResult {
+  id?: string;
+  exerciseId?: string;
+  isPassed?: boolean;
+  score?: number;
+}
+
 export interface Question {
   id?: string;
   text?: string;

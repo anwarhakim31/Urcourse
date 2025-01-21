@@ -1,5 +1,5 @@
 "use client";
-import { Exercise, Module } from "@/types/model";
+import { Exercise, ExerciseResult, Module } from "@/types/model";
 import React, { Fragment } from "react";
 import VideoPlayer from "@/components/fragments/video-player";
 import { File } from "lucide-react";
@@ -9,6 +9,9 @@ import { useRouter } from "next/navigation";
 import { Progress } from "@/components/ui/progress";
 import { LoadingButton } from "@/components/ui/loading-button";
 import useCertificate from "@/hooks/course/useCertificate";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import useCreateRoomExercise from "@/hooks/exercise/useCreateRoomExercise";
 
 interface PropsType {
   list: Module | Exercise;
@@ -17,6 +20,7 @@ interface PropsType {
   progress: number;
   isActive: boolean;
   witchCertificate: boolean;
+  exerciseResult: ExerciseResult;
 }
 
 const CurriculumListView = ({
@@ -26,6 +30,7 @@ const CurriculumListView = ({
   progress,
   isActive,
   witchCertificate,
+  exerciseResult,
 }: PropsType) => {
   const router = useRouter();
   const [active, setActive] = React.useState(isActive || false);
@@ -44,6 +49,8 @@ const CurriculumListView = ({
     useProgressCourse(params.courseId, setActive);
   const { mutate: mutateCertifcate, isPending: isPendingCertifcate } =
     useCertificate();
+  const { mutate: mutateRoom, isPending: isPendingRoom } =
+    useCreateRoomExercise();
 
   return (
     <Fragment>
@@ -64,12 +71,42 @@ const CurriculumListView = ({
                 }
               }}
             />
-          ) : null}
-          <div className="mt-6 p-4 rounded-md border bg-white">
+          ) : (
+            <div className={"aspect-video relative overflow-hidden"}>
+              <Image
+                src={"image" in list ? list?.image || "" : ""}
+                alt={list?.title || ""}
+                width={500}
+                height={500}
+                className="w-full h-full rounded-md"
+              />
+            </div>
+          )}
+          {"type" in list && list.type === "exercise" && (
+            <div className="rounded-md mt-4 flex-between p-2.5 bg-[radial-gradient(ellipse_at_bottom,var(--tw-gradient-stops))] from-indigo-600 via-indigo-800 to-indigo-900 border">
+              <p className="text-sm font-medium text-white">
+                Score: {exerciseResult?.score}
+              </p>
+              <Button
+                disabled={isPendingRoom}
+                onClick={() =>
+                  mutateRoom({
+                    exerciseId: params.curriculumListId,
+                  })
+                }
+                className="text-sm"
+                variant={"outline"}
+              >
+                {exerciseResult?.isPassed ? "Details" : "Start Exercise"}
+              </Button>
+            </div>
+          )}
+
+          <div className="mt-6 p-4 rounded-md border bg-white ">
             <h1 className="font-semibold text-xl capitalize">{list?.title}</h1>
 
             <div
-              className="my-4"
+              className="my-4 text-sm"
               dangerouslySetInnerHTML={{ __html: list.description || "" }}
             />
 

@@ -45,6 +45,16 @@ export async function POST(
         isPublished: title && description && video ? true : false,
       },
     });
+    if (!newModule.isPublished) {
+      await db.course.update({
+        where: {
+          id: params.courseId,
+        },
+        data: {
+          isPublished: false,
+        },
+      });
+    }
 
     await db.curriculum.update({
       where: {
@@ -89,6 +99,7 @@ export async function PATCH(request: NextRequest) {
       },
       include: {
         resourse: true,
+        curriculum: true,
       },
     });
 
@@ -96,7 +107,7 @@ export async function PATCH(request: NextRequest) {
       return ResponseErrorApi(404, "Module not found");
     }
 
-    const newModule = await db.module.update({
+    const updated = await db.module.update({
       where: {
         id: moduleId as string,
       },
@@ -112,6 +123,17 @@ export async function PATCH(request: NextRequest) {
       },
     });
 
+    if (!updated.isPublished) {
+      await db.course.update({
+        where: {
+          id: modules.curriculum.courseId,
+        },
+        data: {
+          isPublished: false,
+        },
+      });
+    }
+
     if (modules.resourse?.length !== resource.length) {
       await db.resource.deleteMany({
         where: {
@@ -122,12 +144,12 @@ export async function PATCH(request: NextRequest) {
         data: resource.map((item: { name: string; file: string }) => ({
           name: item.name,
           file: item.file,
-          moduleId: newModule.id,
+          moduleId: updated.id,
         })),
       });
     }
 
-    return NextResponse.json(newModule);
+    return NextResponse.json(updated);
   } catch (error) {
     console.log(`[errModule]`, error);
     return ResponseErrorApi(500, "Internal Server Error");

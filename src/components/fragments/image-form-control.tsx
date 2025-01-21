@@ -6,6 +6,7 @@ import ImageUploadBox from "./image-upload-box";
 const ImageFormControl = ({
   field,
   label,
+  className,
 }: {
   field: {
     value?: string;
@@ -23,6 +24,7 @@ const ImageFormControl = ({
             value={field.value}
             onChange={field.onChange}
             endpoint="imageUploder"
+            className={className}
           />
         </FormControl>
       </div>

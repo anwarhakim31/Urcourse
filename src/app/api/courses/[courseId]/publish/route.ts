@@ -47,6 +47,15 @@ export async function POST(
       return ResponseErrorApi(400, "required fields are missing");
     }
 
+    const curriculum = [
+      ...(course.curriculum?.module || []),
+      ...(course.curriculum?.exercise || []),
+    ];
+
+    if (curriculum.some((item) => !item.isPublished)) {
+      return ResponseErrorApi(400, "Some curriculum is not published");
+    }
+
     await db.course.update({
       where: {
         id: params.courseId,

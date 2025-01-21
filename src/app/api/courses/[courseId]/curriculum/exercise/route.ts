@@ -52,6 +52,13 @@ export async function POST(
       },
     });
 
+    if (!exercise.isPublished) {
+      await db.course.update({
+        where: { id: course.id },
+        data: { isPublished: false },
+      });
+    }
+
     await db.curriculum.update({
       where: { id: course.curriculum.id },
       data: { lastPosition: position + 1 },
@@ -118,6 +125,7 @@ export async function PATCH(request: NextRequest) {
             answers: true,
           },
         },
+        curriculum: true,
         resourse: true,
       },
     });
@@ -146,20 +154,42 @@ export async function PATCH(request: NextRequest) {
       },
     });
 
-    if (exercise.questions?.length !== questions.length) {
+    if (!updated.isPublished) {
+      await db.course.update({
+        where: {
+          id: exercise.curriculum.courseId,
+        },
+        data: {
+          isPublished: false,
+        },
+      });
+    }
+
+    if (Array.isArray(questions) && questions.length > 0) {
       await db.question.deleteMany({
         where: {
           exerciseId: exercise.id,
         },
       });
-      if (Array.isArray(questions) && questions.length > 0) {
-        await db.question.createMany({
-          data: questions.map((item: { text: string; image: string }) => ({
-            text: item.text,
-            image: item.image,
+
+      for (const question of questions) {
+        const createdQuestion = await db.question.create({
+          data: {
+            text: question.text,
             exerciseId: exercise.id,
-          })),
+            image: question.image || null,
+          },
         });
+
+        if (Array.isArray(question.answers) && question.answers.length > 0) {
+          await db.answer.createMany({
+            data: question.answers.map((answer: Answer) => ({
+              text: answer.text,
+              isCorrect: answer.isCorrect,
+              questionId: createdQuestion.id,
+            })),
+          });
+        }
       }
     }
 

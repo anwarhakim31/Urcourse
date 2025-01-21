@@ -18,8 +18,10 @@ model User{
   photo String?
   isAdmin Boolean @default(false)
   createdAt DateTime @default(now())
+
   purchases Purchase[]
   rating Rating[]
+  
 
   @@map("users")
 }
@@ -119,10 +121,33 @@ model Exercise {
   curriculumId String
   curriculum  Curriculum @relation(fields: [curriculumId], references: [id], onDelete: Cascade)
 
-  proggress Proggress[] 
+  proggress Proggress[]
+  exercise ExerciseResult[] 
 
   createdAt DateTime @default(now())
 }
+
+
+model ExerciseResult {
+  id            String    @id @default(uuid())
+  userId        String   
+  exerciseId    String    
+  exercise      Exercise  @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  score         Int       
+  totalQuestions Int     
+  correctAnswers Int     
+  timeRemaining  Int?
+  alreadyAnswer Json?      
+  isPassed      Boolean   @default(false)
+
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([userId, exerciseId])
+}
+
+
 
 model Question {
   id          String     @id @default(uuid())

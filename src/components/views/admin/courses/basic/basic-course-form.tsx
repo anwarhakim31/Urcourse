@@ -1,6 +1,6 @@
 "use client";
 
-import AccessFormControl from "@/components/fragments/Access-form-control";
+import AccessFormControl from "@/components/fragments/access-form-control";
 import AreaFormControl from "@/components/fragments/area-form-control";
 
 import DataFormControl from "@/components/fragments/data-form-control";

@@ -49,6 +49,7 @@ const formSchema = z.object({
   questions: z
     .array(
       z.object({
+        image: z.string().optional(),
         text: z.string().nonempty({ message: "Question is required" }),
         answers: z
           .array(
@@ -102,8 +103,6 @@ const ExerciseCourseForm = ({ exercise, courseId, exerciseId }: PropsType) => {
     control: form.control,
     name: "questions",
   });
-
-  console.log(form.watch("questions"));
 
   return (
     <Form {...form}>
@@ -178,6 +177,7 @@ const ExerciseCourseForm = ({ exercise, courseId, exerciseId }: PropsType) => {
         </div>
         <ExerciseQuestionComp
           append={(value: {
+            image?: string;
             text: string;
             answers: { text: string; isCorrect: boolean }[];
           }) => {
@@ -189,6 +189,7 @@ const ExerciseCourseForm = ({ exercise, courseId, exerciseId }: PropsType) => {
             index: number,
             value: {
               text: string;
+              image?: string;
               answers: { text: string; isCorrect: boolean }[];
             }
           ) => {

@@ -14,6 +14,7 @@ import useDeleteCurriculumList from "@/hooks/course/curriculum/useDeleteCurricul
 import { toast } from "sonner";
 import { ResponseErrorAxios } from "@/lib/response-error";
 import { cn } from "@/lib/utils";
+import Loader from "@/components/fragments/loader";
 
 type Data = {
   id: string;
@@ -82,10 +83,8 @@ const CurriculumListView = ({
 
   if (!isMounted)
     return (
-      <div className="mt-28 flex items-center justify-center w-full gap-2">
-        <div className="w-3 h-3 rounded-full bg-indigo-700 animate-bounce"></div>
-        <div className="w-3 h-3 rounded-full bg-indigo-700  animate-bounce delay-200"></div>
-        <div className="w-3 h-3 rounded-full bg-indigo-700  animate-bounce"></div>
+      <div className="mt-28">
+        <Loader />
       </div>
     );
 

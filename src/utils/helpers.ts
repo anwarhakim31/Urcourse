@@ -9,6 +9,11 @@ export const splitFullName = (fullname: string) => {
 };
 
 export const requiredFieldCourse = (course: Course) => {
+  const curriculum = [
+    ...(course.curriculum?.module || []),
+    ...(course.curriculum?.exercise || []),
+  ];
+
   const requiredField = [
     course.title,
     course.description,
@@ -16,12 +21,9 @@ export const requiredFieldCourse = (course: Course) => {
     course.image,
     course.categoryId,
     course.level,
-    (course.curriculum &&
-      (course.curriculum.exercise?.length || 0) +
-        (course.curriculum.module?.length || 0) >
-        0 &&
-      course?.curriculum?.exercise.some((exercise) => exercise.isPublished)) ||
-      course?.curriculum?.module.some((module) => module.isPublished),
+    curriculum.some((curriculum) => !curriculum.isPublished)
+      ? undefined
+      : "true",
   ];
 
   const totalField = requiredField.length;

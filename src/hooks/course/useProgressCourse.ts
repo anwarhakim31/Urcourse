@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 const useProgressCourse = (
   courseId: string,
-  setActive: React.Dispatch<React.SetStateAction<boolean>>
+  setActive?: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const router = useRouter();
   return useMutation({
@@ -21,7 +21,7 @@ const useProgressCourse = (
     onSuccess: () => {
       toast.success("this chapter is completed");
       router.refresh();
-      setActive(true);
+      if (setActive) setActive(true);
       // const path = res?.data?.nextList
       //   ? `/course/${courseId}/${res.data.nextList}`
       //   : `/course/${courseId}`;

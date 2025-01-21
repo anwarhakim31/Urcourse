@@ -25,12 +25,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@/components/ui/loading-button";
 
 import AreaFormControl from "@/components/fragments/area-form-control";
-import { v4 as uuid } from "uuid";
+
 import { CircleHelp, Plus } from "lucide-react";
 import AnswerFormControl from "@/components/fragments/answer-form-control";
+import ImageFormControl from "@/components/fragments/image-form-control";
 
 type QuestionFieldArray = {
   append: (value: {
+    image?: string;
     text: string;
     answers: { text: string; isCorrect: boolean }[];
   }) => void;
@@ -95,8 +97,8 @@ export function ModalAddQuestion({ append }: QuestionFieldArray) {
 }
 
 const formSchema = z.object({
+  image: z.string().optional(),
   text: z.string().nonempty({ message: "Question is required" }),
-  id: z.string().optional(),
   answers: z
     .array(
       z.object({
@@ -116,6 +118,7 @@ function ProfileForm({
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   append: (value: {
+    image?: string;
     text: string;
     answers: { text: string; isCorrect: boolean }[];
   }) => void;
@@ -123,8 +126,8 @@ function ProfileForm({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      id: uuid(),
       text: "",
+      image: "",
       answers: [],
     },
     mode: "all",
@@ -146,7 +149,6 @@ function ProfileForm({
       return;
     }
 
-    console.log(data.text);
     if (data.text === "<p><br></p>") {
       form.setError("text", { message: "Question is required" });
       return;
@@ -160,6 +162,19 @@ function ProfileForm({
     <Form {...form}>
       <form className="mx-4 md:mx-0 ">
         <div className=" max-h-[calc(100vh-210px)] overflow-auto scrollbar-none p-0.5">
+          <div className=" w-full">
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field }) => (
+                <ImageFormControl
+                  field={field}
+                  label="Image"
+                  className="h-[175px] w-full p-0"
+                />
+              )}
+            />
+          </div>
           <div className=" w-full">
             <FormField
               control={form.control}

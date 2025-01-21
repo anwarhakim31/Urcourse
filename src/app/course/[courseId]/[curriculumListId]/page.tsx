@@ -2,7 +2,7 @@ import CurriculumListView from "@/components/views/course/course-detail/curricul
 import { getDataCurriculumList } from "@/lib/api-service";
 import authOptions from "@/lib/authOptions";
 import { db } from "@/lib/db";
-import { Exercise, Module } from "@/types/model";
+import { Exercise, ExerciseResult, Module } from "@/types/model";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -35,12 +35,21 @@ const CourseCurriculumListPage = async ({
     return redirect(`/course/${courseId}`);
   }
 
+  const exerciseResult = await db.exerciseResult.findFirst({
+    where: {
+      userId: session?.user?.id,
+      exerciseId: params.curriculumListId,
+      isPassed: true,
+    },
+  });
+
   const {
     modules,
     exercise,
     nextCurriculum,
     withCertificate,
     progress,
+
     isActive,
   } = await getDataCurriculumList(
     courseId,
@@ -56,6 +65,7 @@ const CourseCurriculumListPage = async ({
       progress={progress}
       isActive={isActive}
       witchCertificate={withCertificate}
+      exerciseResult={exerciseResult as ExerciseResult}
     />
   );
 };

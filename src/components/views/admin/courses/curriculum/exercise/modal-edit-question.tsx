@@ -28,13 +28,19 @@ import AreaFormControl from "@/components/fragments/area-form-control";
 
 import { Pencil, Plus } from "lucide-react";
 import AnswerFormControl from "@/components/fragments/answer-form-control";
+import ImageFormControl from "@/components/fragments/image-form-control";
 
 type QuestionFieldArray = {
   update: (
     index: number,
-    value: { text: string; answers: { text: string; isCorrect: boolean }[] }
+    value: {
+      image?: string;
+      text: string;
+      answers: { text: string; isCorrect: boolean }[];
+    }
   ) => void;
   dataEdit: {
+    image?: string;
     text: string;
     answers: { text?: string; isCorrect?: boolean }[];
   };
@@ -112,7 +118,7 @@ export function ModalEditQuestion({
 
 const formSchema = z.object({
   text: z.string().nonempty({ message: "Question is required" }),
-  id: z.string().optional(),
+  image: z.string().optional(),
   answers: z
     .array(
       z.object({
@@ -135,9 +141,14 @@ function QuestionForm({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   update: (
     index: number,
-    value: { text: string; answers: { text: string; isCorrect: boolean }[] }
+    value: {
+      image?: string;
+      text: string;
+      answers: { text: string; isCorrect: boolean }[];
+    }
   ) => void;
   dataEdit: {
+    image?: string;
     text: string;
     answers: { text?: string; isCorrect?: boolean }[];
   };
@@ -182,6 +193,19 @@ function QuestionForm({
       <form className="mx-4 md:mx-0 ">
         <div className=" max-h-[calc(100vh-210px)] overflow-auto scrollbar-none p-0.5">
           <div className=" w-full">
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field }) => (
+                <ImageFormControl
+                  field={field}
+                  label="Image"
+                  className="h-[175px] w-full p-0"
+                />
+              )}
+            />
+          </div>
+          <div className=" w-full mt-4">
             <FormField
               control={form.control}
               name="text"

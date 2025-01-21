@@ -9,6 +9,7 @@ import { ModalEditQuestion } from "./modal-edit-question";
 
 type QuestionFieldArray = {
   append: (value: {
+    image?: string;
     text: string;
     answers: { text: string; isCorrect: boolean }[];
   }) => void;
@@ -17,6 +18,7 @@ type QuestionFieldArray = {
   update: (
     index: number,
     value: {
+      image?: string;
       text: string;
       answers: { text: string; isCorrect: boolean }[];
     }
@@ -46,6 +48,7 @@ const ExerciseQuestionComp: React.FC<QuestionFieldArray> = ({
                   <ModalEditQuestion
                     update={update}
                     dataEdit={{
+                      image: item?.image || "",
                       text: item?.text || "",
                       answers: item?.answers || [],
                     }}
