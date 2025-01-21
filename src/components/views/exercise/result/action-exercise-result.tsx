@@ -16,6 +16,8 @@ const ActionExerciseResult = ({
   const router = useRouter();
   const { mutate } = useProgressCourse(courseId);
 
+  console.log(isPassed);
+
   return (
     <Button
       className="w-full mt-6"

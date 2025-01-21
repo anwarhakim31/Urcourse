@@ -32,6 +32,7 @@ const CourseCurriculumList = ({ courseId, list, course }: PropsType) => {
   const pathname = usePathname();
   const router = useRouter();
 
+  console.log(list);
   return (
     <div className="max-h-[calc(100vh-50px)] ">
       <div className="flex-center py-4 bg-white border-b  ">
@@ -61,7 +62,9 @@ const CourseCurriculumList = ({ courseId, list, course }: PropsType) => {
               pathname === `/course/${courseId}` &&
                 "bg-slate-100 text-slate-600 hover:bg-slate-100 hover:text-slate-600 pointer-events-none",
               pathname !== `/course/${courseId}` &&
-                item.proggress.some((item) => item.moduleId) &&
+                item.proggress.some(
+                  (item) => item.moduleId || item.exerciseId
+                ) &&
                 "text-emerald-500 hover:text-emerald-500 "
             )}
           >
@@ -71,7 +74,9 @@ const CourseCurriculumList = ({ courseId, list, course }: PropsType) => {
                 <Lock size={18} strokeWidth={1.5} />
                 <span className="text-sm">{item.title}</span>
               </div>
-            ) : item.proggress.some((item) => item.moduleId) ? (
+            ) : item.proggress.some(
+                (item) => item.moduleId || item.exerciseId
+              ) ? (
               <div className="flex items-center gap-x-2 py-4">
                 <CheckCircle2Icon size={18} strokeWidth={1.5} />
                 <span className="text-sm truncate">{item.title}</span>
@@ -90,8 +95,9 @@ const CourseCurriculumList = ({ courseId, list, course }: PropsType) => {
             <div
               className={cn(
                 "bg-indigo-700 h-full w-1 ml-auto opacity-0 transition-all duration-200 absolute right-0 top-0",
-                item.proggress.some((item) => item.moduleId) &&
-                  "bg-emerald-500 ",
+                item.proggress.some(
+                  (item) => item.moduleId || item.exerciseId
+                ) && "bg-emerald-500 ",
                 pathname.includes(item.id) && "opacity-100"
               )}
             ></div>

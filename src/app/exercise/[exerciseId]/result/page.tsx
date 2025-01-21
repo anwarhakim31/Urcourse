@@ -27,13 +27,13 @@ const page = async ({ params }: { params: { exerciseId: string } }) => {
     return redirect("/");
   }
 
-  if (!exerciseResult.isPassed) {
-    return redirect(`/exercise/${params.exerciseId}`);
-  }
+  // if (!exerciseResult.isPassed) {
+  //   return redirect(`/exercise/${params.exerciseId}`);
+  // }
 
   return (
     <main className="w-full h-screen flex-center">
-      <div className="flex  ">
+      <div className="flex flex-col md:flex-row">
         <div className="rounded-lg bg-gradient-to-b from-indigo-600 via-indigo-500 to-indigo-400 p-6 flex-center flex-col">
           <h3 className="font-semibold text-xl mb-4 text-white">
             Your Result!

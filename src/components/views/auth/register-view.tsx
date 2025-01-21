@@ -9,21 +9,34 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const formSchema = z.object({
-  email: z
-    .string()
-    .nonempty({
-      message: "Email is required",
-    })
-    .email({ message: "Invalid email address" }),
-  fullname: z
-    .string()
-    .nonempty({ message: "Fullname is required" })
-    .min(6, { message: "Fullname must be at least 6 characters" }),
-  password: z.string().nonempty({ message: "Password is required" }).min(6, {
-    message: "Password must be at least 6 characters",
-  }),
-});
+const formSchema = z
+  .object({
+    email: z
+      .string()
+      .nonempty({
+        message: "Email is required",
+      })
+      .email({ message: "Invalid email address" }),
+    fullname: z
+      .string()
+      .nonempty({ message: "Fullname is required" })
+      .min(6, { message: "Fullname must be at least 6 characters" }),
+    password: z
+      .string()
+      .nonempty({ message: "Password is required" })
+      .min(6, {
+        message: "Password must be at least 6 characters",
+      })
+      .max(20, {}),
+  })
+  .refine((data) => data.password !== data.fullname, {
+    message: "Password cannot be the same as fullname",
+    path: ["password"],
+  })
+  .refine((data) => data.password !== data.email, {
+    message: "Password cannot be the same as email",
+    path: ["password"],
+  });
 
 const RegisterView = () => {
   const form = useForm<z.infer<typeof formSchema>>({

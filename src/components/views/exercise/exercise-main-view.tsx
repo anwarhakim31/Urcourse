@@ -57,7 +57,7 @@ const ExerciseMainPage = ({ roomId }: { roomId: string }) => {
         </div>
       ) : exerciseResult?.isPassed ? null : (
         <div className="flex flex-col h-full w-full">
-          <div className="relative h-[50%] w-full bg-gradient-to-b from-indigo-900 via-indigo-800 to-indigo-500 flex rounded-br-3xl rounded-bl-3xl flex-center">
+          <div className="relative h-[50%] w-full bg-gradient-to-b  from-indigo-900 via-indigo-800 to-indigo-500 flex rounded-br-3xl rounded-bl-3xl flex-center">
             <div className="flex-between absolute w-full top-4 left-0 px-4">
               <h3 className="text-white text-xl font-bold">Score : {score}</h3>
               <div className="flex-center gap-2 rounded-md bg-white/50 px-4 py-1">
@@ -114,14 +114,14 @@ const ExerciseMainPage = ({ roomId }: { roomId: string }) => {
                       })
                     }
                     className={cn(
-                      "border border-indigo-700 font-medium rounded-md p-2.5 flex-1 text-sm lg:text-base xl:max-w-[500px] hover:text-indigo-700 border-b-2 transition-all ease-linear ",
+                      "border border-indigo-700 font-medium rounded-tr-lg rounded-bl-lg p-2.5 flex-1 text-sm lg:text-base xl:max-w-[500px] hover:text-indigo-700 border-b-2 transition-all ease-linear ",
                       effect ? "scale-75 opacity-0" : "scale-100 opacity-100",
                       `duration-${i * 100}`,
                       resultAnswer?.isCorrect &&
                         resultAnswer?.correctAnswer?.includes(
                           answer?.id || ""
                         ) &&
-                        "bg-green-500 text-white border-green-700 animate-correct hover:text-white",
+                        "bg-emerald-500 text-white border-emerald-700 animate-correct hover:text-white",
                       !resultAnswer?.isCorrect &&
                         resultAnswer?.wrongAnswer?.includes(answer?.id || "") &&
                         "bg-red-500 text-white border-red-700 animate-incorrect  hover:text-white",
@@ -129,7 +129,7 @@ const ExerciseMainPage = ({ roomId }: { roomId: string }) => {
                         resultAnswer?.correctAnswer?.some(
                           (id: string) => id === answer?.id
                         ) &&
-                        "bg-green-500 text-white border-green-700  hover:text-white"
+                        "bg-emerald-500 text-white border-emerald-700  hover:text-white"
                     )}
                   >
                     {answer.text}
@@ -148,7 +148,7 @@ const ExerciseMainPage = ({ roomId }: { roomId: string }) => {
         )}
       >
         <h3 className="font-bold text-lg lg:text-xl">
-          {resultAnswer?.isCorrect ? "Correct" : "Wrong"}
+          {resultAnswer?.isCorrect ? "TRUE" : "FALSE"}
         </h3>
       </div>
     </main>

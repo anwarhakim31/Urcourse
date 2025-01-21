@@ -85,7 +85,7 @@ const CurriculumListView = ({
           {"type" in list && list.type === "exercise" && (
             <div className="rounded-md mt-4 flex-between p-2.5 bg-[radial-gradient(ellipse_at_bottom,var(--tw-gradient-stops))] from-indigo-600 via-indigo-800 to-indigo-900 border">
               <p className="text-sm font-medium text-white">
-                Score: {exerciseResult?.score}
+                Score: {exerciseResult?.score || 0}
               </p>
               <Button
                 disabled={isPendingRoom}

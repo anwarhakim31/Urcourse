@@ -1,4 +1,10 @@
-import { LayoutDashboard, LayoutList, LibraryBig } from "lucide-react";
+import {
+  ArrowLeftRight,
+  LayoutDashboard,
+  LayoutList,
+  LibraryBig,
+  Users,
+} from "lucide-react";
 
 export const sidebarItems = [
   {
@@ -15,6 +21,16 @@ export const sidebarItems = [
     name: "Course",
     path: "/admin/course",
     icon: LibraryBig,
+  },
+  {
+    name: "User",
+    path: "/admin/user",
+    icon: Users,
+  },
+  {
+    name: "Purchase",
+    path: "/admin/purchase",
+    icon: ArrowLeftRight,
   },
 ];
 

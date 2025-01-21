@@ -1,3 +1,11 @@
+export interface User {
+  id?: string;
+  fullname?: string;
+  email?: string;
+  phone?: string;
+  photo?: string;
+}
+
 export interface Course {
   id?: string;
   title: string;

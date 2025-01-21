@@ -172,8 +172,8 @@ const CourseReview = ({
             >
               <figure className="rounded-full h-12 w-12 overflow-hidden bg-slate-200">
                 <Image
-                  src={review.user.photo}
-                  alt={review.user.fullname}
+                  src={review?.user?.photo || ""}
+                  alt={review?.user?.fullname || ""}
                   width={50}
                   height={50}
                   priority
@@ -181,7 +181,7 @@ const CourseReview = ({
                 />
               </figure>
               <div>
-                <p className="font-medium mb-1">{review.user.fullname}</p>
+                <p className="font-medium mb-1">{review?.user?.fullname}</p>
                 <RatingStar averageRating={review.rating || 0} />
                 <p className="mt-2 text-sm text-slate-600 first-letter:capitalize">
                   {review.comment}

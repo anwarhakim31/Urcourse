@@ -40,7 +40,7 @@ const DetailPage = async ({ params }: { params: { courseId: string } }) => {
       isPaid={isPaid ? true : false}
       firstCurriculumId={curriculumList[0].id as string}
       isReviewed={!!isReviewed}
-      reviews={reviews as Reviews[]}
+      reviews={reviews as unknown as Reviews[]}
     />
   );
 };
