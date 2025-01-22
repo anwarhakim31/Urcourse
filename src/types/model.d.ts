@@ -111,6 +111,7 @@ export interface Purchase {
   status?: string;
   price?: number;
   course?: Course;
+  user?: User;
 }
 
 export interface Transaction {

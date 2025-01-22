@@ -12,6 +12,8 @@ export async function GET(req: NextRequest) {
     const skip = (page - 1) * limit;
     const search = req.nextUrl.searchParams.get("search") || "";
 
+    console.log(search);
+
     if (token instanceof NextResponse) {
       return token;
     }
@@ -19,22 +21,72 @@ export async function GET(req: NextRequest) {
     if (token && typeof token === "object" && "id" in token) {
       const purchases = await db.purchase.findMany({
         where: {
-          userId: token.id,
-          course: {
-            title: {
-              contains: search,
-              mode: "insensitive",
+          status: "PAID",
+          OR: [
+            {
+              course: {
+                title: {
+                  contains: search,
+                  mode: "insensitive",
+                },
+              },
             },
-          },
+            {
+              user: {
+                email: {
+                  contains: search,
+                  mode: "insensitive",
+                },
+              },
+            },
+          ],
         },
         include: {
+          user: true,
           course: true,
         },
         skip,
         take: limit,
       });
 
-      return NextResponse.json({ success: true, data: purchases });
+      const total = await db.purchase.count({
+        where: {
+          status: "PAID",
+          OR: [
+            {
+              course: {
+                title: {
+                  contains: search,
+                  mode: "insensitive",
+                },
+              },
+            },
+            {
+              user: {
+                email: {
+                  contains: search,
+                  mode: "insensitive",
+                },
+              },
+            },
+          ],
+        },
+      });
+
+      return NextResponse.json({
+        success: true,
+        message: "Categories fetched successfully",
+        data: {
+          purchases,
+          paging: {
+            page,
+            limit,
+            total,
+            totalPage: Math.ceil(total / limit),
+          },
+        },
+        code: 200,
+      });
     }
 
     return ResponseErrorApi(401, "Unauthorized");

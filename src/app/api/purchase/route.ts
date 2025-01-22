@@ -26,6 +26,7 @@ export async function GET(req: NextRequest) {
               category: true,
             },
           },
+          user: true,
         },
       });
 
@@ -115,6 +116,48 @@ export async function POST(req: NextRequest) {
     return ResponseErrorApi(401, "Unauthorized");
   } catch (error) {
     console.log("Purchase", error);
+    return ResponseErrorApi(500, "Internal Server Error");
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const token = await verifyToken(req, true);
+
+    if (token instanceof NextResponse) {
+      return token;
+    }
+
+    const data = await req.json();
+
+    const isExist = await db.purchase.findMany({
+      where: {
+        id: {
+          in: data,
+        },
+      },
+    });
+
+    if (data.length !== isExist.length) {
+      return ResponseErrorApi(404, "purchase not found");
+    }
+
+    await db.purchase.deleteMany({
+      where: {
+        id: {
+          in: data,
+        },
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: "Category Deleted successfully",
+
+      code: 200,
+    });
+  } catch (error) {
+    console.log(["Category", error]);
     return ResponseErrorApi(500, "Internal Server Error");
   }
 }
