@@ -18,6 +18,7 @@ import { splitFullName } from "@/utils/helpers";
 import { SearchCommand } from "./search-command";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Separator } from "../ui/separator";
+import { ProfileSheet } from "../views/admin/profile/profile-sheet";
 
 const HeaderAdmin = () => {
   const session = useSession();
@@ -75,7 +76,7 @@ const HeaderAdmin = () => {
 
           <Separator />
 
-          {/* <ProfileSheet /> */}
+          <ProfileSheet />
           <button
             className="text-sm text-left w-full p-2 block hover:bg-indigo-400/20 transition-all duration-200 ease-in-out"
             aria-label="Logout"
