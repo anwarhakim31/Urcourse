@@ -7,7 +7,7 @@ const useCertificate = () => {
       const res = await instance.post("/courses/certificate", data, {
         responseType: "blob",
       });
-      console.log(res.data);
+
       return res.data;
     },
     onSuccess: (response) => {

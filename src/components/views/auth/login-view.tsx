@@ -36,7 +36,7 @@ const LoginView = () => {
       {error && (
         <Badge
           variant={"default"}
-          className="w-full bg-red-100 text-red-600 flex-center py-1.5 text-sm mb-2 hover:bg-red-100"
+          className="w-full bg-red-100 text-red-600 flex-center py-2  text-xs mb-2 hover:bg-red-100"
         >
           {error}
         </Badge>

@@ -10,24 +10,28 @@ const PhotoProfile = ({
   field,
   fullname,
   isEdit,
+  row,
 }: {
   field: { value?: string; onChange?: (value: string) => void };
   fullname: string;
   isEdit: boolean;
+  row?: boolean;
 }) => {
   return (
-    <FormItem className="flex-center gap-4 flex-col">
-      <FormControl className="w-[120px] h-[120px] rounded-full border">
+    <FormItem className={`flex-center gap-4  ${row ? "flex-row" : "flex-col"}`}>
+      <FormControl>
         {field.value ? (
-          <Image
-            src={field.value?.replace("s96-c", "s512-c") || ""}
-            width={1000}
-            height={1000}
-            alt={"photo"}
-            className="w-full h-full rounded-full object-cover bg-slate-100 "
-          />
+          <div className="w-[120px] h-[120px] rounded-full border">
+            <Image
+              src={field.value?.replace("s96-c", "s512-c") || ""}
+              width={1000}
+              height={1000}
+              alt={"photo"}
+              className="w-full h-full rounded-full object-cover bg-slate-100 "
+            />
+          </div>
         ) : (
-          <div className="w-full h-full flex-center bg-indigo-700">
+          <div className="w-[120px] h-[120px] rounded-full flex-center border bg-indigo-700">
             <span className="text-5xl font-semibold text-white">
               {splitFullName(fullname || "")}
             </span>

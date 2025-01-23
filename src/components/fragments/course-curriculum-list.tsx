@@ -32,7 +32,6 @@ const CourseCurriculumList = ({ courseId, list, course }: PropsType) => {
   const pathname = usePathname();
   const router = useRouter();
 
-  console.log(list);
   return (
     <div className="max-h-[calc(100vh-50px)] ">
       <div className="flex-center py-4 bg-white border-b  ">
