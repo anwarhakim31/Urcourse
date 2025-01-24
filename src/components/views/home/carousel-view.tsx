@@ -18,15 +18,14 @@ const CarouselView = () => {
 
   if (loading) {
     return (
-      <div className=" w-full  pt-28  flex-center ">
-        <div className="w-full p-2 aspect-[16/8] bg-white max-h-[268px] rounded-3xl  md:w-[50vw] lg:h-[268px]  "></div>
+      <div className=" w-full  pt-[6.5rem] pb-8 flex-center ">
+        <div className="w-full px-2 py-2  aspect-[16/8] bg-white max-h-[260px]   md:w-[50vw] lg:h-[260px]  "></div>
       </div>
     );
   }
 
-  console.log(activeIndex);
   return (
-    <div className="pt-24">
+    <section className="">
       <Swiper
         modules={[Autoplay, Pagination]}
         centeredSlides={true}
@@ -82,7 +81,7 @@ const CarouselView = () => {
                   width={650}
                   height={500}
                   priority
-                  className="w-auto h-full rounded-3xl"
+                  className="w-auto h-full "
                 />
               </div>
             )}
@@ -99,7 +98,7 @@ const CarouselView = () => {
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

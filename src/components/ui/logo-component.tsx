@@ -16,7 +16,7 @@ const LogoComponent = () => {
   return (
     <Link
       href={pathname.startsWith("/admin/") ? "/admin/dashboard" : "/"}
-      className="flex items-center gap-2 "
+      className="flex items-center gap-2 hover:opacity-80 transition-all duration-300 ease-linear"
     >
       <Image
         src="/logo.svg"

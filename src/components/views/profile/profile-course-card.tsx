@@ -19,9 +19,9 @@ const ProfileCourseCard = ({
 
   return (
     <Link href={`/course/${item.id}/${progressData.firstCurriculum}`}>
-      <div className="rounded-md  border flex flex-col overflow-hidden bg-white ">
+      <div className="rounded-md  border flex flex-col overflow-hidden bg-white shadow-md">
         <div className="flex-1">
-          <div className="relative w-full aspect-video">
+          <div className="relative w-full aspect-video rounded-md overflow-hidden">
             <Image
               src={item.image || ""}
               alt={item.title}
@@ -37,7 +37,7 @@ const ProfileCourseCard = ({
           </div>
           <div className="w-full px-2.5 mb-2.5">
             <Progress value={progressData.percentage} />
-            <p className="text-sm mt-2 text-slate-700 text-center">
+            <p className="text-sm mt-2 text-blue-600 text-center">
               {progressData.percentage}% Complete
             </p>
           </div>

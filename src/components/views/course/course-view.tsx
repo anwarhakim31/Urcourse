@@ -24,8 +24,6 @@ const CourseView: React.FC<PropsType> = ({ category }) => {
 
   const { data, isLoading } = useFetchCourseObserver(searchParams);
 
-  console.log(data);
-
   return (
     <main className="bg-back">
       <div className="container py-24 ">
@@ -77,9 +75,9 @@ const CourseView: React.FC<PropsType> = ({ category }) => {
               <CourseCard
                 key={item.id}
                 item={item}
-                isPaid={
-                  !!data.purchased.some((p: { id: string }) => p.id === item.id)
-                }
+                isPaid={data?.purchased?.some(
+                  (p: { id: string }) => p.id === item.id
+                )}
               />
             ))
           ) : (

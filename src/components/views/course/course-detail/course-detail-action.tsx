@@ -25,15 +25,14 @@ const CourseDetailAction = ({
   const { mutate, isPending } = useCreatePurchase();
 
   const handleClick = () => {
-    if (isPaid) {
-      return router.push("/course/" + course.id + "/" + firstCurriculumId);
-    }
-
     if (!session.data?.user) {
       return router.push(
         "/login?callbackUrl=" +
           encodeURIComponent(process.env.NEXT_PUBLIC_DOMAIN + pathname)
       );
+    }
+    if (isPaid) {
+      return router.push("/course/" + course.id + "/" + firstCurriculumId);
     }
 
     mutate(
@@ -48,7 +47,7 @@ const CourseDetailAction = ({
 
   return (
     <div className=" border w-full xl:w-[350px] h-fit rounded-md p-6 xl:my-6  text-secondary bg-[radial-gradient(ellipse_at_bottom,var(--tw-gradient-stops))] from-indigo-600 via-indigo-800 to-indigo-900">
-      <h1 className="font-semibold text-xl mb-4">Ready to start learning?</h1>
+      <h1 className="font-semibold text-xl mb-4">Are you ready to start?</h1>
       <p className="text-sm ">
         Track your progress, Watch the video lessons, Exercise your knowledge,
         and more.{" "}

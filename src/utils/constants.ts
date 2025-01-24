@@ -132,3 +132,34 @@ export const creditcard = [
     type: "creditcard",
   },
 ];
+
+export const accordionData = [
+  {
+    value: "item-1",
+    title: "Personalized Learning Experience",
+    content:
+      "Our course is designed to adapt to your individual learning pace and style. Whether you're a beginner or an advanced learner, we provide content that suits your level.",
+    image: "/accordion/acor1.png",
+  },
+  {
+    value: "item-2",
+    title: "Flexible Learning Schedule",
+    content:
+      "Access lessons anytime, anywhere. Learn at your convenience with our mobile-friendly platform and downloadable resources.",
+    image: "/accordion/acor2.png",
+  },
+  {
+    value: "item-3",
+    title: "Certificate of Completion",
+    content:
+      "Showcase your achievement with a recognized certificate that you can add to your resume.",
+    image: "/accordion/acor3.png",
+  },
+  {
+    value: "item-4",
+    title: "Expert Instructors",
+    content:
+      "Learn directly from industry professionals with years of hands-on experience. Our instructors bring real-world insights into every lesson.",
+    image: "/accordion/acor4.png",
+  },
+];

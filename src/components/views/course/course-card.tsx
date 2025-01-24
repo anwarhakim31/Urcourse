@@ -11,7 +11,7 @@ const CourseCard = ({ item, isPaid }: { item: Course; isPaid: boolean }) => {
     <Link href={"/course/" + item.id}>
       <div className="rounded-md  border flex flex-col overflow-hidden bg-white ">
         <div className="flex-1">
-          <div className="relative w-full aspect-video">
+          <div className="relative w-full aspect-video overflow-hidden rounded-md">
             <Image
               src={item.image || ""}
               alt={item.title}

@@ -51,7 +51,7 @@ const CourseCurriculumList = ({ courseId, list, course }: PropsType) => {
             }
             onClick={() => router.push(`/course/${courseId}/${item.id}`)}
             className={cn(
-              "flex relative items-center w-full gap-x-2 border-b text-slate-600 text-sm font-medium pl-4 transition-all hover:text-slate-700 hover:bg-indigo-400/10",
+              "flex relative items-center w-full gap-x-2 border-b text-slate-600 text-sm  pl-4 transition-all hover:text-slate-700 hover:bg-indigo-400/10",
               pathname.includes(item.id) &&
                 "bg-indigo-400/20 text-indigo-700 hover:bg-indigo-400/20 hover:text-indigo-700",
 
