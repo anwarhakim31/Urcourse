@@ -1,11 +1,42 @@
 import CourseCurriculumList from "@/components/fragments/course-curriculum-list";
+import Footer from "@/components/fragments/footer";
 import Header from "@/components/fragments/header";
 import { getCurriculum } from "@/lib/api-service";
 import authOptions from "@/lib/authOptions";
+import { db } from "@/lib/db";
 import { Course } from "@/types/model";
 import { getServerSession } from "next-auth";
 
 import React, { Fragment } from "react";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { courseId: string };
+}) {
+  const course = await db.course.findUnique({
+    where: {
+      id: params.courseId,
+    },
+  });
+
+  console.log(course);
+
+  return {
+    title: course?.title,
+    description:
+      "A platform that empowers your learning journey with engaging, accessible, and expertly crafted courses to help you achieve your goals.",
+    openGraph: {
+      title: course?.title,
+      description:
+        "A platform that empowers your learning journey with engaging, accessible, and expertly crafted courses to help you achieve your goals.",
+      type: "website",
+      locale: "id_ID",
+      url: `${process.env.NEXT_PUBLIC_DOMAIN}/`,
+      siteName: "Urcourse",
+    },
+  };
+}
 
 const layout = async ({
   children,
@@ -36,6 +67,7 @@ const layout = async ({
           <section className="w-full  order-1 lg:order-2 ">{children}</section>
         </div>
       </main>
+      <Footer />
     </Fragment>
   );
 };

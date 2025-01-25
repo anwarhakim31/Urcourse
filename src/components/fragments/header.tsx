@@ -41,8 +41,9 @@ const Header = () => {
   return (
     <Fragment>
       <header
-        className={`fixed top-0 left-0 w-full  border-b bg-white z-50 ${
-          isScroll && "shadow-[0_5px_8px_rgba(0,0,0,0.1)]"
+        className={`fixed top-0 left-0 w-full    z-50 ${
+          isScroll &&
+          "shadow-[0_5px_8px_rgba(0,0,0,0.1)] border-b bg-white backdrop-blur-sm"
         }`}
       >
         <div className="container  h-14 flex items-center justify-between  gap-4">

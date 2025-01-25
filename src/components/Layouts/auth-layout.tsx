@@ -12,6 +12,7 @@ import ResetPasswordView from "../views/auth/reset-password-view";
 import LogoComponent from "../ui/logo-component";
 
 import useGoogleSignIn from "@/hooks/auth/useGoogleSignIn";
+import Footer from "../fragments/footer";
 
 const renderView = (
   pathname: string,
@@ -147,6 +148,7 @@ const AuthLayout = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </Fragment>
   );
 };

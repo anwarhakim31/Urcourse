@@ -3,6 +3,7 @@ import { getCurriculum } from "@/lib/api-service";
 import authOptions from "@/lib/authOptions";
 import { db } from "@/lib/db";
 import { Course, Reviews } from "@/types/model";
+
 import { getServerSession } from "next-auth";
 
 const DetailPage = async ({ params }: { params: { courseId: string } }) => {

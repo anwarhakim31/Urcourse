@@ -26,7 +26,7 @@ const CourseView: React.FC<PropsType> = ({ category }) => {
 
   return (
     <main className="bg-back">
-      <div className="container py-24 ">
+      <div className="container py-24 min-h-screen">
         <div className="flex-center">
           <InputSearch
             placeholder="Search course name..."

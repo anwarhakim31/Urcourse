@@ -1,3 +1,4 @@
+import Footer from "@/components/fragments/footer";
 import Header from "@/components/fragments/header";
 import CarouselView from "@/components/views/home/carousel-view";
 import DiffrentView from "@/components/views/home/diffrent-view";
@@ -15,6 +16,7 @@ export default function Home() {
         <TrustedHomeView />
         <DiffrentView />
       </main>
+      <Footer />
     </>
   );
 }

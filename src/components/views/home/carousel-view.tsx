@@ -18,8 +18,17 @@ const CarouselView = () => {
 
   if (loading) {
     return (
-      <div className=" w-full  pt-[6.5rem] pb-8 flex-center ">
-        <div className="w-full px-2 py-2  aspect-[16/8] bg-white max-h-[260px]   md:w-[50vw] lg:h-[260px]  "></div>
+      <div className=" w-full  pt-1.5 pb-8 flex-center ">
+        <div className="w-full px-2 py-2  aspect-[16/8]  max-h-[260px]  flex-center md:w-[50vw] lg:h-[260px]  ">
+          <Image
+            src={`/carousel/c1.png`}
+            alt={`Carousel 1`}
+            width={650}
+            height={500}
+            priority
+            className="w-auto h-full scale-90"
+          />
+        </div>
       </div>
     );
   }

@@ -5,6 +5,26 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { exerciseId: string };
+}) {
+  const exerciseResult = await db.exerciseResult.findUnique({
+    where: {
+      id: params.exerciseId,
+    },
+    include: {
+      exercise: true,
+    },
+  });
+
+  return {
+    title: exerciseResult?.exercise?.title,
+    description: exerciseResult?.exercise?.description,
+  };
+}
+
 const ExercisePage = async ({ params }: { params: { exerciseId: string } }) => {
   const session = await getServerSession(authOptions);
   if (!session) {

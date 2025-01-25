@@ -10,7 +10,7 @@ const font = Rubik({
   weight: ["400", "500", "600", "700"],
 });
 
-const LogoComponent = () => {
+const LogoComponent = ({ title = false }: { title?: boolean }) => {
   const pathname = usePathname();
 
   return (
@@ -26,12 +26,14 @@ const LogoComponent = () => {
         className="w-8 h-8"
         priority
       />
-      <span
-        style={{ fontFamily: font.style.fontFamily }}
-        className="text-lg text-indigo-700  font-medium"
-      >
-        Urcourse
-      </span>
+      {title && (
+        <span
+          style={{ fontFamily: font.style.fontFamily }}
+          className="text-lg text-indigo-700  font-medium"
+        >
+          Urcourse
+        </span>
+      )}
     </Link>
   );
 };

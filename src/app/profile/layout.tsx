@@ -1,7 +1,14 @@
-"use client";
+import Footer from "@/components/fragments/footer";
 import Header from "@/components/fragments/header";
 import ProfileNavigation from "@/components/views/profile/profile-navigation";
+import { Metadata } from "next";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Profile",
+  description:
+    "A platform that empowers your learning journey with engaging, accessible, and expertly crafted courses to help you achieve your goals.",
+};
 
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -15,6 +22,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
           </section>
         </div>
       </main>
+      <Footer />
     </React.Fragment>
   );
 };

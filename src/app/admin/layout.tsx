@@ -1,6 +1,13 @@
 import HeaderAdmin from "@/components/fragments/header-admin";
 import Sidebar from "@/components/fragments/sidebar";
+import { Metadata } from "next";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Admin",
+  description:
+    "A platform that empowers your learning journey with engaging, accessible, and expertly crafted courses to help you achieve your goals.",
+};
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return (

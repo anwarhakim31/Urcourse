@@ -1,3 +1,4 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
 import Link from "next/link";

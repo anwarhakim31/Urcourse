@@ -9,11 +9,23 @@ import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: {
-    default: "Ucourse",
-    template: "%s | Ucourse",
+    default: "Urcourse",
+    template: "%s | Urcourse",
+  },
+  icons: {
+    icon: "/favicon.ico",
   },
   description:
     "A platform that empowers your learning journey with engaging, accessible, and expertly crafted courses to help you achieve your goals.",
+  openGraph: {
+    title: "Urcourse",
+    description:
+      "A platform that empowers your learning journey with engaging, accessible, and expertly crafted courses to help you achieve your goals.",
+    type: "website",
+    locale: "id_ID",
+    url: `${process.env.NEXT_PUBLIC_DOMAIN}/`,
+    siteName: "Urcourse",
+  },
 };
 
 export default async function RootLayout({

@@ -44,11 +44,11 @@ const DiffrentView = () => {
         material guaranteed, Dicoding Academy also has professional reviewers
         who will review your code.
       </p>
-      <div className="flex mt-20 gap-6">
+      <div className="flex items-center mt-20 gap-6">
         <Accordion
           type="single"
           collapsible
-          className="space-y-4 w-1/2"
+          className="space-y-6 w-full md:w-1/2"
           value={openItem?.toString()}
           onValueChange={setOpenItem}
         >
@@ -56,17 +56,30 @@ const DiffrentView = () => {
             <AccordionItem value={item.value} key={item.value}>
               <AccordionTrigger
                 onClick={() => toggleAccordion(item.value)}
-                className="text-base px-4 border border-b-0  rounded-tl-md rounded-tr-md font-medium"
+                className="text-base px-4 border border-b-0  rounded-tl-md rounded-tr-md bg-white font-medium "
               >
                 {item.title}
               </AccordionTrigger>
-              <AccordionContent className="p-4 border-x rounded-bl-md rounded-br-md text-gray-700">
+              <AccordionContent className="p-4 border-x rounded-bl-md rounded-br-md bg-white text-gray-700 ">
                 {item.content}
+                <div className=" w-full  flex-center md:hidden">
+                  <Image
+                    src={imageNow || "/accordion/acor1.png"}
+                    alt={"image"}
+                    width={500}
+                    height={500}
+                    priority
+                    className={cn(
+                      "w-full object-contain  transition-opacity duration-400 ease-in-out",
+                      isImageVisible ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </div>
               </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
-        <div className="w-1/2  flex-center">
+        <div className="hidden w-full  md:w-1/2  md:flex-center">
           <Image
             src={imageNow || "/accordion/acor1.png"}
             alt={"image"}
