@@ -59,7 +59,7 @@ const VideoPlayer = ({
       onMouseLeave={() => setHover(false)}
     >
       <video
-        className="relative z-[1]"
+        className="relative z-[1] w-full h-full"
         ref={vidRef}
         autoPlay={playing}
         onEnded={handleEnded}

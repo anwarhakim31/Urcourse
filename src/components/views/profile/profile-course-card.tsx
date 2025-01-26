@@ -15,8 +15,6 @@ const ProfileCourseCard = ({
     firstCurriculum: string;
   };
 }) => {
-  console.log(progressData);
-
   return (
     <Link href={`/course/${item.id}/${progressData.firstCurriculum}`}>
       <div className="rounded-md  border flex flex-col overflow-hidden bg-white shadow-md">

@@ -13,7 +13,7 @@ const useUnpublishCourse = (id: string) => {
     },
     onSuccess: () => {
       toast.success("Course unpublished successfully");
-      router.refresh();
+      return router.refresh();
     },
     onError: (error: Error) => {
       ResponseErrorAxios(error);

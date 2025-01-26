@@ -6,6 +6,7 @@ import { UploadDropzone } from "@/utils/uploadthing";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
+import VideoPlayer from "./video-player";
 
 const FileFormControl = ({
   field,
@@ -30,9 +31,7 @@ const FileFormControl = ({
           {type === "video" && field.value ? (
             <>
               <div className="aspect-video max-h-[250px]">
-                <video controls width={"100%"} height={"100%"}>
-                  <source src={field.value} />
-                </video>
+                <VideoPlayer src={field.value} />
               </div>
               <p className=" border p-2 mt-4 text-sm border-indigo-700 relative bg-indigo-400/20 rounded-md">
                 {field.value}
