@@ -20,8 +20,6 @@ export async function generateMetadata({
     },
   });
 
-  console.log(course);
-
   return {
     title: course?.title,
     description:

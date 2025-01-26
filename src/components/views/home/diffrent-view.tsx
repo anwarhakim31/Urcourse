@@ -39,7 +39,7 @@ const DiffrentView = () => {
       <h1 className="text-center capitalize text-2xl md:text-3xl text-slate-700 ">
         Why urcourse is different?
       </h1>
-      <p className=" mt-4 text-slate-700 max-w-[600px] text-center mx-auto">
+      <p className=" mt-4 text-sm text-slate-700 max-w-[600px] text-center mx-auto">
         It&apos;s time to wisely choose learning resources. Not only is the
         material guaranteed, Dicoding Academy also has professional reviewers
         who will review your code.
