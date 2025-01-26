@@ -65,7 +65,7 @@ const BasicCoursePage = async ({
         complated={complated}
         type="course"
       />
-      <div className="flex items-center justify-between p-8 pb-0 flex-wrap gap-4">
+      <div className="flex items-center justify-between p-4 md:p-8 md:pb-0 flex-wrap gap-4">
         <NavigationCourse course={course as unknown as Course} />
         <PublishComponent
           isPublished={course?.isPublished}

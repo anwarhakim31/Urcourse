@@ -1,15 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Calculator,
-  Calendar,
-  CreditCard,
-  Search,
-  Settings,
-  Smile,
-  User,
-} from "lucide-react";
+import { Search } from "lucide-react";
 
 import {
   CommandDialog,
@@ -19,8 +11,9 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
+import { sidebarItems } from "@/utils/constants";
+import Link from "next/link";
 
 export function SearchCommand() {
   const [open, setOpen] = React.useState(false);
@@ -40,7 +33,7 @@ export function SearchCommand() {
   return (
     <>
       <button
-        className="w-full max-w-[220px] rounded-md border flex items-center justify-between"
+        className="w-full max-w-[220px]  rounded-md border hidden md:flex items-center justify-between"
         onClick={() => setOpen(true)}
       >
         <div className="flex gap-2 items-center px-2 flex-1">
@@ -57,37 +50,17 @@ export function SearchCommand() {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Suggestions">
-            <CommandItem>
-              <Calendar />
-              <span>Calendar</span>
-            </CommandItem>
-            <CommandItem>
-              <Smile />
-              <span>Search Emoji</span>
-            </CommandItem>
-            <CommandItem>
-              <Calculator />
-              <span>Calculator</span>
-            </CommandItem>
+            {sidebarItems.map((item: (typeof sidebarItems)[0]) => (
+              <CommandItem key={item.path} value={item.name}>
+                <Link href={item.path} className="flex items-center gap-2">
+                  {" "}
+                  {item.icon && <item.icon size={16} strokeWidth={1.5} />}
+                  <span>{item.name}</span>
+                </Link>
+              </CommandItem>
+            ))}
           </CommandGroup>
           <CommandSeparator />
-          <CommandGroup heading="Settings">
-            <CommandItem>
-              <User />
-              <span>Profile</span>
-              <CommandShortcut>⌘P</CommandShortcut>
-            </CommandItem>
-            <CommandItem>
-              <CreditCard />
-              <span>Billing</span>
-              <CommandShortcut>⌘B</CommandShortcut>
-            </CommandItem>
-            <CommandItem>
-              <Settings />
-              <span>Settings</span>
-              <CommandShortcut>⌘S</CommandShortcut>
-            </CommandItem>
-          </CommandGroup>
         </CommandList>
       </CommandDialog>
     </>

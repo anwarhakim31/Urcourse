@@ -71,9 +71,9 @@ const BasicCourseForm = ({ course, category }: PropsType) => {
   };
 
   return (
-    <div className="px-8 pb-8 pt-4">
+    <div className="px-4 md:px-8 pb-8 pt-4">
       <Form {...form}>
-        <p className="text-sm text-slate-500 mt-4">
+        <p className="text-sm text-slate-500 ">
           Manage the basic information for your course
         </p>
         <form className="mt-4 " onSubmit={form.handleSubmit(onSubmit)}>

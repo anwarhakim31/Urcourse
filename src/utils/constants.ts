@@ -1,5 +1,7 @@
 import {
   ArrowLeftRight,
+  BookOpen,
+  HandCoins,
   LayoutDashboard,
   LayoutList,
   LibraryBig,
@@ -161,5 +163,32 @@ export const accordionData = [
     content:
       "Learn directly from industry professionals with years of hands-on experience. Our instructors bring real-world insights into every lesson.",
     image: "/accordion/acor4.png",
+  },
+];
+
+export const StatistikItem = [
+  {
+    type: "income",
+    title: "Total Income",
+    icon: HandCoins,
+    value: "Rp 1.000.000",
+  },
+  {
+    type: "purchase",
+    title: "Total Purchase",
+    icon: ArrowLeftRight,
+    value: 1,
+  },
+  {
+    type: "user",
+    title: "Total User",
+    icon: Users,
+    value: 1,
+  },
+  {
+    type: "course",
+    title: "Total Course ",
+    icon: BookOpen,
+    value: 1,
   },
 ];

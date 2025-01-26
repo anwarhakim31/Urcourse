@@ -30,7 +30,7 @@ const Header = () => {
 
   React.useEffect(() => {
     window.addEventListener("scroll", () => {
-      if (window.scrollY > 0) {
+      if (window.scrollY > 5) {
         setIsScroll(true);
       } else {
         setIsScroll(false);
@@ -41,10 +41,10 @@ const Header = () => {
   return (
     <Fragment>
       <header
-        className={`fixed top-0 left-0 w-full    z-50 ${
+        className={`fixed top-0 left-0 w-full    z-[1000] ${
           isScroll &&
           "shadow-[0_5px_8px_rgba(0,0,0,0.1)] border-b bg-white backdrop-blur-sm"
-        }`}
+        } ${open && "bg-white"} `}
       >
         <div className="container  h-14 flex items-center justify-between  gap-4">
           <LogoComponent />

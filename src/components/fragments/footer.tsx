@@ -9,7 +9,7 @@ const Footer = () => {
     <footer className="bg-white ">
       <div className="container">
         <Separator />
-        <div className="py-20 flex-between gap-4">
+        <div className="py-20 flex items-center justify-between flex-col md:flex-row gap-8 md:gap-4">
           <LogoComponent title={true} />
           <p className="w-[300px] text-sm text-slate-700 text-center">
             Online learning platform designed to help users enhance their skills

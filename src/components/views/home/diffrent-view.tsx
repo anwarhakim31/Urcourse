@@ -36,7 +36,7 @@ const DiffrentView = () => {
 
   return (
     <section className="pt-24  container ">
-      <h1 className="text-center capitalize text-3xl text-slate-700 ">
+      <h1 className="text-center capitalize text-2xl md:text-3xl text-slate-700 ">
         Why urcourse is different?
       </h1>
       <p className=" mt-4 text-slate-700 max-w-[600px] text-center mx-auto">

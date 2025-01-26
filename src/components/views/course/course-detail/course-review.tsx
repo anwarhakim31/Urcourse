@@ -64,7 +64,7 @@ const CourseReview = ({
   }, [isReview]);
 
   return (
-    <div className="mt-6 p-4 rounded-md border bg-white" ref={reviewRef}>
+    <div className="mt-6 p-4 rounded-md border  bg-white" ref={reviewRef}>
       <h1 className="font-semibold text-xl capitalize">Reviews & Ratings </h1>
       <div className="flex mt-2 flex-wrap gap-2 items-center justify-between">
         <div className="flex  gap-2 items-center">
