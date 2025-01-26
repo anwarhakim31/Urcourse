@@ -11,7 +11,7 @@ declare module "next-auth" {
     email: string;
     password: string;
     fullname: string;
-    phone: number | null;
+
     photo: string | null;
     isAdmin: boolean;
     createdAt: Date;
@@ -25,7 +25,6 @@ declare module "next-auth" {
       isAdmin?: boolean;
       id: string;
       accessToken?: string;
-      phone?: string;
     };
   }
 
@@ -36,7 +35,6 @@ declare module "next-auth" {
     isAdmin?: boolean;
     id: string;
     accessToken?: string;
-    phone?: string;
   }
 }
 
@@ -94,7 +92,7 @@ const authOptions: NextAuthOptions = {
         token.photo = user.photo;
         token.fullname = user.fullname;
         token.id = user.id;
-        token.phone = user.phone;
+
         token.isAdmin = user.isAdmin;
       }
 
@@ -122,14 +120,14 @@ const authOptions: NextAuthOptions = {
           token.fullname = newUser.fullname || data.fullname;
           token.isAdmin = newUser.isAdmin;
           token.photo = newUser.photo || data.photo;
-          token.phone = newUser.phone;
+
           token.id = newUser.id;
         } else {
           token.email = data.email;
           token.fullname = userDB.fullname || data.fullname;
           token.isAdmin = userDB.isAdmin;
           token.photo = userDB.photo || data.photo;
-          token.phone = userDB.phone;
+
           token.id = userDB.id;
         }
       }
@@ -138,7 +136,6 @@ const authOptions: NextAuthOptions = {
         token.photo = session.user?.photo;
         token.fullname = session.user?.fullname;
         token.email = session.user?.email;
-        token.phone = session.user?.phone;
       }
 
       return token;
@@ -150,7 +147,6 @@ const authOptions: NextAuthOptions = {
         session.user.fullname = (token.fullname as string) || "";
         session.user.photo = (token.photo as string) || "";
         session.user.isAdmin = token.isAdmin as boolean;
-        session.user.phone = (token.phone as string) || "";
 
         const accsesToken = jwt.sign(token, process.env.JWT_SECRET || "", {
           algorithm: "HS256",
