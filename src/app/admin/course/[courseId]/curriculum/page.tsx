@@ -54,7 +54,7 @@ const CuriculumCoursePage = async ({
   }
 
   return (
-    <SectionWrapper>
+    <SectionWrapper isScroll={true}>
       <div className="flex items-center justify-between">
         <NavigationCourse course={course as Course} />
       </div>
