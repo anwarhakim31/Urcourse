@@ -35,15 +35,6 @@ export async function PATCH(req: NextRequest) {
       }
     }
 
-    await db.curriculum.update({
-      where: {
-        courseId: data[0].courseId,
-      },
-      data: {
-        lastPosition: data.length - 1,
-      },
-    });
-
     return NextResponse.json({
       success: true,
       message: "Order updated successfully",

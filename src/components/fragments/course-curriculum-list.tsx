@@ -71,14 +71,18 @@ const CourseCurriculumList = ({ courseId, list, course }: PropsType) => {
             pathname === `/course/${courseId}` ? (
               <div className="flex items-center gap-x-2 py-4">
                 <Lock size={18} strokeWidth={1.5} />
-                <span className="text-sm">{item.title}</span>
+                <span className="text-sm text-left line-clamp-1">
+                  {item.title}
+                </span>
               </div>
             ) : item.proggress.some(
                 (item) => item.moduleId || item.exerciseId
               ) ? (
               <div className="flex items-center gap-x-2 py-4">
                 <CheckCircle2Icon size={18} strokeWidth={1.5} />
-                <span className="text-sm truncate">{item.title}</span>
+                <span className="text-sm text-left line-clamp-1">
+                  {item.title}
+                </span>
               </div>
             ) : (
               <div className="flex items-center gap-x-2 py-4">
@@ -87,7 +91,9 @@ const CourseCurriculumList = ({ courseId, list, course }: PropsType) => {
                 ) : (
                   <Pencil size={16} strokeWidth={1.5} />
                 )}
-                <span className="text-sm truncate">{item.title}</span>
+                <span className="text-sm text-left line-clamp-1">
+                  {item.title}
+                </span>
               </div>
             )}
 
