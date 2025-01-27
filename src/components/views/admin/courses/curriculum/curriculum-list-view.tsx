@@ -159,9 +159,9 @@ const CurriculumListView = ({
         onConfirm={() => {
           curriculumMutate(isDelete?.id as string, {
             onSuccess: () => {
-              router.refresh();
               setIsDelete(null);
               toast.success("Curriculum deleted successfully");
+              router.refresh();
             },
             onError: (error: Error) => {
               console.log(error);

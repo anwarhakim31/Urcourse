@@ -49,7 +49,7 @@ const formSchema = z.object({
   questions: z
     .array(
       z.object({
-        image: z.string().optional(),
+        image: z.string().nullable().optional(),
         text: z.string().nonempty({ message: "Question is required" }),
         answers: z
           .array(
@@ -72,13 +72,15 @@ const ExerciseCourseForm = ({ exercise, courseId, exerciseId }: PropsType) => {
     defaultValues: {
       title: exercise?.title || "",
       description: exercise?.description || "",
-      duration: exercise?.duration || "",
+      duration: exercise?.duration || undefined,
       image: exercise?.image || "",
       resource: exercise?.resourse || [],
       questions: exercise?.questions || [],
     },
     shouldFocusError: true,
   });
+
+  console.log(form.formState.errors);
 
   const router = useRouter();
 

@@ -165,7 +165,7 @@ export async function PATCH(request: NextRequest) {
       });
     }
 
-    if (Array.isArray(questions) && questions.length > 0) {
+    if (Array.isArray(questions)) {
       await db.question.deleteMany({
         where: {
           exerciseId: exercise.id,

@@ -72,7 +72,7 @@ export interface Question {
   position?: number;
   exerciseId?: string;
   exercise?: Exercise;
-  image?: string;
+  image?: string | null;
   answers?: Answer[];
 }
 

@@ -41,7 +41,7 @@ const ExerciseQuestionComp: React.FC<QuestionFieldArray> = ({
           fields.map((item: Question, i: number) => {
             return (
               <div
-                key={item.id}
+                key={item?.id || i}
                 className=" bg-indigo-400/20 p-4 mt-4 rounded-md border border-dashed border-indigo-700"
               >
                 <div className="flex items-center gap-2 justify-end">
@@ -78,7 +78,7 @@ const ExerciseQuestionComp: React.FC<QuestionFieldArray> = ({
                   <div className="list-[latin] list-inside ">
                     {item.answers &&
                       item?.answers?.map((answer, index) => (
-                        <p key={i} className="text-xs">
+                        <p key={index} className="text-xs">
                           {index === 0
                             ? "A. "
                             : index === 1
