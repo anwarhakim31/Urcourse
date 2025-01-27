@@ -60,8 +60,8 @@ const CoruseDetailView = ({
                 className={cn(
                   "text-indigo-700",
                   course.level === "Beginner" && "text-green-500",
-                  course.level === "Intermediate" && "fill-yellow-500",
-                  course.level === "Advanced" && "fill-red-500"
+                  course.level === "Intermediate" && "text-yellow-500",
+                  course.level === "Advanced" && "text-red-500"
                 )}
               />
               {course.level}

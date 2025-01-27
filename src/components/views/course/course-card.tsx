@@ -44,8 +44,8 @@ const CourseCard = ({ item, isPaid }: { item: Course; isPaid: boolean }) => {
                   className={cn(
                     "text-indigo-700",
                     item.level === "Beginner" && "text-green-500",
-                    item.level === "Intermediate" && "fill-yellow-500",
-                    item.level === "Advanced" && "fill-red-500"
+                    item.level === "Intermediate" && "text-yellow-500",
+                    item.level === "Advanced" && "text-red-500"
                   )}
                 />
               </div>
