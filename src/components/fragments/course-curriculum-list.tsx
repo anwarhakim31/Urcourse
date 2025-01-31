@@ -41,7 +41,7 @@ const CourseCurriculumList = ({ courseId, list, course }: PropsType) => {
             : course?.title}
         </h3>
       </div>
-      <div className="scrollbar-none bg-white h-fit max-h-[calc(100vh-180px)] overflow-auto">
+      <div className="scrollbar-none bg-white h-fit max-h-[calc(100vh-225px)] overflow-auto">
         {list.map((item, i) => (
           <button
             key={item.id}

@@ -33,11 +33,13 @@ const CourseCard = ({ item, isPaid }: { item: Course; isPaid: boolean }) => {
                 {item.averageRating}/5
               </span>
               <div className="flex-center gap-2">
-                <Ribbon
-                  size={18}
-                  strokeWidth={1.5}
-                  className={cn("text-orange-500")}
-                />
+                {item.certificate && (
+                  <Ribbon
+                    size={18}
+                    strokeWidth={1.5}
+                    className={cn("text-orange-500")}
+                  />
+                )}
                 <Gem
                   size={18}
                   strokeWidth={1.5}

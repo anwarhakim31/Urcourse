@@ -22,7 +22,7 @@ const AccessFormControl = ({
   description: string;
 }) => {
   return (
-    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm bg-white">
       <div className="relative w-full flex justify-between items-center">
         <div>
           <FormLabel className="font-medium text-xs">{label}</FormLabel>

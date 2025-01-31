@@ -29,14 +29,14 @@ const DiffrentView = () => {
           setImageNow(image);
         }
         setIsImageVisible(true);
-      }, 300);
+      }, 350);
     }
     setOpenItem(value);
   };
 
   return (
     <section className="pt-24  container ">
-      <h1 className="text-center capitalize text-2xl md:text-3xl text-slate-700 ">
+      <h1 className="text-center capitalize text-2xl md:text-3xl text-slate-700 font-medium">
         Why urcourse is different?
       </h1>
       <p className=" mt-4 text-sm text-slate-700 max-w-[600px] text-center mx-auto">
@@ -56,11 +56,11 @@ const DiffrentView = () => {
             <AccordionItem value={item.value} key={item.value}>
               <AccordionTrigger
                 onClick={() => toggleAccordion(item.value)}
-                className="text-base px-4 border border-b-0  rounded-tl-md rounded-tr-md bg-white font-medium "
+                className="text-sm px-4 border border-b-0  rounded-tl-md rounded-tr-md bg-white font-medium "
               >
                 {item.title}
               </AccordionTrigger>
-              <AccordionContent className="p-4 border-x rounded-bl-md rounded-br-md bg-white text-gray-700 ">
+              <AccordionContent className="p-4  border-x rounded-bl-md rounded-br-md bg-white text-gray-700 ">
                 {item.content}
                 <div className=" w-full  flex-center md:hidden">
                   <Image

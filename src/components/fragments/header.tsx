@@ -1,5 +1,5 @@
 "use client";
-import React, { Fragment } from "react";
+import React from "react";
 import LogoComponent from "../ui/logo-component";
 import { useSession } from "next-auth/react";
 import Burger from "../ui/burger";
@@ -39,7 +39,7 @@ const Header = () => {
   }, []);
 
   return (
-    <Fragment>
+    <div className="relative">
       <header
         className={`fixed top-0 left-0 w-full    z-[1000] ${
           isScroll &&
@@ -92,7 +92,7 @@ const Header = () => {
           <Navbar onClose={handleToggle} />
         </div>
       )}
-    </Fragment>
+    </div>
   );
 };
 

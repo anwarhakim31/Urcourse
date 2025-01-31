@@ -64,7 +64,7 @@ const CourseDetailAction = ({
         <span>
           {isPending
             ? "Purchasing..."
-            : isPaid
+            : isPaid && session.data?.user
             ? "Start Learning"
             : "Purchase Now"}
         </span>

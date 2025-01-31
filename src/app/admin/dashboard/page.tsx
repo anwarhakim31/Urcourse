@@ -16,8 +16,8 @@ const DashboardPage = () => {
   const { data, isLoading } = useGetStatistic();
 
   return (
-    <SectionWrapper isScroll={true}>
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 ">
+    <SectionWrapper isScroll={true} isPadding={false}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 p-4 md:p-8">
         {StatistikItem.map((item) => (
           <div
             key={item.type}
@@ -61,13 +61,15 @@ const DashboardPage = () => {
         ))}
       </div>
 
-      <BarCharComp data={data?.allMonths || []} loading={isLoading} />
-      <div className="mt-4 flex flex-col lg:flex-row gap-4">
-        <PieChartComponent
-          data={data?.categoryStat || []}
-          loading={isLoading}
-        />
-        <PopularCourse data={data?.popularCourse || []} loading={isLoading} />
+      <div className="p-4 md:p-8">
+        <BarCharComp data={data?.allMonths || []} loading={isLoading} />
+        <div className="mt-4 flex flex-col lg:flex-row gap-4">
+          <PieChartComponent
+            data={data?.categoryStat || []}
+            loading={isLoading}
+          />
+          <PopularCourse data={data?.popularCourse || []} loading={isLoading} />
+        </div>
       </div>
     </SectionWrapper>
   );

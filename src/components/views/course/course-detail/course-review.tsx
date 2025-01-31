@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { Course, Reviews } from "@/types/model";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Star, X } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
@@ -48,7 +49,7 @@ const CourseReview = ({
       comment: "",
     },
   });
-
+  const session = useSession();
   const [isReview, setIsReview] = React.useState(false);
 
   const { mutate, isPending } = useCreateRating(setIsReview);
@@ -80,17 +81,20 @@ const CourseReview = ({
             </p>
           </div>
         </div>
-        {!isReview && isPaid && !isReviewed && (
-          <Button
-            disabled={isPending}
-            onClick={() => {
-              setIsReview(true);
-              form.reset();
-            }}
-          >
-            Give a Review
-          </Button>
-        )}
+        {session.status === "authenticated" &&
+          !isReview &&
+          isPaid &&
+          !isReviewed && (
+            <Button
+              disabled={isPending}
+              onClick={() => {
+                setIsReview(true);
+                form.reset();
+              }}
+            >
+              Give a Review
+            </Button>
+          )}
       </div>
       {isReview && (
         <Form {...form}>
