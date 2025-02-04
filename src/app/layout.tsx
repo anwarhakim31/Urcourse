@@ -6,6 +6,7 @@ import ReactQueryProvider from "@/components/providers/react-query-provider";
 import SessionAuthProvider from "@/components/providers/session-auth-provider";
 import authOptions from "@/lib/authOptions";
 import { Toaster } from "@/components/ui/sonner";
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
   title: {
@@ -38,6 +39,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className=" scroll-smooth">
+        <NextTopLoader showSpinner={false} />
         <SessionAuthProvider session={session}>
           <ReactQueryProvider>
             {children}

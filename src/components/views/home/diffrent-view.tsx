@@ -29,7 +29,7 @@ const DiffrentView = () => {
           setImageNow(image);
         }
         setIsImageVisible(true);
-      }, 350);
+      }, 200);
     }
     setOpenItem(value);
   };
